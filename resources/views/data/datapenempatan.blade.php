@@ -30,6 +30,7 @@
                                     <th>L/P</th>
                                     <th>Kelas</th>
                                     <th>Nama Pembimbing</th>
+                                    <th>Nama Guru Mapel PKL</th>
 
                                 </tr>
                             </thead>
@@ -44,6 +45,7 @@
                                         <td>{{ $data->jenis_kelamin }}</td>
                                         <td>{{ $data->kelas }}</td>
                                         <td>{{ $data->nama_pembimbing }}</td>
+                                        <td>{{ $data->nama_gurumapel }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

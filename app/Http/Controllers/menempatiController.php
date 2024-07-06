@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MenempatiExport;
 use App\Models\datapenempatan;
 use App\Models\instansi;
 use App\Models\menempati;
 use App\Models\siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class menempatiController extends Controller
 {
@@ -39,15 +41,8 @@ class menempatiController extends Controller
                 'user_id' => Auth::id(),
             ]);
         }
-        // $menempatiIds = menempati::latest()->pluck('id');
-        // foreach ($menempatiIds as $menempatiId) {
-        //     datapenempatan::create([
-        //         'menempati_id' =>$menempatiId,
-        //         'user_id' => Auth::id(),
-        //     ]);
-        // }
-        
-        return redirect()->route('homemenempati')->with('status', 'Berhasil Menambah data');
+        toastr()->success('Data berhasil ditambahkan!');
+        return redirect()->route('homemenempati');
     }
     public function editmenempati(menempati $menempati)
     {
@@ -66,25 +61,20 @@ class menempatiController extends Controller
             'instansi_id' => 'required',
         ]);
         $menempati->update($data);
-        // $dataPenempatan = DataPenempatan::where('instansi_id', $request->instansi_id)->first();
-        // $dataPenempatan->update([
-        //     'user_id' => Auth::id(),
-        //     'instansi_id' => $request->instansi_id,
-        //     'siswa_id' => $request->siswa_id,
-        // ]);
-        return redirect()->route('homemenempati')->with('status', 'Berhasil Mengedit data');
+        toastr()->success('Data berhasil di update!');
+
+        return redirect()->route('homemenempati');
     }
     public function hapusmenempati(menempati $menempati)
     {
-        // $dataPenempatan = DataPenempatan::where('instansi_id', $menempati->instansi_id)
-        // ->where('siswa_id', $menempati->siswa_id)
-        // ->first();
-
-        // if ($dataPenempatan) {
-        //     $dataPenempatan->delete();
-        // }
+       
         $menempati->delete();
-      
-        return redirect()->route('homemenempati')->with('status', 'Berhasil Menghapus data');
+        toastr()->success('Data berhasil dihapus');
+        
+        return redirect()->route('homemenempati');
+    }
+    public function exportDataMenempati()
+    {
+            return Excel::download(new MenempatiExport, 'data_menempati.xlsx');
     }
 }

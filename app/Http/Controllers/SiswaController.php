@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SiswaExport;
 use App\Models\siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -51,7 +53,7 @@ class SiswaController extends Controller
             ]);
     
             // Membuat data siswa dengan menetapkan user_id yang baru dibuat
-            $siswa = Siswa::create([
+            Siswa::create([
                 'user_id' => $user->id,
                 'nis' => $request->nis,
                 'nama' => $request->nama,
@@ -60,8 +62,9 @@ class SiswaController extends Controller
                 'tahun_ajar' => $request->tahun_ajar,
             ]);
         });
+        toastr()->success('Data berhasil ditambahkan!');
     
-        return redirect()->route('homesiswa')->with('status', 'Berhasil Menambah data');
+        return redirect()->route('homesiswa');
     }
     public function editsiswa(siswa $siswa)
     {
@@ -78,13 +81,18 @@ class SiswaController extends Controller
         ]);
 
         $siswa->update($data);
-
-        return redirect()->route('homesiswa')->with('status', 'Berhasil Mengedit data');
+        toastr()->success('Data berhasil di update!');
+        return redirect()->route('homesiswa');
     }
     public function hapussiswa(siswa $siswa)
     {
         $siswa->delete();
+        toastr()->success('Data berhasil dihapus');
 
-        return redirect()->route('homesiswa')->with('status', 'Berhasil Menghapus data');
+        return redirect()->route('homesiswa');
+    }
+    public function exportDataSiswa()
+    {
+            return Excel::download(new SiswaExport, 'data_siswa.xlsx');
     }
 }

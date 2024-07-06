@@ -13,9 +13,13 @@ class membimbing extends Model
     {
         return $this->belongsTo(pembimbing::class);
     }
-    public function instansi()
+    public function guru_mapel_pkl()
     {
-        return $this->belongsTo(instansi::class);
+        return $this->belongsTo(guru_mapel_pkl::class);
+    }
+    public function siswa()
+    {
+        return $this->belongsTo(siswa::class);
     }
     public function User()
     {

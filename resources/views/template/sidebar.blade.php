@@ -15,7 +15,22 @@
     <link rel="stylesheet" href="{{ asset('bootstrap-icon/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+
     <style>
+        /* Optional: Additional custom styling for Select2 */
+        .select2-container .select2-selection--single {
+            height: 100% !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 2.5 !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100% !important;
+        }
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5) !important;
+        }
+
         .sidebar-link {
             text-decoration: none;
         }
@@ -28,7 +43,7 @@
 
 <body>
     <div class="wrapper">
-        <aside id="sidebar">
+        <aside id="sidebar" class="expand">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
                     <i class="lni lni-grid-alt"></i>
@@ -70,6 +85,11 @@
                             <a href="{{ route('homepembimbing') }}" class="sidebar-link"><i
                                     class="bi bi-person-check"></i>
                                 Pembimbing</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('homegurumapel') }}" class="sidebar-link"><i
+                                    class="bi bi-person-check"></i>
+                                Guru Mapel PKL</a>
                         </li>
                         <li class="sidebar-item">
                             <a href="{{ route('homemenempati') }}" class="sidebar-link"><i class="bi bi-geo-alt"></i>
@@ -164,7 +184,7 @@
                         @yield('content')
                     </div>
                 </div>
-                
+
             </main>
             <footer class="footer">
                 <div class="container-fluid">
@@ -192,6 +212,8 @@
             </footer>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
@@ -209,7 +231,7 @@
     <script>
         new DataTable('#example');
     </script>
-   
+
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
@@ -229,6 +251,16 @@
                 placeholder: "Select an option",
                 allowClear: true,
             });
+            $('#siswas').select2({
+
+                placeholder: "Silahkan masukan nama siswa",
+                allowClear: true,
+            });
+            $('#gurumapel').select2({
+
+                placeholder: "Select an option",
+                allowClear: true,
+            });
             // Inisialisasi Select2 untuk pembimbing
 
             $('#pembimbing').select2({
@@ -238,6 +270,31 @@
             });
         });
     </script>
+    <script>
+        // Tangkap klik tombol hapus
+        $('.delete-btn').click(function(e) {
+            e.preventDefault();
+            var deleteUrl = $(this).attr('href'); // Ambil URL hapus dari atribut href
+            var dataId = $(this).data('id'); // Ambil ID data untuk digunakan dalam SweetAlert
+
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Data ini akan dihapus secara permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect atau hapus data sesuai kebutuhan
+                    window.location.href = deleteUrl;
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

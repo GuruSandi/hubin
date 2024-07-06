@@ -16,8 +16,9 @@ class CreateMembimbingsTable extends Migration
         Schema::create('membimbings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('instansi_id')->constrained();
+            $table->foreignId('siswa_id')->constrained()->onDelete('cascade');
             $table->foreignId('pembimbing_id')->constrained();
+            $table->foreignId('guru_mapel_pkl_id')->constrained();
             $table->timestamps();
         });
     }

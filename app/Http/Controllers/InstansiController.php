@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\InstansiExport;
 use App\Models\instansi;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InstansiController extends Controller
 {
@@ -29,8 +31,9 @@ class InstansiController extends Controller
             'alamat' => $request->alamat,
             'domisili' => $request->domisili,
         ]);
+        toastr()->success('Data berhasil ditambahkan!');
         
-        return redirect()->route('homeinstansi')->with('status', 'Berhasil Menambah data');
+        return redirect()->route('homeinstansi');
     }
     public function editinstansi(instansi $instansi)
     {
@@ -47,13 +50,18 @@ class InstansiController extends Controller
         ]);
        
         $instansi->update($data);
+        toastr()->success('Data berhasil di update!');
         
-        return redirect()->route('homeinstansi')->with('status', 'Berhasil Mengedit data');
+        return redirect()->route('homeinstansi');
     }
     public function hapusinstansi(instansi $instansi)
     {
         $instansi->delete();
-      
-        return redirect()->route('homeinstansi')->with('status', 'Berhasil Menghapus data');
+        toastr()->success('Data berhasil dihapus');
+        return redirect()->route('homeinstansi');
+    }
+    public function exportDataInstansi()
+    {
+            return Excel::download(new InstansiExport, 'data_instansi.xlsx');
     }
 }

@@ -44,6 +44,18 @@ Route::get('/hapussiswa/{siswa}', 'SiswaController@hapussiswa')->name('hapussisw
 Route::post('/importsiswa', 'ImportController@importsiswa')->name('importsiswa');
 Route::post('/importinstansi', 'ImportController@importinstansi')->name('importinstansi');
 Route::post('/importpembimbing', 'ImportController@importpembimbing')->name('importpembimbing');
+Route::post('/importgurumapel', 'ImportController@importgurumapel')->name('importgurumapel');
+Route::post('/importmembimbing', 'ImportController@importmembimbing')->name('importmembimbing');
+Route::post('/importmenempati', 'ImportController@importmenempati')->name('importmenempati');
+
+//export
+Route::get('/exportDataMembimbing', 'MembimbingController@exportDataMembimbing')->name('exportDataMembimbing');
+Route::get('/exportDataMenempati', 'menempatiController@exportDataMenempati')->name('exportDataMenempati');
+Route::get('/exportDataSiswa', 'SiswaController@exportDataSiswa')->name('exportDataSiswa');
+Route::get('/exportDataInstansi', 'InstansiController@exportDataInstansi')->name('exportDataInstansi');
+Route::get('/exportDataPembimbing', 'PembimbingController@exportDataPembimbing')->name('exportDataPembimbing');
+Route::get('/exportDataGuruMapelPkl', 'GuruMapelController@exportDataGuruMapelPkl')->name('exportDataGuruMapelPkl');
+
 
 //instansi
 Route::get('/homeinstansi', 'InstansiController@homeinstansi')->name('homeinstansi');
@@ -60,6 +72,14 @@ Route::post('/posttambahpembimbing', 'PembimbingController@posttambahpembimbing'
 Route::get('/editpembimbing/{pembimbing}', 'PembimbingController@editpembimbing')->name('editpembimbing');
 Route::post('/posteditpembimbing/{pembimbing}', 'PembimbingController@posteditpembimbing')->name('posteditpembimbing');
 Route::get('/hapuspembimbing/{pembimbing}', 'PembimbingController@hapuspembimbing')->name('hapuspembimbing');
+
+//GuruMapelPKL
+Route::get('/homegurumapel', 'GuruMapelController@homegurumapel')->name('homegurumapel');
+Route::get('/tambahgurumapel', 'GuruMapelController@tambahgurumapel')->name('tambahgurumapel');
+Route::post('/posttambahgurumapel', 'GuruMapelController@posttambahgurumapel')->name('posttambahgurumapel');
+Route::get('/editgurumapel/{gurumapel}', 'GuruMapelController@editgurumapel')->name('editgurumapel');
+Route::post('/posteditgurumapel/{gurumapel}', 'GuruMapelController@posteditgurumapel')->name('posteditgurumapel');
+Route::get('/hapusgurumapel/{gurumapel}', 'GuruMapelController@hapusgurumapel')->name('hapusgurumapel');
 
 //menempati
 Route::get('/search-instansi', 'MenempatiController@search')->name('search');

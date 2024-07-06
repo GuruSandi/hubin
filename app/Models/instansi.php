@@ -13,10 +13,7 @@ class instansi extends Model
     {
         return $this->hasMany(menempati::class);
     }
-    public function membimbing()
-    {
-        return $this->hasMany(membimbing::class);
-    }
+    
    
    
 }

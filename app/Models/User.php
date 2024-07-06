@@ -25,6 +25,18 @@ class User extends Authenticatable
     {
         return $this->belongsTo(menempati::class);
     }
+    public function guru_mapel_pkl()
+    {
+        return $this->belongsTo(guru_mapel_pkl::class);
+    }
+    public function jurnal()
+    {
+        return $this->belongsTo(jurnal::class);
+    }
+    public function nilai_pkl()
+    {
+        return $this->belongsTo(nilai_pkl::class);
+    }
    
     /**
      * The attributes that are mass assignable.

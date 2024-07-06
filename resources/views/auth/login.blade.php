@@ -42,6 +42,28 @@
                 flex-direction: column;
             }
         }
+        label,
+        input,
+        button {
+            font-family: 'Open Sans', sans-serif;
+            /* Ganti 'Roboto' dengan nama font yang Anda inginkan */
+        }
+        input,
+        button {
+            /* Ganti 'Roboto' dengan nama font yang Anda inginkan */
+            border-radius: 20%;
+        }
+        .btn-custom {
+            background-color: #080761;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+            /* Transisi untuk efek hover */
+        }
+
+        .btn-custom:hover {
+            background-color: #0a0942;
+            /* Warna latar belakang berubah saat tombol dihover */
+        }
     </style>
 </head>
 
@@ -61,7 +83,7 @@
                         <form action="{{ route('postlogin') }}" class="form-group mt-5" method="POST">
                             @csrf
                             <label for="username">Username</label>
-                            <input type="text" class="form-control form-control-lg mb-3" required name="username">
+                            <input type="text" class="form-control form-control-lg mb-3" required name="username" >
                             <label for="password">Password</label>
                             <input type="password" class="form-control form-control-lg mb-3" required name="password">
                             @if (Session::has('status'))

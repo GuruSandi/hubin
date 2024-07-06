@@ -2,52 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MembimbingExport;
 use App\Models\instansi;
+use App\Models\guru_mapel_pkl;
 use App\Models\membimbing;
 use App\Models\pembimbing;
+use App\Models\siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Maatwebsite\Excel\Facades\Excel;
 class MembimbingController extends Controller
 {
     public function homemembimbing()
     {
+        
         $membimbing = membimbing::all();
-       
+        
         $membimbing_sorted = $membimbing->sortBy('pembimbing');
         return view('membimbing.homemembimbing', compact('membimbing_sorted'));
     }
     public function tambahmembimbing()
     {
         $pembimbing=pembimbing::all();
-        $instansi=instansi::all();
-        $instansi_terpilih = membimbing::pluck('instansi_id')->toArray();
-        $instansi_tersedia = $instansi->whereNotIn('id', $instansi_terpilih);
-        return view('membimbing.tambahmembimbing', compact('instansi_tersedia','pembimbing'));
+        $gurumapel=guru_mapel_pkl::all();
+        $siswa=siswa::all();
+        $siswa_terpilih = membimbing::pluck('siswa_id')->toArray();
+        $siswa_tersedia = $siswa->whereNotIn('id', $siswa_terpilih);
+        return view('membimbing.tambahmembimbing', compact('siswa_tersedia','pembimbing','gurumapel'));
     }
     public function posttambahmembimbing(Request $request)
     {
         $request->validate([
-            'instansi_ids' => 'required|array',
+            'siswa_ids' => 'required|array',
             'pembimbing_id' => 'required|exists:pembimbings,id',
+            'guru_mapel_pkl_id' => 'required|exists:guru_mapel_pkls,id',
         ]);
-        foreach ($request->instansi_ids as $instansiId) {
+        foreach ($request->siswa_ids as $siswaId) {
             membimbing::create([
-                'instansi_id' => $instansiId,
+                'siswa_id' => $siswaId,
                 'pembimbing_id' => $request->pembimbing_id,
+                'guru_mapel_pkl_id' => $request->guru_mapel_pkl_id,
                 'user_id' => Auth::id(),
             ]);
         }
+        toastr()->success('Data berhasil ditambahkan!');
         
-        return redirect()->route('homemembimbing')->with('status', 'Berhasil Menambah data');
+        return redirect()->route('homemembimbing');
     }
     public function editmembimbing(membimbing $membimbing)
     {
         $pembimbing = pembimbing::all();
-        $instansi = instansi::all();
-        $selectinstansi = $membimbing->instansi_id;
+        $gurumapel = guru_mapel_pkl::all();
+        $siswa = siswa::all();
+        $selectsiswa = $membimbing->siswa_id;
         $selectpembimbing = $membimbing->pembimbing_id;
-        return view('membimbing.editmembimbingsatu', compact('membimbing','pembimbing','instansi','selectinstansi','selectpembimbing'));
+        $selectgurumapel = $membimbing->guru_mapel_pkl_id;
+        return view('membimbing.editmembimbingsatu', compact('selectgurumapel','membimbing','pembimbing','siswa','selectsiswa','selectpembimbing','gurumapel'));
     }
    
    
@@ -55,16 +65,22 @@ class MembimbingController extends Controller
     {
         $data=$request->validate([
             'pembimbing_id' => 'required',
-            'instansi_id' => 'required',
+            'guru_mapel_pkl_id' => 'required',
+            'siswa_id' => 'required',
         ]);
         $membimbing->update($data);
-
-        return redirect()->route('homemembimbing')->with('status', 'Berhasil Mengedit data');
+        toastr()->success('Data berhasil di update!');
+        return redirect()->route('homemembimbing');
     }
     public function hapusmembimbing(membimbing $membimbing)
     {
         $membimbing->delete();
-      
-        return redirect()->route('homemembimbing')->with('status', 'Berhasil Menghapus data');
+        toastr()->success('Data berhasil dihapus');
+        
+        return redirect()->route('homemembimbing');
+    }
+    public function exportDataMembimbing()
+    {
+            return Excel::download(new MembimbingExport, 'data_membimbing.xlsx');
     }
 }

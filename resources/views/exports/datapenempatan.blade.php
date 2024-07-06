@@ -66,6 +66,7 @@
                 <th style=" width: 50px;">L/P</th>
                 <th style=" width: 60px;">Kelas</th>
                 <th style=" width: 200px;">Nama Pembimbing</th>
+                <th style=" width: 200px;">Nama Guru Mapel PKL</th>
 
             </tr>
         </thead>
@@ -81,6 +82,7 @@
                     <td style=" width: 70px;">{{ $data->jenis_kelamin }}</td>
                     <td style=" width: 60px;">{{ $data->kelas }}</td>
                     <td style=" width: 200px;">{{ $data->nama_pembimbing }}</td>
+                    <td style=" width: 200px;">{{ $data->nama_gurumapel }}</td>
                 </tr>
             @endforeach
         </tbody>

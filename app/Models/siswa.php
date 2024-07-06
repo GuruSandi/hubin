@@ -20,7 +20,18 @@ class siswa extends Model
     {
         return $this->hasMany(menempati::class);
     }
-
+    public function membimbing()
+    {
+        return $this->hasMany(membimbing::class);
+    }
+    public function nilai_pkl()
+    {
+        return $this->hasMany(nilai_pkl::class);
+    }
+    public function jurnal()
+    {
+        return $this->hasMany(jurnal::class);
+    }
     public function absensisiswa()
     {
         return $this->hasMany(absensisiswa::class);

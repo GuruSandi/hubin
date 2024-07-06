@@ -16,6 +16,8 @@ class CreatePembimbingsTable extends Migration
         Schema::create('pembimbings', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('foto')->nullable();
+            $table->string('no_hp')->nullable();
             $table->timestamps();
         });
     }

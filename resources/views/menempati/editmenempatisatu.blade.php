@@ -2,30 +2,43 @@
 @section('title', 'Edit Penempatan')
 
 @section('content')
-
-<div class="container mt-5 mb-5">
-    <div class="card mx-auto p-5 col-md-8 shadow">
-        <h4 class="text-center mb-5 fw-bold">Edit Data Penempatan</h4>
-        <form action="{{route('posteditmenempati', $menempati->id)}}"  enctype="multipart/form-data" method="POST">
+<div class="card p-3 col-12 shadow">
+    <div class="card-body">
+        <form action="{{route('posteditmenempati', $menempati->id)}}" enctype="multipart/form-data" method="POST">
             @csrf
-            <label for="">Instansi</label>
-            <select class=" form-control" id="instansi" name="instansi_id">
-                @foreach ($instansi as $item)
-                    <option value="{{ $item->id }}" {{ $selectinstansi == $item->id ? 'selected' : '' }}>{{ $item->instansi }}</option>
-                @endforeach
-            </select>
-        
-            <label for="">Pilih Siswa</label>
-
-            <select class=" form-control" id="siswa" name="siswa_id">
-                @foreach ($siswa as $item)
+            <h5 class="text-center fw-bold mb-5" style="color: rgb(19, 19, 59)">Form Tambah Data Penempatan</h5>
+           
+            <div class="row mt-3">
+                <div class="col-12">
+                    <label for="" class="mb-2 fw-bold" style="color: rgb(19, 19, 59)">Instansi</label>
+                    <select  style="width: 99.7%" class="form-control form-control-lg mb-3 " id="instansi" name="instansi_id">
+                        @foreach ($instansi as $item)
+                        <option value="{{ $item->id }}" {{ $selectinstansi == $item->id ? 'selected' : '' }}>{{ $item->instansi }}</option>
+                    @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <label for="" class="mb-2 fw-bold" style="color: rgb(19, 19, 59)">Pilih Siswa</label>
+                    <select style="width: 99.7%"  class="form-control form-control-lg mb-3 " id="siswa" name="siswa_id"
+                        >
+                        @foreach ($siswa as $item)
                     <option value="{{ $item->id }}" {{ $selectsiswa == $item->id ? 'selected' : '' }}>{{ $item->nama }}</option>
                 @endforeach
-            </select>
-            <button class="btn btn-primary w-100 mt-2">Submit</button>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary mt-3">Submit</button>
+            </div>
+
         </form>
     </div>
 </div>
+
+
 
 @endsection
 
