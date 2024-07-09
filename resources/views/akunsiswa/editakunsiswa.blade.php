@@ -1,24 +1,34 @@
-@extends('template.sidebar')
-@section('title', 'Edit Akun Siswa')
-
-@section('content')
-
-<div class="container mt-5 mb-5">
-    <div class="card mx-auto p-5 col-md-5 shadow">
-        <h4 class="text-center mb-5 fw-bold">Edit Akun Siswa</h4>
-        <form action="{{ route('posteditakunsiswa', $user->id) }}" class="form-group mt-5" method="POST">
-            @csrf
-            <label for="username">Username</label>
-            <input type="text" class="form-control form-control-lg mb-3" required name="username" value="{{$user->username}}">
-            <label for="password">Password</label>
-            <input type="password" class="form-control form-control-lg mb-3" required name="password" value="{{$user->password}}">
-            @if (Session::has('status'))
-                <div class="alert mt-3 mb-3 alert-primary">{{ Session::get('status') }}</div>
-            @endif
-            <button class="btn btn-lg form-control form-control-lg mb-3 text-white" style="background-color: #080761;">Simpan</button>
-        </form>
+<!-- Modal Form Edit -->
+<div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-labelledby="editModal{{ $item->id }}Label"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModal{{ $item->id }}Label">Edit Akun Siswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form Edit -->
+                <form action="{{ route('posteditakunsiswa', $item->user->id) }}" class="form-group"
+                    enctype="multipart/form-data" method="POST">
+                    @csrf
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control form-control-lg mb-3" required name="username"
+                        value="{{ $item->user->username }}">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control form-control-lg mb-3" required name="password"
+                        value="{{ $item->user->password }}">
+                    @if (Session::has('status'))
+                        <div class="alert mt-3 mb-3 alert-primary">{{ Session::get('status') }}</div>
+                    @endif
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-   
 
-@endsection

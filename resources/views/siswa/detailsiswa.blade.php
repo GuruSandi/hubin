@@ -8,8 +8,8 @@
             </div>
             <div class="modal-body">
 
-                <p><strong>NIS :</strong> {{ $item->nama }}</p>
-                <p><strong>Nama :</strong> {{ $item->nis }}</p>
+                <p><strong>NIS :</strong> {{ $item->nis }}</p>
+                <p><strong>Nama :</strong> {{ $item->nama }}</p>
                 <p><strong>Jenis Kelamin:</strong> {{ $item->jenkel }}</p>
                 <p><strong>Kelas :</strong> {{ $item->kelas }}</p>
                 <p><strong>Tahun Ajar :</strong> {{ $item->tahun_ajar }}</p>

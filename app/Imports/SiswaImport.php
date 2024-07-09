@@ -2,8 +2,10 @@
 
 namespace App\Imports;
 
+use Illuminate\Support\Facades\Crypt;
 use App\Models\siswa;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -19,10 +21,12 @@ class SiswaImport implements ToModel, WithHeadingRow
             'kelas' => $row['kelas'],
             'tahun_ajar' => $row['tahun_ajar'],
         ]);
-        $password= $row['nis'];
+        $password = Str::random(8); 
         $user = new User();
         $user->username = $row['nis'];
-        $user->password = bcrypt($password); // Anda mungkin perlu memvalidasi dan mengenkripsi password
+        $user->password = bcrypt($password); 
+        $user->encrypted_password = $password;
+
         $user->role = 'siswa';
         $user->save();
 

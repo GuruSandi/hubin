@@ -24,13 +24,23 @@ Route::get('/dashboardsiswa', 'FiturSiswaController@dashboardsiswa')->name('dash
 Route::get('/tambahlokasi', 'FiturSiswaController@tambahlokasi')->name('tambahlokasi');
 Route::post('/simpanlokasi', 'FiturSiswaController@simpanlokasi')->name('simpanlokasi');
 
-//akunsisiwa
+//akunsiswa
 Route::get('/homeakunsiswa', 'AuthController@homeakunsiswa')->name('homeakunsiswa');
-Route::get('/tambahakunsiswa', 'AuthController@tambahakunsiswa')->name('tambahakunsiswa');
-Route::post('/posttambahakunsiswa', 'AuthController@posttambahakunsiswa')->name('posttambahakunsiswa');
-Route::get('/editakunsiswa/{user}', 'AuthController@editakunsiswa')->name('editakunsiswa');
 Route::post('/posteditakunsiswa/{user}', 'AuthController@posteditakunsiswa')->name('posteditakunsiswa');
 Route::get('/hapusakunsiswa/{user}', 'AuthController@hapusakunsiswa')->name('hapusakunsiswa');
+Route::get('/unduhAkunsiswa', 'AuthController@unduhAkunsiswa')->name('unduhAkunsiswa');
+
+//akunGuruMapelPKL
+Route::get('/homeGuruMapelPkl', 'AuthController@homeGuruMapelPkl')->name('homeGuruMapelPkl');
+Route::post('/posteditakunGuruMapelPkl/{user}', 'AuthController@posteditakunGuruMapelPkl')->name('posteditakunGuruMapelPkl');
+Route::get('/hapusakunGuruMapelPkl/{user}', 'AuthController@hapusakunGuruMapelPkl')->name('hapusakunGuruMapelPkl');
+Route::get('/unduhGuruMapelPkl', 'AuthController@unduhGuruMapelPkl')->name('unduhGuruMapelPkl');
+//akunadmin
+Route::get('/homeakunadmin', 'AuthController@homeakunadmin')->name('homeakunadmin');
+Route::post('/posttambahakunadmin', 'AuthController@posttambahakunadmin')->name('posttambahakunadmin');
+Route::post('/posteditakunadmin/{user}', 'AuthController@posteditakunadmin')->name('posteditakunadmin');
+Route::get('/hapusakunadmin/{user}', 'AuthController@hapusakunadmin')->name('hapusakunadmin');
+Route::get('/unduhakunadmin', 'AuthController@unduhakunadmin')->name('unduhakunadmin');
 
 //siswa
 Route::get('/homesiswa', 'SiswaController@homesiswa')->name('homesiswa');
@@ -102,6 +112,14 @@ Route::get('/hapusmembimbing/{membimbing}', 'MembimbingController@hapusmembimbin
 //data penempatan
 Route::get('/dataPenempatan', 'DataPenempatanController@dataPenempatan')->name('dataPenempatan');
 Route::get('/exportDataPenempatan', 'DataPenempatanController@exportDataPenempatan')->name('exportDataPenempatan');
+//DashboardAdmin
+Route::get('/DashboardAdmin', 'DashboardController@DashboardAdmin')->name('DashboardAdmin');
+Route::get('/setting', 'DashboardController@setting')->name('setting');
+Route::post('/posteditprofile/{user}', 'DashboardController@posteditprofile')->name('posteditprofile');
+Route::get('/pklluarkota', 'DashboardController@pklluarkota')->name('pklluarkota');
+Route::get('/pkldalamkota', 'DashboardController@pkldalamkota')->name('pkldalamkota');
+Route::get('/belumditempatkan', 'DashboardController@belumditempatkan')->name('belumditempatkan');
+Route::get('/tempatkan/{siswa}', 'DashboardController@tempatkan')->name('tempatkan');
 
 
 Route::get('/homeabsen', 'AbsenController@homeabsen')->name('homeabsen');

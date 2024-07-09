@@ -79,7 +79,7 @@
                 </div>
                 <div class="right-column col-md-6">
                     <div class="form-container mx-auto" >
-                        <h2 class="fw-bold mt-5" style="color: #080761">PKL-2024<br>HUBIN-SMKN 2 Sukabumi</h2>
+                        <h2 class="fw-bold mt-5" style="color: #080761">SIMAE-2024<br>SMK Negeri 2 Sukabumi</h2>
                         <form action="{{ route('postlogin') }}" class="form-group mt-5" method="POST">
                             @csrf
                             <label for="username">Username</label>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Crypt;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use App\Exports\PembimbingExport;
 use App\Models\User;
@@ -36,13 +37,13 @@ class PembimbingController extends Controller
             'no_hp' => $request->no_hp,
             'foto' => $request->foto->store('img/fotoguru'),
         ]);
-        $username = substr($request->nama, 0, 3) . mt_rand(10, 99); // Generate username
-        $password = Str::random(8); // Generate password
+        $username = substr($request->nama, 0, 3) . mt_rand(10, 99); 
+        $password = Str::random(8); 
         DB::transaction(function () use ($request, $username, $password,  ) {
-            // Membuat data pengguna (user) terkait
             $user = User::create([
-                'username' => $username, // Atau gunakan informasi lain yang sesuai
-                'password' => bcrypt($request->no_hp), // Sesuaikan dengan kebutuhan Anda
+                'username' => $username, 
+                'password' => bcrypt($request->no_hp), 
+                'encrypted_password' => $password,
                 'role' => 'guru',
             ]);
 
@@ -60,7 +61,7 @@ class PembimbingController extends Controller
 
         toastr()->success('Data berhasil ditambahkan!');
 
-        return redirect()->route('homepembimbing')->with('success', 'Berhasil Menambah data');
+        return redirect()->route('homepembimbing');
     }
     public function editpembimbing(pembimbing $pembimbing)
     {

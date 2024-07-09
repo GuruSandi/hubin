@@ -24,8 +24,9 @@ class ImportController extends Controller
         $file = $request->file('file');
 
         Excel::import(new SiswaImport, $file);
+        toastr()->success('Data berhasil di Import!');
 
-        return redirect()->back()->with('success', 'Data siswa berhasil diimport.');
+        return redirect()->back();
     }
     public function importinstansi(Request $request)
     {
@@ -36,8 +37,9 @@ class ImportController extends Controller
         $file = $request->file('file');
 
         Excel::import(new InstansiImport, $file);
+        toastr()->success('Data berhasil di Import!');
 
-        return redirect()->back()->with('success', 'Data instansi berhasil diimport.');
+        return redirect()->back();
     }
     public function importpembimbing(Request $request)
     {
@@ -48,7 +50,7 @@ class ImportController extends Controller
         $file = $request->file('file');
 
         Excel::import(new PembimbingImport, $file);
-        toastr()->success('Data berhasil diimport!');
+        toastr()->success('Data berhasil di Import!');
         
         return redirect()->back();
     }
@@ -61,7 +63,7 @@ class ImportController extends Controller
         $file = $request->file('file');
 
         Excel::import(new GuruMapelImport, $file);
-        toastr()->success('Data berhasil diimport!');
+        toastr()->success('Data berhasil di Import!');
         
         return redirect()->back();
     }
@@ -74,7 +76,7 @@ class ImportController extends Controller
 
         if ($userId) {
             Excel::import(new MembimbingImport($userId), $request->file('file'));
-            toastr()->success('Data berhasil diimport!');
+            toastr()->success('Data berhasil di import!');
 
             return redirect()->back();
         } else {
@@ -95,7 +97,7 @@ class ImportController extends Controller
 
         if ($userId) {
             Excel::import(new MenempatiImport($userId), $request->file('file'));
-            toastr()->success('Data berhasil diimport!');
+            toastr()->success('Data berhasil di Import!');
             return redirect()->back();
         } else {
             toastr()->error('Pengguna tidak Terautentikasi');

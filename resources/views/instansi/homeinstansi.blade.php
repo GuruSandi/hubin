@@ -5,8 +5,8 @@
     <div class=" mt-5 mb-5">
        
         <div class="card col-12 shadow mx-auto p-4">
-            <h5 class="fw-bold mb-5">Data Instansi</h5>
-            <div class="row mb-5">
+            <h5 class="fw-bold mb-4">Data Instansi</h5>
+            <div class="row mb-2">
                 <form action="{{ route('importinstansi') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">

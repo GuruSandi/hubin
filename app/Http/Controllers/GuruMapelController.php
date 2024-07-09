@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Crypt;
 use App\Exports\GuruMapelPklExport;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
@@ -34,7 +35,8 @@ class GuruMapelController extends Controller
             // Membuat data pengguna (user) terkait
             $user = User::create([
                 'username' => $username, // Atau gunakan informasi lain yang sesuai
-                'password' => bcrypt($request->no_hp), // Sesuaikan dengan kebutuhan Anda
+                'password' => bcrypt($password),
+                'encrypted_password' => $password,
                 'role' => 'guru',
             ]);
 

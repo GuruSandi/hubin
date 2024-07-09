@@ -5,8 +5,8 @@
 
     <div class=" mt-5">
         <div class="card col-12 shadow mx-auto p-4">
-            <h5 class="fw-bold mb-5">Data Guru Mapel PKL</h5>
-            <div class="row mb-5">
+            <h5 class="fw-bold mb-4">Data Guru Mapel PKL</h5>
+            <div class="row mb-3">
                 <form action="{{ route('importgurumapel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
@@ -28,16 +28,16 @@
                         <div class="col-4 col-md-2">
 
                             <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
-                            data-bs-target="#tambahgurumapelModal">
-                            <i class="bi bi-plus-circle"></i> Tambah
-                        </button>
+                                data-bs-target="#tambahgurumapelModal">
+                                <i class="bi bi-plus-circle"></i> Tambah
+                            </button>
                         </div>
                     </div>
                 </form>
 
             </div>
 
-           
+
 
             <div class="row">
                 <div class="col-12 col-md-12 col-sm-8">
@@ -68,15 +68,16 @@
                                                     data-bs-target="#detailModal{{ $item->id }}">
                                                     <i class="bi bi-book " style="color: white"></i>
                                                 </button>
-                                                <button type="button" style="background-color: #080761" class="btn mx-1" data-bs-toggle="modal"
-                                                    data-bs-target="#editModal{{ $item->id }}">
+                                                <button type="button" style="background-color: #080761" class="btn mx-1"
+                                                    data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">
                                                     <i class="bi bi-pencil " style="color: white"></i>
                                                 </button>
-                                                
-                                                <a href="{{ route('hapusgurumapel', $item->id) }}" class="btn btn-danger mx-1 delete-btn" data-id="{{ $item->id }}">
+
+                                                <a href="{{ route('hapusgurumapel', $item->id) }}"
+                                                    class="btn btn-danger mx-1 delete-btn" data-id="{{ $item->id }}">
                                                     <i class="bi bi-trash"></i>
                                                 </a>
-                                                
+
 
                                             </div>
                                         </td>
@@ -94,6 +95,6 @@
         </div>
     </div>
     @include('guru_mapel.tambahgurumapel')
-    
+
 
 @endsection

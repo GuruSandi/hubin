@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Crypt;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,16 +19,19 @@ class DatabaseSeeder extends Seeder
         User::create([
             'username'=>'admin',
             'password'=>bcrypt('123'),
+            'encrypted_password'=>'123',
             'role'=>'admin',
         ]);
         User::create([
             'username'=>'guru',
             'password'=>bcrypt('123'),
+            'encrypted_password'=>'123',
             'role'=>'guru',
         ]);
         User::create([
             'username'=>'siswa',
             'password'=>bcrypt('123'),
+            'encrypted_password'=>'123',
             'role'=>'siswa',
         ]);
     }

@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Crypt;
 use App\Exports\SiswaExport;
 use App\Models\siswa;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -42,14 +43,15 @@ class SiswaController extends Controller
             'kelas' => 'required',
             'tahun_ajar' => 'required',
         ]);
+        $password = Str::random(8); 
        
-        DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request,  $password) {
             // Membuat data pengguna (user) terkait
             $user = User::create([
-                'username' => $request->nis, // Atau gunakan informasi lain yang sesuai
-                'password' => bcrypt($request->nis), // Sesuaikan dengan kebutuhan Anda
+                'username' => $request->nis,
+                'password' => bcrypt($password),
+                'encrypted_password' => $password,
                 'role' => 'siswa',
-                // Tambahkan kolom lain yang sesuai dengan kebutuhan Anda
             ]);
     
             // Membuat data siswa dengan menetapkan user_id yang baru dibuat
@@ -93,6 +95,6 @@ class SiswaController extends Controller
     }
     public function exportDataSiswa()
     {
-            return Excel::download(new SiswaExport, 'data_siswa.xlsx');
+        return Excel::download(new SiswaExport, 'data_siswa.xlsx');
     }
 }

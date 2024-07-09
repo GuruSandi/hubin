@@ -7,7 +7,7 @@
             <div class="alert alert-primary">{{ Session::get('status') }}</div>
         @endif
         <div class="card col-12 shadow mx-auto p-4">
-            <h5 class="fw-bold mb-3">Penempatan</h5>
+            <h5 class="fw-bold mb-4">Penempatan</h5>
             <div class="row mb-3">
                 <form action="{{ route('importmenempati') }}" method="POST" enctype="multipart/form-data">
                     @csrf

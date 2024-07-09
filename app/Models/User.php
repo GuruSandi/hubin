@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $guarded=['1'];
+    protected $guarded=[];
 
     public function siswa()
     {
@@ -47,8 +47,10 @@ class User extends Authenticatable
         'username',
         'password',
         'role',
+        'encrypted_password',
     ];
 
+   
     /**
      * The attributes that should be hidden for arrays.
      *

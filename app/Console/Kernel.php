@@ -26,18 +26,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+       
         $schedule->call(function () {
             // Periksa absensi siswa pada hari itu
             $absensi = absensisiswa::whereDate('created_at', today())->get();
-            
+
             // Ambil semua siswa
             $siswaIds = siswa::pluck('user_id');
-            
+
             // Loop melalui setiap siswa
             foreach ($siswaIds as $userId) {
                 // Periksa apakah siswa telah melakukan absensi pada hari itu
                 $absensiSiswa = $absensi->where('user_id', $userId)->first();
-                
+
                 // Jika tidak ada entri absensi untuk siswa pada hari itu, ubah keterangan absensi menjadi "tidak hadir"
                 if (!$absensiSiswa) {
                     absensisiswa::create([
@@ -58,7 +59,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

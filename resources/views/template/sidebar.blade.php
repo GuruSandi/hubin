@@ -17,16 +17,21 @@
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 
     <style>
+       
+
         /* Optional: Additional custom styling for Select2 */
         .select2-container .select2-selection--single {
             height: 100% !important;
         }
+
         .select2-container--default .select2-selection--single .select2-selection__rendered {
             line-height: 2.5 !important;
         }
+
         .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 100% !important;
         }
+
         .modal-backdrop {
             background-color: rgba(0, 0, 0, 0.5) !important;
         }
@@ -38,6 +43,27 @@
         a {
             text-decoration: none;
         }
+
+        .btn.btn-sm {
+            background-color: #080761;
+            color: #ffffff;
+            /* warna teks saat tombol normal */
+            text-decoration: none;
+            /* menghapus underline jika ada */
+            padding: 5px 10px;
+            /* sesuaikan padding dengan yang lain */
+            border-radius: 3px;
+            /* sudut lengkung tombol */
+            transition: background-color 0.3s, color 0.3s;
+            /* efek transisi hover */
+        }
+
+        .btn.btn-sm:hover {
+            background-color: #fdaf07;
+            /* warna background saat hover */
+            color: #ffffff;
+            /* warna teks saat hover */
+        }
     </style>
 </head>
 
@@ -45,42 +71,38 @@
     <div class="wrapper">
         <aside id="sidebar" class="expand">
             <div class="d-flex">
-                <button class="toggle-btn" type="button">
+                <button class="toggle-btn" type="button" style="margin-top: 20px">
                     <i class="lni lni-grid-alt"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#" class="text-white" style="margin-top: -50px">HUBIN</a>
+                    <a href="#" class="text-white">SIMAE-2024</a>
                 </div>
             </div>
+            <hr style="color: #ffffff ; height: 2px; margin-top: -5px" class="w-100 fw-bold">
+
             <ul class="sidebar-nav">
+
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Profile</span>
-                    </a>
+                    <a href="{{ route('DashboardAdmin') }}" class="sidebar-link"><i class="bi bi-person"></i>
+                        Dashboard</a>
+
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="lni lni-agenda"></i>
-                        <span>Task</span>
-                    </a>
+                    <a href="{{ route('homesiswa') }}" class="sidebar-link"><i class="bi bi-person"></i>
+                        Siswa</a>
+
+                </li>
+                <li class="sidebar-item">
+                    <a href="{{ route('homeinstansi') }}" class="sidebar-link"><i class="bi bi-building"></i>
+                        Instansi</a>
                 </li>
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#pkl" aria-expanded="false" aria-controls="pkl">
+                        data-bs-target="#guru" aria-expanded="false" aria-controls="guru">
                         <i class="bi bi-journal"></i>
-                        <span>PKL</span>
+                        <span>Guru</span>
                     </a>
-                    <ul id="pkl" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="{{ route('homesiswa') }}" class="sidebar-link"><i class="bi bi-person"></i>
-                                Siswa</a>
-
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('homeinstansi') }}" class="sidebar-link"><i class="bi bi-building"></i>
-                                Instansi</a>
-                        </li>
+                    <ul id="guru" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a href="{{ route('homepembimbing') }}" class="sidebar-link"><i
                                     class="bi bi-person-check"></i>
@@ -91,27 +113,48 @@
                                     class="bi bi-person-check"></i>
                                 Guru Mapel PKL</a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('homemenempati') }}" class="sidebar-link"><i class="bi bi-geo-alt"></i>
-                                Penempatan</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('homemembimbing') }}" class="sidebar-link"><i class="bi bi-people"></i>
-                                Membimbing</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('dataPenempatan') }}" class="sidebar-link"><i
-                                    class="bi bi-file-earmark-text"></i> Data
-                                Penempatan</a>
-                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="{{ route('homemenempati') }}" class="sidebar-link"><i class="bi bi-geo-alt"></i>
+                        Penempatan</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{{ route('homemembimbing') }}" class="sidebar-link"><i class="bi bi-people"></i>
+                        Membimbing</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{{ route('dataPenempatan') }}" class="sidebar-link"><i
+                            class="bi bi-file-earmark-text"></i> Data
+                        Penempatan</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#akun" aria-expanded="false" aria-controls="akun">
+                        <i class="bi bi-journal"></i>
+                        <span>Data Akun</span>
+                    </a>
+                    <ul id="akun" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a href="{{ route('homeakunsiswa') }}" class="sidebar-link"><i
                                     class="bi bi-file-earmark-text"></i> Akun Siswa</a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('homeGuruMapelPkl') }}" class="sidebar-link"><i
+                                    class="bi bi-file-earmark-text"></i> Akun Guru Mapel PKL</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('homeakunadmin') }}" class="sidebar-link"><i
+                                    class="bi bi-file-earmark-text"></i> Akun Admin</a>
+                        </li>
 
                     </ul>
                 </li>
-                <li class="sidebar-item">
+
+
+                {{-- <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
                         <i class="lni lni-layout"></i>
@@ -139,20 +182,17 @@
                         <i class="lni lni-popup"></i>
                         <span>Notification</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('setting') }}" class="sidebar-link">
                         <i class="lni lni-cog"></i>
                         <span>Setting</span>
                     </a>
                 </li>
             </ul>
-            <div class="sidebar-footer">
-                <a href="{{ route('logout') }}" class="sidebar-link">
-                    <i class="lni lni-exit"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
+            {{-- <div class="sidebar-footer">
+               
+            </div> --}}
         </aside>
         <div class="main">
             <nav class="navbar navbar-expand px-4 py-3">
@@ -162,17 +202,14 @@
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
-                            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0 text-dark">
-
-                                <img src="{{ asset('img/account.png') }}" class="avatar img-fluid" alt="">
-
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end rounded">
-                                <a href="#" class="sidebar-link">
-                                    <i class="lni lni-exit"></i>
+                            <h6 style="color: #080761">Welcome {{ Auth::user()->username }}! |
+                                <a href="{{ route('logout') }}" class="btn btn-sm">
+                                    <i class="bi  bi-box-arrow-right"></i>
                                     <span>Logout</span>
                                 </a>
-                            </div>
+                            </h6>
+
+
                         </li>
                     </ul>
                 </div>
@@ -212,6 +249,7 @@
             </footer>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
