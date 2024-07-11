@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+    //    "\App\Console\Commands\DbBackup",
+    //    "\App\Console\Commands\ClearOldBackups"
     ];
 
     /**
@@ -26,6 +27,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // $schedule->command('backup:clear')->daily();
+        // $schedule->command('db:backup')->daily();
        
         $schedule->call(function () {
             // Periksa absensi siswa pada hari itu
@@ -63,4 +66,6 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+    
+    
 }

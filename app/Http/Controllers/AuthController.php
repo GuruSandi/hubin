@@ -54,12 +54,15 @@ class AuthController extends Controller
     }
     public function login()
     {
-
+        
         return view('auth.login');
     }
-    public function logout()
+    public function logout(Request $request)
     {
         auth()->logout();
+        $request->session()->invalidate();
+ 
+        $request->session()->regenerateToken();
         return redirect()->route('login')->with('status','Berhasil Logout');
     }
    
@@ -73,21 +76,17 @@ class AuthController extends Controller
         ]);
         
         if (Auth::attempt($cek)) {
+            
             $user=Auth::user();
-            if ($user->role == 'admin') {
-               
+            $request->session()->regenerate();
+            if ($user->role == 'admin') {    
                 return redirect()->route('DashboardAdmin')->with('status','Welcome ' .$user->username);
             } elseif ($user->role == 'guru') {
-               
                 return redirect()->route('home')->with('status','Welcome ' .$user->username);
-
             } elseif ($user->role == 'siswa') {
                 return redirect()->route('dashboardsiswa')->with('status','Welcome ' .$user->username);
-
             }
-
         }
-
         return back()->with('status','Username atau Password salah');
     }
     public function unduhAkunsiswa()
