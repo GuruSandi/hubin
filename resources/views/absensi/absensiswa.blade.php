@@ -2,29 +2,42 @@
 @section('title', 'Absensi Datang')
 
 @section('content')
-
-    <div class="container mt-5">
+    <div class="section" id="bg">
+        <h4 class="text-white">Absensi Datang</h4>
+        
+        
+    </div>
+    <div class="section">
+        <div class="mt-3">
+            <div class="card" style="border-radius: 10px">
+                <div class="card-body ">
+                    <form action="{{ route('postabsensi') }}" method="POST" class="form-group" enctype="multipart/form-data">
+                        @csrf
+                        
+                        <label for="">Keterangan:</label>
+                        <select name="keterangan" class="form-control" required>
+                            <option value="hadir">Hadir</option>
+                            <option value="libur">Libur</option>
+                        </select><br>
+            
+                        <!-- Tambahkan input tersembunyi untuk menyimpan koordinat latitude dan longitude -->
+                        <input type="hidden" name="latitude" id="latitude">
+                        <input type="hidden" name="longitude" id="longitude">
+            
+                        <button type="submit" class="btn btn-primary">Absen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- <div class="container mt-5">
         <div class="card col-12 shadow mx-auto p-4">
             @if (Session::has('error'))
                 <div class="alert alert-danger">{{ Session::get('error') }}</div>
             @endif
-            <h4 class="text-center mb-5 fw-bold">Absensi Datang</h4>
-            <form action="{{ route('postabsensi') }}" method="POST" class="form-group" enctype="multipart/form-data">
-                @csrf
-                <label for="">Keterangan:</label>
-                <select name="keterangan" class="form-control" required>
-                    <option value="hadir">Hadir</option>
-                    <option value="libur">Libur</option>
-                </select><br>
-
-                <!-- Tambahkan input tersembunyi untuk menyimpan koordinat latitude dan longitude -->
-                <input type="hidden" name="latitude" id="latitude">
-                <input type="hidden" name="longitude" id="longitude">
-
-                <button type="submit" class="btn btn-primary">Absen</button>
-            </form>
+            
         </div>
-    </div>
+    </div> --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -35,5 +48,17 @@
                 document.getElementById('longitude').value = longitude;
             });
         });
+    </script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/locale/id.js"></script>
+
+    <script>
+        var waktuSekarang = moment().locale('id').format('HH:mm:ss');
+        // document.getElementById('waktu-sekarang').textContent = waktuSekarang;
+        document.getElementById('waktu-sekarang').value = latitude;
+    </script>
+    <script>
+        var tanggalSekarang = moment().locale('id').format('dddd, D MMMM YYYY');
+        document.getElementById('tanggal-sekarang').textContent = tanggalSekarang;
     </script>
 @endsection

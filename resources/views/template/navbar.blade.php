@@ -11,13 +11,21 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
-    <title>Hubin</title>
+    <title>SIMAE-2024</title>
     <meta name="description" content="Mobilekit HTML Mobile UI Kit">
     <meta name="keywords" content="bootstrap 4, mobile template, cordova, phonegap, mobile, html" />
     <link rel="icon" type="image/jpg" href="{{ asset('img/logohubin.jpeg') }}" sizes="32x32">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/logohubin.jpeg') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="manifest" href="{{ asset('__manifest.json') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap-icon/bootstrap-icons.min.css') }}">
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
+
 </head>
 
 <body style="background-color: white;">
@@ -48,26 +56,26 @@
                 <strong>Home</strong>
             </div>
         </a>
-        <a href="#" class="item active">
+        {{-- <a href="{{ route('homeabsen') }}" class="item active">
             <div class="col">
                 <ion-icon name="calendar-outline" role="img" class="md hydrated" aria-label="calendar outline">
                 </ion-icon>
-                <strong>Calendar</strong>
+                <strong>Jurnal</strong>
             </div>
-        </a>
-        <a href="{{ route('homeabsen') }}" class="item">
+        </a> --}}
+        {{-- <a href="{{ route('homeabsen') }}" class="item">
             <div class="col">
                 <div class="action-button large">
                     <ion-icon name="finger-print" role="img" class="md hydrated" aria-label="add outline">
                     </ion-icon>
                 </div>
             </div>
-        </a>
-        <a href="#" class="item">
+        </a> --}}
+        <a href="{{ route('homeabsen') }}" class="item">
             <div class="col">
                 <ion-icon name="document-text-outline" role="img" class="md hydrated"
                     aria-label="document text outline"></ion-icon>
-                <strong>Docs</strong>
+                <strong>Jurnal</strong>
             </div>
         </a>
         <a href="{{route('logout')}}" class="item">

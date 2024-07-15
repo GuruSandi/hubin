@@ -39,7 +39,14 @@ a:focus {
   color: #1e74fd;
   text-decoration: none;
 }
-
+.btn {
+  
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #0a0c7f; /* Ubah warna latar belakang saat dihover */
+  color: #fff; /* Ubah warna teks menjadi putih saat dihover */
+}
 button {
   outline: 0 !important;
 }
@@ -1993,10 +2000,18 @@ a.badge-dark {
 }
 
 .card .card-body {
-  padding: 24px 16px;
+  padding: 16px 16px 24px 16px;
   line-height: 1.4em;
 }
-
+.jarak {
+  border-radius: 6px;
+  border: 0;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+}
+.jarak .jarakelement {
+  padding: 16px 16px 24px 16px;
+  /* line-height: 1.4em; */
+}
 .card .card-title {
   color: #141515;
   font-size: 24px;
@@ -7907,9 +7922,10 @@ body.dark-mode-active .cart-item .cart-item-footer {
 }
 
 .button {
-  background: linear-gradient(to right, #FF416C, #FF4B2B);
+  background:  #0e10a3;
   /* Warna latar belakang */
   color: #fff;
+  border-radius: 6px;
   /* Warna teks */
   transition: background-color 0.3s ease;
   /* Animasi perubahan warna latar belakang */
@@ -7917,10 +7933,16 @@ body.dark-mode-active .cart-item .cart-item-footer {
 
 /* Efek hover */
 .button:hover {
-  background: linear-gradient(to right, #FF4B2B, #FF416C);
+  background:  #080761;
   /* Warna latar belakang saat hover */
 }
-
+.btnn{
+  background-color: #080761; color: #fff; border-radius: 20px; transition: background-color 0.3s ease;
+}
+.btnn:hover {
+  background:  #0e10a3;
+  /* Warna latar belakang saat hover */
+}
 /* Efek hover untuk ikon dan teks */
 .button:hover .icon-text-container ion-icon,
 .button:hover .icon-text-container .text {
@@ -7930,7 +7952,7 @@ body.dark-mode-active .cart-item .cart-item-footer {
 
 #user-section {
   height: 180px;
-  background-color: #1E74FD;
+  background-color: #080761;
   padding: 20px;
 }
 
@@ -7941,14 +7963,19 @@ body.dark-mode-active .cart-item .cart-item-footer {
 }
 
 #bg {
-  height: 300px;
-  background-color: #1E74FD;
+  height: 70px;
+  background-color: #080761;
   padding: 20px;
+}
+#bghome {
+  height: 400px;
+  background-color: #080761;
+  padding: 20px;
+  border-radius: 0 0 40px 40px;
 }
 
 #user-detail {
   margin-top: 20px;
-  display: flex;
 }
 
 #user-info {
@@ -7978,10 +8005,17 @@ body.dark-mode-active .cart-item .cart-item-footer {
 
 #presence-section {
   position: absolute;
-  top: 150px;
+  top: 270px;
   width: 100%;
-  background-color: #fff;
-  border-radius: 10px 10px 0px 0px;
+  /* background-color: #fff; */
+  /* border-radius: 10px 10px 0px 0px; */
+}
+#absensi-section {
+  position: absolute;
+  top: 300px;
+  width: 100%;
+  /* background-color: #fff; */
+  /* border-radius: 10px 10px 0px 0px; */
 }
 
 .todaypresence {

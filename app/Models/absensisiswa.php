@@ -11,7 +11,7 @@ class absensisiswa extends Model
     protected $table = 'absensisiswas';
 
     protected $fillable = [
-        'user_id', 'latitude', 'longitude', 'keterangan'
+        'user_id', 'latitude', 'longitude', 'keterangan','jarak', 'jam_masuk','jam_pulang','tanggal'
     ];
 
     public function user()

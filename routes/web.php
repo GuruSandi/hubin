@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::middleware(['guest'])->group(function () {
-    Route::get('/', 'AuthController@login')->name('login');
+Route::get('/', 'AuthController@login')->name('login');
     Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
+Route::middleware(['guest'])->group(function () {
+    
 });
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', 'AuthController@logout')->name('logout');
@@ -128,11 +128,21 @@ Route::middleware(['auth'])->group(function () {
 
         //absensiswa
         Route::get('/homeabsen', 'AbsenController@homeabsen')->name('homeabsen');
+        //absen datang
         Route::get('/absensi', 'AbsenController@absensi')->name('absensi');
         Route::post('/postabsensi', 'AbsenController@postabsensi')->name('postabsensi');
         Route::get('/editabsensi/{id}', 'AbsenController@editabsensi')->name('editabsensi');
         Route::post('/updateabsensi/{id}', 'AbsenController@updateabsensi')->name('updateabsensi');
-        Route::get('/deleteabsensi/{id}', 'AbsenController@deleteabsensi')->name('deleteabsensi');
+
+        //absen Pulang
+        Route::get('/absensipulang', 'AbsenController@absensipulang')->name('absensipulang');
+        Route::get('/tambahabsensipulang/{id}', 'AbsenController@tambahabsensipulang')->name('tambahabsensipulang');
+        Route::post('/postabsensipulang/{id}', 'AbsenController@postabsensipulang')->name('postabsensipulang');
+        Route::get('/editabsensipulang/{id}', 'AbsenController@editabsensipulang')->name('editabsensipulang');
+        Route::post('/posteditabsensipulang/{id}', 'AbsenController@posteditabsensipulang')->name('posteditabsensipulang');
+        Route::get('/jurnaledit/{id}', 'AbsenController@editjurnal')->name('jurnal.edit');
+        Route::post('/jurnalupdate/{id}', 'AbsenController@updatejurnal')->name('jurnal.update');
+
     });
 
     Route::group(['middleware' => ['auth', 'role:guru']], function () {
