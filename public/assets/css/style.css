@@ -533,7 +533,7 @@ button:focus {
   /* padding: 56px 0; */
   margin-bottom: env(safe-area-inset-bottom);
   margin-top: env(safe-area-inset-top);
-  padding-bottom: 500px;
+  padding-bottom: 700px;
 }
 
 #appCapsule.extra-header-active {
@@ -7963,9 +7963,17 @@ body.dark-mode-active .cart-item .cart-item-footer {
 }
 
 #bg {
+  height: 200px;
+  background-color: #080761;
+  padding: 20px 20px 10px 10px;
+  border-radius: 0 0 10px 10px;
+
+}
+#bgjurnal {
   height: 70px;
   background-color: #080761;
-  padding: 20px;
+  padding: 20px 10px 10px 10px;
+
 }
 #bghome {
   height: 400px;
@@ -7996,6 +8004,13 @@ body.dark-mode-active .cart-item .cart-item-footer {
   width: 100%;
   top: 120px;
   z-index: 999;
+}
+#menu-form {
+  position: absolute;
+  width: 100%;
+  top: 120px;
+  z-index: 999;
+  margin-top: 40px;
 }
 
 .list-menu {

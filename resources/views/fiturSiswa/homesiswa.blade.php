@@ -8,11 +8,9 @@
             <div class="row">
                 <div class="col-10">
                     <div id="user-info">
-                        {{-- <h4 style="margin-top: -20px" id="user-role">
-                            Selamat Datang
-                        </h4> --}}
+                        
                         <h3 id="user-name">{{ $siswa->nama }}</h3>
-                        <span id="user-role">SMK Negeri 2 Sukabumi
+                        <span id="user-role">{{ $siswa->kelas }}
                         </span>
                     </div>
                 </div>
@@ -109,7 +107,7 @@
 
 
         @foreach ($absensisiswa as $item)
-            <div class="card" style="border-radius: 10px">
+            <div class="card mt-3" style="border-radius: 10px">
                 <div class="card-body ">
 
                     <div class="row">
@@ -155,7 +153,7 @@
                                     <div class="col-7">
                                         <p class="text-muted">Status</p>
                                         @if ($item->validasi == 'belum_tervalidasi')
-                                            <p class="text-danger">Belum divalidasi Guru Mapel PKL</p>
+                                            <p class="text-danger" style="font-size: 12px">Belum divalidasi Guru Mapel PKL</p>
                                         @elseif ($item->validasi == 'ditolak')
                                             <p class="text-danger">Di Tolak</p>
                                         @elseif ($item->validasi == 'tervalidasi')

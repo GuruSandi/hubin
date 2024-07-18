@@ -18,6 +18,7 @@ class CreateJurnalsTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('guru_mapel_pkl_id')->constrained();
             $table->foreignId('siswa_id')->constrained()->onDelete('cascade');
+            $table->date('tanggal');
             $table->text('deskripsi_jurnal')->nullable();
             $table->enum('validasi', ['tervalidasi','belum_tervalidasi','ditolak']);
             $table->timestamps();

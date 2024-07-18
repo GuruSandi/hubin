@@ -71,7 +71,7 @@
                 </div>
             </div>
         </a> --}}
-        <a href="{{ route('homeabsen') }}" class="item">
+        <a href="{{ route('jurnal') }}" class="item">
             <div class="col">
                 <ion-icon name="document-text-outline" role="img" class="md hydrated"
                     aria-label="document text outline"></ion-icon>

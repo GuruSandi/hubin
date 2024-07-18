@@ -136,10 +136,11 @@ Route::middleware(['auth'])->group(function () {
 
         //absen Pulang
         Route::get('/absensipulang', 'AbsenController@absensipulang')->name('absensipulang');
-        Route::get('/tambahabsensipulang/{id}', 'AbsenController@tambahabsensipulang')->name('tambahabsensipulang');
+        Route::get('/absensipulang/{id}', 'AbsenController@tambahabsensipulang')->name('tambahabsensipulang');
         Route::post('/postabsensipulang/{id}', 'AbsenController@postabsensipulang')->name('postabsensipulang');
         Route::get('/editabsensipulang/{id}', 'AbsenController@editabsensipulang')->name('editabsensipulang');
         Route::post('/posteditabsensipulang/{id}', 'AbsenController@posteditabsensipulang')->name('posteditabsensipulang');
+        Route::get('/jurnal', 'AbsenController@jurnal')->name('jurnal');
         Route::get('/jurnaledit/{id}', 'AbsenController@editjurnal')->name('jurnal.edit');
         Route::post('/jurnalupdate/{id}', 'AbsenController@updatejurnal')->name('jurnal.update');
 
