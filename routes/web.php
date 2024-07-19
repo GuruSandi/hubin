@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'AuthController@login')->name('login');
-    Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
+
 Route::middleware(['guest'])->group(function () {
-    
+    Route::get('/', 'AuthController@login')->name('login');
+    Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 });
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', 'AuthController@logout')->name('logout');
@@ -143,6 +143,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/jurnal', 'AbsenController@jurnal')->name('jurnal');
         Route::get('/jurnaledit/{id}', 'AbsenController@editjurnal')->name('jurnal.edit');
         Route::post('/jurnalupdate/{id}', 'AbsenController@updatejurnal')->name('jurnal.update');
+        Route::get('/jurnal/search', 'AbsenController@search')->name('jurnal.search');
+        Route::get('/jurnal/belumdivalidasi', 'AbsenController@jurnalbelumdivalidasi')->name('jurnalbelumdivalidasi');
+        Route::get('/jurnal/ditolak', 'AbsenController@jurnalditolak')->name('jurnalditolak');
+        Route::get('/jurnal/tervalidasi', 'AbsenController@jurnaltervalidasi')->name('jurnaltervalidasi');
+        Route::get('/profile/siswa', 'FiturSiswaController@profilesiswa')->name('profilesiswa');
+        Route::get('/profile/guruMapelPkl', 'FiturSiswaController@profilegurumapel')->name('profilegurumapel');
+        Route::get('/profile/pembimbing', 'FiturSiswaController@profilepembimbing')->name('profilepembimbing');
+        Route::post('/change-password','FiturSiswaController@changePassword')
+        ->name('change.password');
+        Route::get('/edit-password','FiturSiswaController@editpassword')
+        ->name('editpassword');
+
 
     });
 

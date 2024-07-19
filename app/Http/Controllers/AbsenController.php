@@ -30,9 +30,8 @@ class AbsenController extends Controller
             // Misalnya, tampilkan pesan kesalahan
             return redirect()->route('tambahabsensipulang', $absensiHariIni->id);
         }
-
-
         toastr()->warning('Anda belum Melakukan Absensi Datang');
+        return redirect()->back();
     }
 
     public function tambahabsensipulang($id)
@@ -40,10 +39,10 @@ class AbsenController extends Controller
         $absensisiswa = absensisiswa::findOrFail($id);
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
-        $jam= Carbon::now();
+        $jam = Carbon::now();
         $tanggal = Carbon::parse($absensisiswa->tanggal)->translatedFormat('l, j F Y');
         $jamsekarang = Carbon::parse($jam)->format('H.i');
-        return view('absensi.absensipulang', compact('absensisiswa','tanggal','jamsekarang'));
+        return view('absensi.absensipulang', compact('absensisiswa', 'tanggal', 'jamsekarang'));
     }
 
     public function postabsensipulang(Request $request, $id)
@@ -68,7 +67,7 @@ class AbsenController extends Controller
         } else {
             $jarak_formatted = round($jarak_meter / 1000, 2) . ' KM';
         }
-         date_default_timezone_set('Asia/Jakarta');
+        date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $jamSekarang = Carbon::now();
         $tanggalSekarang = Carbon::now();
@@ -81,7 +80,7 @@ class AbsenController extends Controller
             'tanggal' => $tanggalSekarang,
 
         ]);
-       
+
         $absensisiswa = absensisiswa::findOrFail($id);
         $absensisiswa->update([
             'latitude' => $request->latitude,
@@ -91,9 +90,8 @@ class AbsenController extends Controller
             'jam_pulang' => $jamSekarang,
         ]);
 
-
-
-        return redirect()->route('dashboardsiswa')->with('status', 'Berhasil Mengupdate absensi.');
+        toastr()->success('Data berhasil disimpan!');
+        return redirect()->route('dashboardsiswa');
     }
 
     public function editabsensipulang($id)
@@ -103,7 +101,7 @@ class AbsenController extends Controller
         Carbon::setLocale('id_ID');
         $tanggal = Carbon::parse($absensisiswa->tanggal)->translatedFormat('l, j F Y');
         $jam_pulang = Carbon::parse($absensisiswa->jam_pulang)->format('H.i');
-        return view('absensi.editabsensipulang', compact('absensisiswa','tanggal','jam_pulang'));
+        return view('absensi.editabsensipulang', compact('absensisiswa', 'tanggal', 'jam_pulang'));
     }
 
     public function posteditabsensipulang(Request $request, $id)
@@ -140,24 +138,73 @@ class AbsenController extends Controller
             'jam_pulang' => $jamSekarang,
         ]);
 
-
-
-        return redirect()->route('dashboardsiswa')->with('status', 'Berhasil Mengupdate absensi.');
+        toastr()->success('Data berhasil disimpan!');
+        return redirect()->route('dashboardsiswa');
     }
 
+    public function search(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        Carbon::setLocale('id_ID');
+        $user = Auth::user();
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        $jurnal = Jurnal::where('user_id', $user->id)
+            ->whereDate('tanggal', '>=', Carbon::parse($start_date))
+            ->whereDate('tanggal', '<=', Carbon::parse($end_date))
+            ->get();
+
+        foreach ($jurnal as $item) {
+            $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+        }
+
+        // Tampilkan hasil pencarian ke view
+        return view('jurnal.jurnal', compact('jurnal'));
+    }
+
+    public function jurnalbelumdivalidasi()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        Carbon::setLocale('id_ID');
+        $user = Auth::user();
+        $jurnal = jurnal::whereIn('user_id', [$user->id])->where('validasi', 'belum_tervalidasi')->get();
+        foreach ($jurnal as $item) {
+            $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+        }
+        return view('jurnal.jurnal', compact('jurnal'));
+    }
+    public function jurnalditolak()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        Carbon::setLocale('id_ID');
+        $user = Auth::user();
+        $jurnal = jurnal::whereIn('user_id', [$user->id])->where('validasi', 'ditolak')->get();
+        foreach ($jurnal as $item) {
+            $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+        }
+        return view('jurnal.jurnal', compact('jurnal'));
+    }
+    public function jurnaltervalidasi()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        Carbon::setLocale('id_ID');
+        $user = Auth::user();
+        $jurnal = jurnal::whereIn('user_id', [$user->id])->where('validasi', 'tervalidasi')->get();
+        foreach ($jurnal as $item) {
+            $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+        }
+        return view('jurnal.jurnal', compact('jurnal'));
+    }
     public function jurnal()
     {
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
-        $user=Auth::user();
+        $user = Auth::user();
         $jurnal = jurnal::where('user_id', $user->id)->get();
         foreach ($jurnal as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-
         }
-       
-       
-
         return view('jurnal.jurnal', compact('jurnal'));
     }
     public function editjurnal($id)
@@ -170,52 +217,36 @@ class AbsenController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        return view('jurnal.editjurnal', compact('jurnal','tanggal'));
+        return view('jurnal.editjurnal', compact('jurnal', 'tanggal'));
     }
     public function updatejurnal(Request $request, $id)
-{
-    $request->validate([
-        'deskripsi_jurnal' => 'required', 
-    ]);
+    {
+        $request->validate([
+            'deskripsi_jurnal' => 'required',
+        ]);
 
-    $jurnal = jurnal::findOrFail($id);
+        $jurnal = jurnal::findOrFail($id);
 
-    if ($jurnal->user_id != auth()->user()->id) {
-        abort(403, 'Unauthorized action.');
+        if ($jurnal->user_id != auth()->user()->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $jurnal->deskripsi_jurnal = $request->deskripsi_jurnal;
+        $jurnal->save();
+        toastr()->success('Data berhasil disimpan!');
+
+        return redirect()->route('dashboardsiswa');
     }
-
-    $jurnal->deskripsi_jurnal = $request->deskripsi_jurnal;
-    $jurnal->save();
-
-    return redirect()->route('dashboardsiswa')->with('success', 'Jurnal berhasil diperbarui.');
-}
 
 
     public function homeabsen()
     {
         $user = Auth::user();
-        $bulanIndonesia = [
-            '01' => 'Januari',
-            '02' => 'Februari',
-            '03' => 'Maret',
-            '04' => 'April',
-            '05' => 'Mei',
-            '06' => 'Juni',
-            '07' => 'Juli',
-            '08' => 'Agustus',
-            '09' => 'September',
-            '10' => 'Oktober',
-            '11' => 'November',
-            '12' => 'Desember'
-        ];
-
-        $tanggal = date('d');
-        $bulan = $bulanIndonesia[date('m')];
-        $tahun = date('Y');
+        
         $siswa = siswa::where('user_id', $user->id)->first();
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
-        
+
         $absensiSiswa = AbsensiSiswa::where('user_id', $user->id)->get();
         $absensisiswa = AbsensiSiswa::where('absensisiswas.user_id', $user->id)
             ->select('absensisiswas.tanggal', 'absensisiswas.jam_masuk', 'absensisiswas.jam_pulang', 'jurnals.deskripsi_jurnal',  'jurnals.validasi', 'jurnals.id')
@@ -223,27 +254,52 @@ class AbsenController extends Controller
                 $join->on('absensisiswas.user_id', '=', 'jurnals.user_id')
                     ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
             })
+            ->orderBy('absensisiswas.tanggal', 'desc')  // Mengurutkan berdasarkan tanggal descending
+            ->limit(5)
             ->get();
-        //  $absensisiswa = AbsensiSiswa::where('user_id', $user->id)->get();
         foreach ($absensisiswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
             $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
             $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
         }
-        $hadir = $absensisiswa->where('keterangan', 'hadir')->count();
-        $libur = $absensisiswa->where('keterangan', 'libur')->count();
-        $absen = $absensisiswa->where('keterangan', 'absen')->count();
+       
 
-        return view('absensi.homeabsen', compact('absensisiswa', 'hadir', 'libur', 'siswa', 'absen', 'tanggal', 'bulan', 'tahun'));
+        return view('absensi.homeabsen', compact('absensisiswa'));
     }
 
     public function absensi()
     {
         $siswa = Siswa::where('user_id', auth()->id())->first();
+
+        if (!$siswa) {
+
+            toastr()->error('Anda tidak memiliki izin untuk melakukan absensi.');
+            return redirect()->back();
+        }
+
+        // Find the placement of the student
+        $menempati = Menempati::where('siswa_id', $siswa->id)->first();
+
+        if (!$menempati) {
+
+            toastr()->error('Anda belum di tempatkan di Instansi manapun. Silahkan hubungi admin!.');
+            return redirect()->back();
+        }
+
+        // Ensure institution's location is set and valid
+        if (!$siswa->menempati()->exists() || !$siswa->menempati()->first()->instansi || is_null($siswa->menempati()->first()->instansi->latitude) || is_null($siswa->menempati()->first()->instansi->longitude)) {
+            toastr()->warning('Anda belum menambahkan lokasi instansi. Silakan tambahkan lokasi instansi terlebih dahulu.');
+
+            return redirect()->route('tambahlokasi');
+        }
+
+        // Get institution details
+
+        $siswa = Siswa::where('user_id', auth()->id())->first();
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
-        $tanggal= Carbon::now();
-        $jam= Carbon::now();
+        $tanggal = Carbon::now();
+        $jam = Carbon::now();
         $tanggalsekarang = Carbon::parse($tanggal)->translatedFormat('l, j F Y');
         $jamsekarang = Carbon::parse($jam)->format('H.i');
         $absensiHariIni = AbsensiSiswa::where('user_id', $siswa->user_id)
@@ -254,7 +310,7 @@ class AbsenController extends Controller
             // Jika sudah, tampilkan pesan kesalahan
             return redirect()->route('editabsensi', $absensiHariIni->id);
         }
-        return view('absensi.absensiswa', compact('tanggalsekarang','jamsekarang'));
+        return view('absensi.absensiswa', compact('tanggalsekarang', 'jamsekarang'));
     }
     public function postabsensi(Request $request)
     {
@@ -297,7 +353,7 @@ class AbsenController extends Controller
             $jarak_formatted = round($jarak_meter / 1000, 2) . ' KM';
         }
         date_default_timezone_set('Asia/Jakarta');
-        Carbon::setLocale('id_ID'); 
+        Carbon::setLocale('id_ID');
         $jamSekarang = Carbon::now();
         $tanggalSekarang = Carbon::now();
         absensisiswa::create([
@@ -310,8 +366,9 @@ class AbsenController extends Controller
             'tanggal' => $tanggalSekarang,
         ]);
 
+        toastr()->success('Data berhasil disimpan!');
 
-        return redirect()->route('dashboardsiswa')->with('status', 'Berhasil Melakukan Absen.');
+        return redirect()->route('dashboardsiswa');
     }
 
 
@@ -340,7 +397,7 @@ class AbsenController extends Controller
         $tanggal = Carbon::parse($absensisiswa->tanggal)->translatedFormat('l, j F Y');
         $jam_masuk = Carbon::parse($absensisiswa->jam_masuk)->format('H.i');
 
-        return view('absensi.editabsensi', compact('absensisiswa','tanggal','jam_masuk'));
+        return view('absensi.editabsensi', compact('absensisiswa', 'tanggal', 'jam_masuk'));
     }
 
     public function updateabsensi(Request $request, $id)
@@ -375,9 +432,10 @@ class AbsenController extends Controller
             'jarak' => $jarak_formatted,
         ]);
 
+        toastr()->success('Data berhasil disimpan!');
 
 
-        return redirect()->route('dashboardsiswa')->with('status', 'Berhasil Mengupdate absensi.');
+        return redirect()->route('dashboardsiswa');
     }
 
 

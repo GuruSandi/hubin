@@ -1,23 +1,26 @@
-@extends('template.navbar')
+@extends('template.nav')
 @section('title', 'Absensi Pulang')
 
 @section('content')
-<div class="section" id="bg">
-    <a href="{{ route('dashboardsiswa') }}">
-        <div style="background-color: #fff; border-radius: 50px; width: 40px; height: 40px; padding: 2px; font-size: 22px;"
-            class="text-center text-dark"> <i class="bi bi-arrow-left bi-lg"></i>
+<div id="bg">
+    <div class="container">
+        <div style="width: 40px">
+            <a href="{{ route('dashboardsiswa') }}">
+                <div style="background-color: #faac05; border-radius: 50px; width: 40px; height: 40px; padding: 2px; font-size: 22px;"
+                    class="text-center text-white"> <i class="bi bi-arrow-left bi-lg"></i>
+                </div>
+            </a>
         </div>
-    </a>
-    <h4 class="text-white mt-3">Absensi Pulang</h4>
-    <p style="font-size: 12px" class="text-white">Silahkan melakukan Absensi Pulang pilih salah satu keterangan hadir, libur dan
-        tidak masuk PKL</p>
-
-
+       
+        <h4 class="text-white mt-3">Absensi Pulang</h4>
+        <p style="font-size: 12px" class="text-white">Silahkan melakukan Absensi Pulang pilih salah satu keterangan hadir, libur dan
+            tidak masuk PKL</p>
+    </div>
 </div>
 <div class="" id="menu-form">
     <div class="mt-3">
         <div class="card" style="border-radius: 20px 20px 0 0; box-shadow: none; border: none">
-            <div class="card-body ">
+            <div class="container mt-3">
                 <form action="{{ route('posteditabsensipulang', $absensisiswa->id) }}" method="POST" class="form-group" enctype="multipart/form-data">
                     @csrf
                     <label for="">Tanggal:</label>

@@ -1,13 +1,17 @@
-@extends('template.navbar')
+@extends('template.nav')
 @section('title', 'Absensi Datang')
 
 @section('content')
 <div class="section" id="bg">
-    <a href="{{ route('dashboardsiswa') }}">
-        <div style="background-color: #fff; border-radius: 50px; width: 40px; height: 40px; padding: 2px; font-size: 22px;"
-            class="text-center text-dark"> <i class="bi bi-arrow-left bi-lg"></i>
-        </div>
-    </a>
+    <div style="width: 40px">
+        <a href="{{ route('dashboardsiswa') }}">
+        
+            <div style="background-color: #faac05; border-radius: 50px; width: 40px; height: 40px; padding: 2px; font-size: 22px;"
+                class="text-center text-white"> <i class="bi bi-arrow-left bi-lg"></i>
+            </div>
+        </a>
+    </div>
+    
     <h4 class="text-white mt-3">Absensi Datang</h4>
     <p style="font-size: 12px" class="text-white">Mohon lengkapi absensi datang Anda dengan memilih salah satu keterangan berikut: hadir, libur, atau tidak masuk PKL.</p>
 
