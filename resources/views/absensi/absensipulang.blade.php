@@ -19,7 +19,7 @@
 <div class="" id="menu-form">
     <div class=" mt-3">
         <div class="card" style="border-radius: 20px 20px 0 0; box-shadow: none; border: none">
-            <div class="container mt-3 ">
+            <div class="container mt-3 " style="margin-bottom: 90px">
                 <form action="{{ route('postabsensipulang', $absensisiswa->id) }}" method="POST" class="form-group" enctype="multipart/form-data">
                     @csrf
                     <label for="">Tanggal:</label>
@@ -31,6 +31,7 @@
                     <select name="keterangan" class="form-control" required>
                         <option value="hadir">Hadir</option>
                         <option value="libur">Libur</option>
+                        <option value="tidak_hadir_pkl">Tidak Hadir PKL</option>
                     </select><br>
                     <label for="">Deskripsi Jurnal:</label>
                     <div class="form-floating">

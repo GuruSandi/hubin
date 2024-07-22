@@ -112,24 +112,13 @@
 
     <div class="sidebar shadow col-md-3 col-lg-2">
         <h1 class="logo">HUBIN</h1>
-        <a href="{{ route('home') }}"><i class="bi bi-house"></i> Dashboard</a>
+        <a href="{{ route('dashboardguru') }}"><i class="bi bi-house"></i> Dashboard</a>
+        <a href="{{ route('dataabsensi') }}"><i class="bi bi-house"></i> Absensi</a>
+        <a href="{{ route('datajurnal') }}"><i class="bi bi-house"></i> Jurnal</a>
+        <a href="{{ route('datasiswa') }}"><i class="bi bi-house"></i> Siswa</a>
+        
 
-
-        <a href="#dropdownMenu" class="dropdown-toggle" data-bs-toggle="collapse" role="button" aria-expanded="false"
-            aria-controls="dropdownMenu"><i class="bi bi-journal"></i> PKL</a>
-        <div class="collapse" id="dropdownMenu">
-            <a href="{{ route('homesiswa') }}" class="dropdown-item"><i class="bi bi-person"></i> Siswa</a>
-            <a href="{{ route('homeinstansi') }}" class="dropdown-item"><i class="bi bi-building"></i> Instansi</a>
-            <a href="{{ route('homepembimbing') }}" class="dropdown-item"><i class="bi bi-person-check"></i>
-                Pembimbing</a>
-            <a href="{{ route('homemenempati') }}" class="dropdown-item"><i class="bi bi-geo-alt"></i> Penempatan</a>
-            <a href="{{ route('homemembimbing') }}" class="dropdown-item"><i class="bi bi-people"></i> Membimbing</a>
-            <a href="{{ route('dataPenempatan') }}" class="dropdown-item"><i class="bi bi-file-earmark-text"></i> Data
-                Penempatan</a>
-            <a href="{{ route('homeakunsiswa') }}" class="dropdown-item"><i class="bi bi-file-earmark-text"></i> Akun Siswa</a>
-
-        </div>
-
+       
 
     </div>
 

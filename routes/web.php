@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::middleware(['guest'])->group(function () {
-    Route::get('/', 'AuthController@login')->name('login');
+Route::get('/', 'AuthController@login')->name('login');
     Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
+Route::middleware(['guest'])->group(function () {
+    
 });
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', 'AuthController@logout')->name('logout');
@@ -120,7 +120,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/unduhakunadmin', 'AuthController@unduhakunadmin')->name('unduhakunadmin');
     });
 
-    Route::group(['middleware' => ['auth', 'role:siswa']], function () {
+    Route::group(['middleware' => ['role:siswa']], function () {
         //fitursiswa
         Route::get('/dashboardsiswa', 'FiturSiswaController@dashboardsiswa')->name('dashboardsiswa');
         Route::get('/tambahlokasi', 'FiturSiswaController@tambahlokasi')->name('tambahlokasi');
@@ -144,6 +144,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/jurnaledit/{id}', 'AbsenController@editjurnal')->name('jurnal.edit');
         Route::post('/jurnalupdate/{id}', 'AbsenController@updatejurnal')->name('jurnal.update');
         Route::get('/jurnal/search', 'AbsenController@search')->name('jurnal.search');
+        Route::get('/absensi/search', 'AbsenController@searchabsen')->name('searchabsen');
         Route::get('/jurnal/belumdivalidasi', 'AbsenController@jurnalbelumdivalidasi')->name('jurnalbelumdivalidasi');
         Route::get('/jurnal/ditolak', 'AbsenController@jurnalditolak')->name('jurnalditolak');
         Route::get('/jurnal/tervalidasi', 'AbsenController@jurnaltervalidasi')->name('jurnaltervalidasi');
@@ -160,7 +161,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['auth', 'role:guru']], function () {
        
-
-        // Tambahkan rute-rute guru lainnya di sini
     });
+    
+    Route::get('/dashboardguru', 'FiturGuruController@dashboardguru')->name('dashboardguru');
+    Route::get('/dataabsensi', 'FiturGuruController@absensisiswa')->name('dataabsensi');
+    Route::get('/datasiswa', 'FiturGuruController@datasiswa')->name('datasiswa');
+    Route::get('/datajurnal', 'FiturGuruController@jurnalsiwa')->name('datajurnal');
+    Route::get('/validasisetuju/{jurnal}', 'FiturGuruController@validasisetuju')->name('validasisetuju');
+    Route::get('/validasiditolak/{jurnal}', 'FiturGuruController@validasiditolak')->name('validasiditolak');
+    Route::post('/validasi/{jurnal}', 'FiturGuruController@validasi')->name('validasi');
+    
 });

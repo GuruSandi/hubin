@@ -8,7 +8,7 @@
 
         </div>
     </div>
-    <div class="container">
+    <div class="container" style="margin-bottom: 90px">
         <div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-3" style="font-size: 12px">
             <div class="col">
                 <div id="toggleFilter" class="filter-item p-2 mt-3">
@@ -37,76 +37,87 @@
                     </div>
                 </div>
             </a>
-            
+
+        </div>
+
+        <div class="row mt-3">
+            <div id="filterForm" style="display: none;">
+                <form action="{{ route('jurnal.search') }}" method="GET">
+                    <div class="form-group">
+                        <label for="start_date">Tanggal Mulai:</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">Tanggal Akhir:</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" required>
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-primary"> Cari</button>
+
+                    </div>
+                </form>
+            </div>
         </div>
         
-       <div class="row mt-3">
-        <div id="filterForm" style="display: none;">
-            <form action="{{ route('jurnal.search') }}" method="GET">
-                <div class="form-group">
-                    <label for="start_date">Tanggal Mulai:</label>
-                    <input type="date" id="start_date" name="start_date" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="end_date">Tanggal Akhir:</label>
-                    <input type="date" id="end_date" name="end_date" class="form-control" required>
-                </div>
-                <div class="">
-                    <button type="submit" class="btn btn-primary"> Cari</button>
-                   
-                </div>
-            </form>
-        </div>
-       </div>
-
-        @foreach ($jurnal as $item)
-            <div class="mt-3">
-                <div class="card" style="border-radius: 10px;">
-                    <div class="card-body ">
-                        <div class="row">
-                            <div class="col-6">
-                                <p style="font-size: 16">{{ $item->tanggal }}</p>
-                            </div>
-                            <div class="col-6">
-                                @if ($item->validasi == 'belum_tervalidasi')
-                                    <div class="d-flex justify-content-end">
-                                        <p class="text-white bg-warning px-1" style="font-size: 11px ; border-radius: 10px">
-                                            Belum divalidasi</p>
-
-                                    </div>
-                                @elseif ($item->validasi == 'ditolak')
-                                    <div class="d-flex justify-content-end">
-                                        <p class="text-white bg-danger px-1" style="font-size: 11px ; border-radius: 10px">
-                                            Ditolak</p>
-                                    </div>
-                                @elseif ($item->validasi == 'tervalidasi')
-                                    <div class="d-flex justify-content-end">
-                                        <p class="text-white bg-success px-1" style="font-size: 11px ; border-radius: 10px">
-                                            Sudah divalidasi</p>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <p class="text-muted">Deskripsi Jurnal :</p>
-                                <p>{{ $item->deskripsi_jurnal }}</p>
-                                <div class="d-flex justify-content-end">
+        <div class="row g-3">
+            @foreach ($jurnal as $item)
+                <div class="col-md-6 col-lg-6">
+                    <div class="card mt-3" style="border-radius: 10px">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p style="font-size: 16">{{ $item->tanggal }}</p>
+                                </div>
+                                <div class="col-6">
                                     @if ($item->validasi == 'belum_tervalidasi')
-                                        <a href="{{ route('jurnal.edit', $item->id) }}" class="btn btn-primary">Ubah
-                                            Jurnal</a>
+                                        <div class="d-flex justify-content-end">
+                                            <p class="text-white bg-warning px-1"
+                                                style="font-size: 11px ; border-radius: 10px">
+                                                Belum divalidasi</p>
+
+                                        </div>
                                     @elseif ($item->validasi == 'ditolak')
-                                        <a href="{{ route('jurnal.edit', $item->id) }}" class="btn btn-primary">Ubah
-                                            Jurnal</a>
+                                        <div class="d-flex justify-content-end">
+                                            <p class="text-white bg-danger px-1"
+                                                style="font-size: 11px ; border-radius: 10px">
+                                                Ditolak</p>
+                                        </div>
+                                    @elseif ($item->validasi == 'tervalidasi')
+                                        <div class="d-flex justify-content-end">
+                                            <p class="text-white bg-success px-1"
+                                                style="font-size: 11px ; border-radius: 10px">
+                                                Sudah divalidasi</p>
+                                        </div>
                                     @endif
                                 </div>
-
                             </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="text-muted">Deskripsi Jurnal :</p>
+                                    <p>{{ $item->deskripsi_jurnal }}</p>
+                                    <div class="d-flex justify-content-end">
+                                        @if ($item->validasi == 'belum_tervalidasi')
+                                            <a href="{{ route('jurnal.edit', $item->id) }}" class="btn btn-primary">Ubah
+                                                Jurnal</a>
+                                        @elseif ($item->validasi == 'ditolak')
+                                            <a href="{{ route('jurnal.edit', $item->id) }}" class="btn btn-primary">Ubah
+                                                Jurnal</a>
+                                        @endif
+                                    </div>
+
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
+
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+
+
+        </div>
+       
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

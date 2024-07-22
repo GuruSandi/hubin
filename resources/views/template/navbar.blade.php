@@ -25,6 +25,11 @@
             text-decoration: none;
         }
 
+        .active {
+            color: skyblue;
+            /* Atur warna sesuai keinginan Anda */
+        }
+        
         .filter-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -70,9 +75,8 @@
                 flex: 0 0 auto;
             }
 
-            
+
         }
-        
     </style>
 
 </head>
@@ -84,9 +88,9 @@
         <div class="spinner-border text-primary" role="status"></div>
     </div>
     <!-- * loader -->
+    {{-- id="appCapsule" --}}
 
-
-    <div id="appCapsule">
+    <div class="">
         @yield('content')
 
     </div>
@@ -98,32 +102,51 @@
 
     <!-- App Bottom Menu -->
     <div class="appBottomMenu">
-        <a href="{{ route('dashboardsiswa') }}" class="item">
+        <a href="{{ route('dashboardsiswa') }}" class="item {{ \Route::is('dashboardsiswa') ? 'active' : '' }}">
             <div class="col">
-                <ion-icon name="home-outline" role="img" class="md hydrated" aria-label="file tray full outline">
+                <ion-icon name="home-outline" role="img" class="md hydrated text-muted fw-bold"
+                    aria-label="file tray full outline">
                 </ion-icon>
                 <strong>Home</strong>
             </div>
         </a>
-       
-        <a href="{{ route('jurnal') }}" class="item">
+
+
+        <a href="{{ route('jurnal') }}" class="item {{ \Route::is('jurnal') ? 'active' : '' }}">
             <div class="col">
-                <ion-icon name="document-text-outline" role="img" class="md hydrated"
+                <ion-icon name="document-text-outline" role="img" class="md hydrated text-muted fw-bold"
                     aria-label="document text outline"></ion-icon>
                 <strong>Jurnal</strong>
             </div>
         </a>
-       
-        <a href="{{ route('profilesiswa') }}" class="item">
+
+        <a href="{{ route('profilesiswa') }}" class="item  {{ \Route::is('profilesiswa') ? 'active' : '' }}">
             <div class="col">
-                <ion-icon name="people-outline" role="img" class="md hydrated" aria-label="people outline">
+                <ion-icon name="people-outline" role="img" class="md hydrated text-muted fw-bold"
+                    aria-label="people outline">
                 </ion-icon>
                 <strong>Profile</strong>
             </div>
         </a>
-       
+
     </div>
-    <!-- * App Bottom Menu -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#jurnalLink').click(function(e) {
+                e.preventDefault(); // Mencegah tautan untuk berpindah ke halaman baru
+
+                // Hapus class 'active' dari semua item lain jika diperlukan
+                $('.item').removeClass('active');
+
+                // Tambahkan class 'active' pada item yang diklik
+                $(this).find('.item').addClass('active');
+
+                // Lalu, navigasi ke halaman yang dituju
+                window.location.href = $(this).attr('href');
+            });
+        });
+    </script>
 
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}

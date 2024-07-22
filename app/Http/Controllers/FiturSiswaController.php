@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Log;
 class FiturSiswaController extends Controller
 {
     public function editpassword()
@@ -40,8 +40,9 @@ class FiturSiswaController extends Controller
             'password' => bcrypt($request->new_password),
             'encrypted_password' =>$request->new_password,
         ]);
+        $request->session()->regenerate();
 
-        return redirect()->back()->with('success', 'Password berhasil diperbarui.');
+        return redirect()->route('editpassword')->with('success', 'Password berhasil diperbarui.');
     }
     public function profilesiswa()
     {
@@ -111,7 +112,7 @@ class FiturSiswaController extends Controller
         $user = User::find(auth()->id());
         $siswa = $user->siswa;
         $menempati = $user->siswa->menempati->first();
-        $instansi = $menempati->instansi;
+        $instansi = $menempati->instansi->latitude;
         if ($instansi) {
             toastr()->error('Lokasi Instansi Sudah Ada!');
             return redirect()->route('dashboardsiswa');

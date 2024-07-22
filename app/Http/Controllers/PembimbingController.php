@@ -25,6 +25,17 @@ class PembimbingController extends Controller
     {
         return view('pembimbing.tambahpembimbing');
     }
+    public function generateNumericPassword($length = 8)
+    {
+        $chars = '0123456789';
+        $password = '';
+        
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $chars[rand(0, strlen($chars) - 1)];
+        }
+        
+        return $password;
+    }
     public function posttambahpembimbing(Request $request)
     {
         $request->validate([
@@ -38,7 +49,8 @@ class PembimbingController extends Controller
             'foto' => $request->foto->store('img/fotoguru'),
         ]);
         $username = substr($request->nama, 0, 3) . mt_rand(10, 99); 
-        $password = Str::random(8); 
+        $password = $this->generateNumericPassword(8);
+
         DB::transaction(function () use ($request, $username, $password,  ) {
             $user = User::create([
                 'username' => $username, 

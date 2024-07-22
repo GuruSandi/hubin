@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,13 +11,23 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $guarded=[];
+    /**
+     * Determine if the user should have their password reset.
+     *
+     * @return bool
+     */
+    public function shouldRenewPassword()
+    {
+        
+        return false;
+    }
+    protected $guarded = [];
 
     public function siswa()
     {
-    return $this->hasOne(Siswa::class);
+        return $this->hasOne(Siswa::class);
     }
-    
+
     public function membimbing()
     {
         return $this->belongsTo(membimbing::class);
@@ -37,7 +48,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(nilai_pkl::class);
     }
-   
+
     /**
      * The attributes that are mass assignable.
      *
@@ -50,7 +61,7 @@ class User extends Authenticatable
         'encrypted_password',
     ];
 
-   
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -69,4 +80,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+   
+   
 }

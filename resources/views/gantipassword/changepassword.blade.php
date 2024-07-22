@@ -13,7 +13,7 @@
         </div>
        
         <h4 class="text-white mt-3">Edit Password</h4>
-        <p style="font-size: 12px" class="text-white">Silakan periksa kembali jurnal Anda dengan cermat untuk memastikan keseluruhan isi telah disampaikan dengan jelas dan tepat.</p>
+        <p style="font-size: 12px" class="text-white">Ganti sandi Anda untuk meningkatkan keamanan yang lebih baik.</p>
 
        </div>
     </div>
@@ -21,7 +21,7 @@
         <div class="mt-3">
             <div class="card" style="border-radius: 20px 20px 0 0; box-shadow: none; border: none">
                 <div class="container mt-3 ">
-                    <form method="POST" action="{{ route('change.password') }}">
+                    <form method="POST" action="{{ route('change.password') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group">

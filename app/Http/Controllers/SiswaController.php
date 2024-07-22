@@ -34,6 +34,17 @@ class SiswaController extends Controller
     {
         return view('siswa.tambahsiswa');
     }
+    public function generateNumericPassword($length = 8)
+    {
+        $chars = '0123456789';
+        $password = '';
+        
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $chars[rand(0, strlen($chars) - 1)];
+        }
+        
+        return $password;
+    }
     public function posttambahsiswa(Request $request)
     {
         $request->validate([
@@ -43,7 +54,8 @@ class SiswaController extends Controller
             'kelas' => 'required',
             'tahun_ajar' => 'required',
         ]);
-        $password = Str::random(8); 
+        $password = $this->generateNumericPassword(8);
+
        
         DB::transaction(function () use ($request,  $password) {
             // Membuat data pengguna (user) terkait

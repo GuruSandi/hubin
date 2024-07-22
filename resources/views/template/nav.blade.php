@@ -84,7 +84,7 @@
     </div>
     <!-- * loader -->
 
-    <div id="appCapsule">
+    <div>
         @yield('content')
 
     </div>

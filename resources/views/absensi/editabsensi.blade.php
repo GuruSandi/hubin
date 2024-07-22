@@ -18,7 +18,7 @@
     <div class="" id="menu-form">
         <div class=" mt-3">
             <div class="card" style="border-radius: 20px 20px 0 0; box-shadow: none; border: none">
-                <div class="container card-body mt-3 ">
+                <div class="container card-body mt-3 " style="margin-bottom: 90px">
                     <form action="{{ route('updateabsensi', $absensisiswa->id) }}" method="POST" class="form-group"
                         enctype="multipart/form-data">
                         @csrf
@@ -31,6 +31,8 @@
                         <select name="keterangan" class="form-control" required>
                             <option value="hadir" @if ($absensisiswa->keterangan == 'hadir') selected @endif>Hadir</option>
                             <option value="libur" @if ($absensisiswa->keterangan == 'libur') selected @endif>Libur</option>
+                            <option value="tidak_hadir_pkl" @if ($absensisiswa->keterangan == 'tidak_hadir_pkl') selected @endif>Tidak Hadir PKL</option>
+
                         </select><br>
 
                         <!-- Tambahkan input tersembunyi untuk menyimpan koordinat latitude dan longitude -->

@@ -39,11 +39,11 @@
 
         </div>
     </div>
-    <div class="container">
+    <div class="container" style="margin-bottom: 90px">
 
         <div class="row mt-3">
             <div id="filterForm" style="display: none;">
-                <form action="{{ route('jurnal.search') }}" method="GET">
+                <form action="{{ route('searchabsen') }}" method="GET">
                     <div class="form-group">
                         <label for="start_date">Tanggal Mulai:</label>
                         <input type="date" id="start_date" name="start_date" class="form-control" required>
@@ -102,38 +102,15 @@
                                 <hr style="width: 90%">
                                 <div class="row">
                                     <div class="col-12">
-                                        <p class="text-muted">Jurnal</p>
-                                        <p>{{ $item->deskripsi_jurnal }}</p>
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <p class="text-muted">Status</p>
-                                                @if ($item->validasi == 'belum_tervalidasi')
-                                                    <p class="text-danger" style="font-size: 12px">Belum divalidasi Guru
-                                                        Mapel
-                                                        PKL
-                                                    </p>
-                                                @elseif ($item->validasi == 'ditolak')
-                                                    <p class="text-danger">Di Tolak</p>
-                                                @endif
-                                            </div>
-                                            <div class="col-5">
-                                                <div class="d-flex justify-content-end">
-                                                    @if ($item->validasi == 'belum_tervalidasi')
-                                                        <a href="{{ route('jurnal.edit', $item->id) }}"
-                                                            class="btn btn-primary">Ubah
-                                                            Jurnal</a>
-                                                    @elseif ($item->validasi == 'ditolak')
-                                                        <a href="{{ route('jurnal.edit', $item->id) }}"
-                                                            class="btn btn-primary">Ubah
-                                                            Jurnal</a>
-                                                    @elseif ($item->validasi == 'tervalidasi')
-                                                        <ion-icon class="green" name="checkmark-circle"
-                                                            style="font-size: 30px"></ion-icon>
-                                                    @endif
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                        <p class="text-muted">Keterangan : @if ($item->keterangan == 'hadir')
+                                                Hadir
+                                            @elseif ($item->keterangan == 'libur')
+                                                Libur
+                                            @elseif ($item->keterangan == 'tidak_masuk_pkl')
+                                                Tidak Masuk PKL
+                                            @endif
+                                        </p>
+                                       
 
                                     </div>
                                 </div>
@@ -147,7 +124,7 @@
 
 
         </div>
-
+       
 
     </div>
 

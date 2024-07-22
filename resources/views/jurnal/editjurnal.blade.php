@@ -20,7 +20,7 @@
     <div id="menu-form">
         <div class="mt-3">
             <div class="card" style="border-radius: 20px 20px 0 0; box-shadow: none; border: none">
-                <div class="container mt-3 ">
+                <div class="container mt-3 " style="margin-bottom: 90px">
                     <form action="{{ route('jurnal.update', ['id' => $jurnal->id]) }}" method="POST" class="form-group"
                         enctype="multipart/form-data">
                         @csrf

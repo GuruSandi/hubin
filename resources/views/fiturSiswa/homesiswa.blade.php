@@ -115,15 +115,15 @@
 
 
     </div>
-    <div class=" mt-5" id="absensi-section">
-        @if ($absensisiswa)
-            <div class="container">
+    <div class="" style="margin-bottom: 800px">
+        <div class=" mt-5" id="absensi-section">
+            <div class="container" style="margin-bottom: 90px">
                 @foreach ($absensisiswa as $item)
                     <div class="card mt-3" style="border-radius: 10px">
                         <div class="card-body ">
-
+    
                             <div class="row">
-
+    
                                 <div class="row">
                                     <div class="col-12">
                                         {{-- <p class="fw-bold">{{ substr($item->deskripsi_jurnal, 0, strpos($item->deskripsi_jurnal, ' ', strpos($item->deskripsi_jurnal, ' ') + 1)) }}</p> --}}
@@ -135,7 +135,7 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>
-
+    
                                             </div>
                                             <div class="col-8">
                                                 <h4 class="text-muted"> Jam Masuk</h4>
@@ -147,7 +147,7 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>
-
+    
                                             </div>
                                             <div class="col-8">
                                                 <h4 class="text-muted"> Jam Pulang</h4>
@@ -188,40 +188,40 @@
                                                             style="font-size: 30px"></ion-icon>
                                                     @endif
                                                 </div>
-
+    
                                             </div>
                                         </div>
-
+    
                                     </div>
                                 </div>
                             </div>
-
+    
                         </div>
                     </div>
                 @endforeach
             </div>
-        @else
-            <div class="container">
+    
+            @if ($absensisiswa->isEmpty())
                 <div class="card" style="border-radius: 10px">
-                    <div class="card-body mt-3 ">
-                        <div class="row">
-                            <h6 class="text-muted text-center">Hi {{ $siswa->nama }}! Selamat datang di SIMAE-2024,
-                                aplikasi
-                                absensi PKL
-                                untuk memudahkan Anda dalam mengelola presensi harian. Kami siap mendukung kegiatan Anda
-                                selama
-                                PKL dengan teknologi terkini untuk pengalaman yang lebih baik!</h6>
-
+                    <div class="container">
+                        <div class="card-body mt-3">
+                            <div class="row">
+                                <h6 class="text-muted text-center">Hi {{ $siswa->nama }}! Selamat datang di SIMAE-2024,
+                                    aplikasi absensi PKL
+                                    untuk memudahkan Anda dalam mengelola presensi harian. Kami siap mendukung kegiatan Anda selama
+                                    PKL dengan teknologi terkini untuk pengalaman yang lebih baik!</h6>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
-            </div>
-        @endif
-
-
-
-
+            @endif
+    
+    
+    
+        </div>
     </div>
+    
 
 
 

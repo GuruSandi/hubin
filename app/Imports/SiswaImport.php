@@ -12,6 +12,17 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class SiswaImport implements ToModel, WithHeadingRow
 {
+    public function generateNumericPassword($length = 8)
+    {
+        $chars = '0123456789';
+        $password = '';
+        
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $chars[rand(0, strlen($chars) - 1)];
+        }
+        
+        return $password;
+    }
     public function model(array $row)
     {
         $siswa= new siswa([
@@ -21,7 +32,7 @@ class SiswaImport implements ToModel, WithHeadingRow
             'kelas' => $row['kelas'],
             'tahun_ajar' => $row['tahun_ajar'],
         ]);
-        $password = Str::random(8); 
+        $password = $this->generateNumericPassword(8);
         $user = new User();
         $user->username = $row['nis'];
         $user->password = bcrypt($password); 

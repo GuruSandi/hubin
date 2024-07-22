@@ -17,10 +17,12 @@ class AbsenController extends Controller
 {
     public function absensipulang()
     {
+        date_default_timezone_set('Asia/Jakarta');
+        Carbon::setLocale('id_ID');
         $siswa = Siswa::where('user_id', auth()->id())->first();
 
         $absensiHariIni = AbsensiSiswa::where('user_id', $siswa->user_id)
-            ->whereDate('created_at', Carbon::today())
+            ->whereDate('created_at', Carbon::now()->toDateString())
             ->first();
         if (!empty($absensiHariIni->jam_pulang)) {
             // Jika sudah ada jam pulang, redirect ke route 'tambahabsensipulang' dengan parameter $absensiHariIni->id
@@ -88,6 +90,8 @@ class AbsenController extends Controller
             'keterangan' => $request->keterangan,
             'jarak' => $jarak_formatted,
             'jam_pulang' => $jamSekarang,
+            'tanggal' => $tanggalSekarang,
+
         ]);
 
         toastr()->success('Data berhasil disimpan!');
@@ -129,6 +133,7 @@ class AbsenController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $jamSekarang = Carbon::now();
+        $tanggalSekarang = Carbon::now();
         $absensisiswa = absensisiswa::findOrFail($id);
         $absensisiswa->update([
             'latitude' => $request->latitude,
@@ -136,6 +141,8 @@ class AbsenController extends Controller
             'keterangan' => $request->keterangan,
             'jarak' => $jarak_formatted,
             'jam_pulang' => $jamSekarang,
+            'tanggal' => $tanggalSekarang,
+
         ]);
 
         toastr()->success('Data berhasil disimpan!');
@@ -153,6 +160,7 @@ class AbsenController extends Controller
         $jurnal = Jurnal::where('user_id', $user->id)
             ->whereDate('tanggal', '>=', Carbon::parse($start_date))
             ->whereDate('tanggal', '<=', Carbon::parse($end_date))
+            ->orderBy('tanggal', 'desc')
             ->get();
 
         foreach ($jurnal as $item) {
@@ -162,13 +170,36 @@ class AbsenController extends Controller
         // Tampilkan hasil pencarian ke view
         return view('jurnal.jurnal', compact('jurnal'));
     }
+    public function searchabsen(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        Carbon::setLocale('id_ID');
+        $user = Auth::user();
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
 
+        $absensisiswa = absensisiswa::where('user_id', $user->id)
+            ->whereDate('tanggal', '>=', Carbon::parse($start_date))
+            ->whereDate('tanggal', '<=', Carbon::parse($end_date))
+            ->orderBy('tanggal', 'desc')
+
+            ->get();
+
+        foreach ($absensisiswa as $item) {
+            $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+        }
+
+        // Tampilkan hasil pencarian ke view
+        return view('absensi.homeabsen', compact('absensisiswa'));
+    }
     public function jurnalbelumdivalidasi()
     {
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $user = Auth::user();
-        $jurnal = jurnal::whereIn('user_id', [$user->id])->where('validasi', 'belum_tervalidasi')->get();
+        $jurnal = jurnal::whereIn('user_id', [$user->id])->where('validasi', 'belum_tervalidasi')
+            ->orderBy('tanggal', 'desc')
+            ->get();
         foreach ($jurnal as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
         }
@@ -179,7 +210,9 @@ class AbsenController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $user = Auth::user();
-        $jurnal = jurnal::whereIn('user_id', [$user->id])->where('validasi', 'ditolak')->get();
+        $jurnal = jurnal::whereIn('user_id', [$user->id])->where('validasi', 'ditolak')
+            ->orderBy('tanggal', 'desc')
+            ->get();
         foreach ($jurnal as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
         }
@@ -190,7 +223,9 @@ class AbsenController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $user = Auth::user();
-        $jurnal = jurnal::whereIn('user_id', [$user->id])->where('validasi', 'tervalidasi')->get();
+        $jurnal = jurnal::whereIn('user_id', [$user->id])->where('validasi', 'tervalidasi')
+            ->orderBy('tanggal', 'desc')
+            ->get();
         foreach ($jurnal as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
         }
@@ -201,7 +236,9 @@ class AbsenController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $user = Auth::user();
-        $jurnal = jurnal::where('user_id', $user->id)->get();
+        $jurnal = jurnal::where('user_id', $user->id)
+            ->orderBy('tanggal', 'desc')
+            ->get();
         foreach ($jurnal as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
         }
@@ -242,27 +279,31 @@ class AbsenController extends Controller
     public function homeabsen()
     {
         $user = Auth::user();
-        
+
         $siswa = siswa::where('user_id', $user->id)->first();
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
 
         $absensiSiswa = AbsensiSiswa::where('user_id', $user->id)->get();
         $absensisiswa = AbsensiSiswa::where('absensisiswas.user_id', $user->id)
-            ->select('absensisiswas.tanggal', 'absensisiswas.jam_masuk', 'absensisiswas.jam_pulang', 'jurnals.deskripsi_jurnal',  'jurnals.validasi', 'jurnals.id')
+            ->select('absensisiswas.tanggal', 'absensisiswas.keterangan', 'absensisiswas.jam_masuk', 'absensisiswas.jam_pulang', 'jurnals.deskripsi_jurnal',  'jurnals.validasi', 'jurnals.id')
             ->leftJoin('jurnals', function ($join) {
                 $join->on('absensisiswas.user_id', '=', 'jurnals.user_id')
                     ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
             })
             ->orderBy('absensisiswas.tanggal', 'desc')  // Mengurutkan berdasarkan tanggal descending
-            ->limit(5)
             ->get();
         foreach ($absensisiswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
             $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
-            $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
+            // Periksa jika jam_pulang tidak kosong sebelum memformatnya
+            if ($item->jam_pulang) {
+                $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
+            } else {
+                $item->jam_pulang = 'Belum Absen Pulang';
+            }
         }
-       
+
 
         return view('absensi.homeabsen', compact('absensisiswa'));
     }
@@ -358,6 +399,7 @@ class AbsenController extends Controller
         $tanggalSekarang = Carbon::now();
         absensisiswa::create([
             'user_id' => auth()->id(),
+            'siswa_id' => $siswa->id,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'keterangan' => $request->keterangan,

@@ -53,7 +53,7 @@
     <table class="tabel tabel-bordered">
         <thead>
             <tr>
-                <th>No</th>
+                <th>siswa_id</th>
                 <th>NIS</th>
                 <th>Nama</th>
                 <th>P/L</th>
@@ -65,7 +65,7 @@
         <tbody>
             @foreach ($dataSiswa as $item)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->id }}</td>
                     <td style=" width: 70px;">{{ $item->nis }}</td>
                     <td style=" width: 200px;">{{ $item->nama }}</td>
                     <td style=" width: 200px;">{{ $item->jenkel }}</td>
