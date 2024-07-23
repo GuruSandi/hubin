@@ -1,215 +1,166 @@
 <!DOCTYPE html>
+<!-- YouTube or Website - CodingLab -->
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIMAE-2024</title>
+   
+    <link rel="stylesheet" href="{{ asset('sidebar1/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap-icon/bootstrap-icons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
-
-
-    <title>@yield('title')</title>
-    <style>
-        .sidebar {
-            width: 255px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #f8f9fa;
-            padding-top: 20px;
-            z-index: 1000;
-            /* Ensure sidebar is above other content */
-        }
-
-        .sidebar a,
-        .logout-btn {
-            padding: 15px 20px;
-            display: block;
-            color: black;
-            text-decoration: none;
-        }
-
-        .sidebar a:hover,
-        .logout-btn:hover {
-            background-color: #080761;
-            color: white;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .navbar-custom {
-            height: 56px;
-            /* Adjust as needed */
-        }
-
-        .dropdown-item.active {
-            background-color: #080761;
-            /* Warna latar belakang yang diinginkan */
-        }
-
-        .logo {
-            padding: 0px 20px 20px;
-            /* Jarak antara logo dan judul */
-        }
-
-        @media (min-width: 768px) {
-            .sidebar {
-                height: 100vh;
-            }
-
-            .content {
-                margin-left: 255px;
-            }
-
-            .navbar-custom {
-                margin-left: 255px;
-            }
-        }
-
-        @media (min-width: 576px) {
-            .sidebar {
-                height: 100vh;
-            }
-
-            .content {
-                margin-left: 255px;
-            }
-
-            .navbar-custom {
-                margin-left: 255px;
-            }
-        }
-
-        @media (max-width: 767px) {
-
-            /* CSS rules for devices with width up to 767px (e.g., smartphones) */
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                padding-top: 0;
-            }
-
-            .content {
-                margin-left: 0;
-            }
-
-            .navbar-custom {
-                margin-left: 0;
-            }
-        }
-    </style>
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
 
-<body style=" background-color: #f8f9fa">
+<body>
+    <nav class="sidebar"  style="box-shadow: ">
+        <div class="text-center" style="background-color: #080761; height: 60px; padding-top: 15px">
+            <a href="#" class="logo text-white ">SIMAE-2024</a>
+        </div>
+        <div class="logofoto text-center">
+            <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" class="imaged mt-4 w-50 rounded">
+            <p class="mt-1 fw-bold">{{ $guru_mapel_pkl->nama }} <br> <span
+                    style="font-weight: normal; font-size: 14px">Guru Mapel PKL</span></p>
+        </div>
+        <div class="menu-content">
+            <ul class="menu-items">
+                <li class="item {{ \Route::is('dashboardguru*') ? 'active' : '' }}">
+                    <a href="{{ route('dashboardguru') }}"><i class="fas fa-home mx-2"></i> Home</a>
 
-    <div class="sidebar shadow col-md-3 col-lg-2">
-        <h1 class="logo">HUBIN</h1>
-        <a href="{{ route('dashboardguru') }}"><i class="bi bi-house"></i> Dashboard</a>
-        <a href="{{ route('dataabsensi') }}"><i class="bi bi-house"></i> Absensi</a>
-        <a href="{{ route('datajurnal') }}"><i class="bi bi-house"></i> Jurnal</a>
-        <a href="{{ route('datasiswa') }}"><i class="bi bi-house"></i> Siswa</a>
-        
-
-       
-
-    </div>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="#">@yield('title')</a>
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ auth()->user()->username }}
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {{-- <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Profile</a></li> --}}
-                        <li><a class="dropdown-item" href="{{ route('logout') }}"><i class="bi bi-box-arrow-right"></i>
-                                Logout</a></li>
-                    </ul>
                 </li>
-            </ul>
 
+                
+                <li class="item {{ \Route::is('dataabsensi*') ? 'active' : '' }}">
+                    <a href="{{ route('dataabsensi') }}"><i class="fas fa-list mx-2"></i> Absensi</a>
+                </li>
+                <li class="item {{ \Route::is('datajurnal') ? 'active' : '' }}">
+                    <a href="{{ route('datajurnal') }}"><i class="fas fa-book mx-2"></i> Jurnal</a>
+                </li>
+                <li class="item {{ \Route::is('datasiswa') ? 'active' : '' }}">
+                    <a href="{{ route('datasiswa') }}"><i class="fas fa-user mx-2"></i>
+                        Siswa</a>
+
+                </li>
+
+                
+            </ul>
         </div>
     </nav>
 
-    <div class="content">
+    <nav class="navbar sticky-top">
+        <i class="fa-solid fa-bars" id="sidebar-close"></i>
+        <div class="d-flex justify-content-end">
+            <!-- Tombol Dropdown -->
+            <a href="#" id="dropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" class="imaged w64 rounded">
+            </a>
+          
+            <!-- Menu Dropdown -->
+            <ul class="dropdown-menu dropdown-menu-profile rounded" style="margin-top: 40px" id="dropdownMenu">
+              <li>
+                <a href="{{ route('editpassword') }}" class="dropdown-item1" style="font-size: 14px;">
+                  <i class="bi bi-lock-fill"></i>
+                  <span>Edit Password</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('logout') }}" class="dropdown-item1" style="font-size: 14px;">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Logout</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+       
+    </nav>
+
+    <main class="main">
         @yield('content')
-    </div>
+    </main>
 
-
+    <script src="{{ asset('sidebar1/script.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
-
-
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
     <script>
         new DataTable('#example');
     </script>
     <script>
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        var dropdownToggle = document.getElementById('dropdownToggle');
+        var dropdownMenu = document.getElementById('dropdownMenu');
 
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Hapus kelas 'active' dari semua item dropdown
-                dropdownItems.forEach(item => {
-                    item.classList.remove('active');
-                });
-
-                // Tambahkan kelas 'active' pada item yang diklik
-                this.classList.add('active');
-            });
-        });
-
-        const dropdownToggle = document.getElementById('dropdownToggle');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-
-        dropdownMenu.addEventListener('hidden.bs.collapse', function() {
-            dropdownMenu.classList.remove('show');
+        dropdownToggle.addEventListener('click', function(event) {
+            if (dropdownMenu.style.display === 'block') {
+                dropdownMenu.style.display = 'none';
+            } else {
+                dropdownMenu.style.display = 'block';
+            }
         });
     </script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    
 
     <script>
-        $(document).ready(function() {
-            // Inisialisasi Select2 untuk instansi
-            $('#instansi').select2({
-
-                placeholder: "Select an option",
-                allowClear: true
-            });
-
-            // Inisialisasi Select2 untuk siswa
-            $('#siswa').select2({
-
-                placeholder: "Select an option",
-                allowClear: true,
-            });
-            // Inisialisasi Select2 untuk pembimbing
-
-            $('#pembimbing').select2({
-
-                placeholder: "Select an option",
-                allowClear: true
+        // Tangkap klik tombol validasi
+        $('.validate-btn').click(function(e) {
+            e.preventDefault();  // Cegah aksi default dari link
+    
+            var validateUrl = $(this).attr('href');  // Ambil URL validasi dari atribut href
+            var dataId = $(this).data('id');  // Ambil ID data untuk digunakan dalam SweetAlert
+    
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Anda akan menyetujui jurnal ini!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Setujui!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect ke URL validasi jika dikonfirmasi
+                    window.location.href = validateUrl;
+                }
             });
         });
     </script>
+    <script>
+        // Tangkap klik tombol validasi
+        $('.tolakvalidate-btn').click(function(e) {
+            e.preventDefault();  // Cegah aksi default dari link
+    
+            var validateUrl = $(this).attr('href');  // Ambil URL validasi dari atribut href
+            var dataId = $(this).data('id');  // Ambil ID data untuk digunakan dalam SweetAlert
+    
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Anda akan menolak jurnal ini!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, ditolak!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect ke URL validasi jika dikonfirmasi
+                    window.location.href = validateUrl;
+                }
+            });
+        });
+    </script>
+    
 </body>
 
 </html>
