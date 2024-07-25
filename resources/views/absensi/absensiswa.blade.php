@@ -36,8 +36,8 @@
                             <option value="tidak_hadir_pkl">Tidak Hadir PKL</option>
                         </select><br>
 
-                        <input type="hidden" name="latitude" id="latitude">
-                        <input type="hidden" name="longitude" id="longitude">
+                        <input type="hidden" name="latitude" required id="latitude">
+                        <input type="hidden" name="longitude" required id="longitude">
 
                         <button type="submit" class="btn w-100 text-white"
                             style="border-radius: 20px; background-color: #080761">Simpan</button>

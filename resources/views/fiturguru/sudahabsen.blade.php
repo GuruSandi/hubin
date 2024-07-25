@@ -5,13 +5,13 @@
 
     <div class="container mt-4">
 
-        <div class="row mt-3">
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <p class="fw-bold mb-4">Sudah Absen hari ini</p>
-                        <div class="table-wrapper">
-                            <table class="table table-sm table-bordered" id="example" style="font-size: 12px">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-sm table-bordered" id="example" style="font-size: 12px">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -22,6 +22,7 @@
                                         <th>Jam Pulang</th>
                                         <th>Jarak Absen</th>
                                         <th>Instansi</th>
+                                        <th>Keterangan</th>
                                         <th>Pembimbing</th>
                                     </tr>
                                 </thead>
@@ -36,6 +37,17 @@
                                             <td>{{ $item->jam_pulang }}</td>
                                             <td>{{ $item->jarak }}</td>
                                             <td>{{ $item->instansi }}</td>
+                                            <td>
+                                                @if ($item->keterangan == 'hadir')
+                                                    Hadir
+                                                @elseif ($item->keterangan == 'libur')
+                                                    Libur
+                                                @elseif ($item->keterangan == 'tidak_masuk_pkl')
+                                                    Tidak Masuk PKL
+                                                @elseif ($item->keterangan == 'absen')
+                                                    Alpha
+                                                @endif
+                                            </td>
                                             <td>{{ $item->nama_pembimbing }}</td>
 
                                         </tr>
@@ -82,6 +94,18 @@
                         <dd class="col-sm-8">{{ $item->jarak }}</dd>
                         <dt class="col-sm-4">Instansi</dt>
                         <dd class="col-sm-8">{{ $item->instansi }}</dd>
+                        <dt class="col-sm-4">Keterangan</dt>
+                        <dd class="col-sm-8">
+                            @if ($item->keterangan == 'hadir')
+                                Hadir
+                            @elseif ($item->keterangan == 'libur')
+                                Libur
+                            @elseif ($item->keterangan == 'tidak_masuk_pkl')
+                                Tidak Masuk PKL
+                            @elseif ($item->keterangan == 'absen')
+                                Alpha
+                            @endif
+                        </dd>
                         <dt class="col-sm-4">Pembimbing</dt>
                         <dd class="col-sm-8">{{ $item->nama_pembimbing }}</dd>
                     </dl>

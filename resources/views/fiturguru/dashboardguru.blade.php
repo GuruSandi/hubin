@@ -129,6 +129,7 @@
                                         <th>Jam Pulang</th>
                                         <th>Jarak Absen</th>
                                         <th>Instansi</th>
+                                        <th>Keterangan</th>
                                         <th>Pembimbing</th>
                                     </tr>
                                 </thead>
@@ -143,6 +144,17 @@
                                             <td>{{ $item->jam_pulang }}</td>
                                             <td>{{ $item->jarak }}</td>
                                             <td>{{ $item->instansi }}</td>
+                                            <td>
+                                                @if ($item->keterangan == 'hadir')
+                                                    Hadir
+                                                @elseif ($item->keterangan == 'libur')
+                                                    Libur
+                                                @elseif ($item->keterangan == 'tidak_masuk_pkl')
+                                                    Tidak Masuk PKL
+                                                @elseif ($item->keterangan == 'absen')
+                                                    Alpha
+                                                @endif
+                                            </td>
                                             <td>{{ $item->nama_pembimbing }}</td>
                                         </tr>
                                     @endforeach
@@ -192,6 +204,18 @@
                         <dd class="col-sm-8">{{ $item->jarak }}</dd>
                         <dt class="col-sm-4">Instansi</dt>
                         <dd class="col-sm-8">{{ $item->instansi }}</dd>
+                        <dt class="col-sm-4">Keterangan</dt>
+                        <dd class="col-sm-8">
+                            @if ($item->keterangan == 'hadir')
+                                Hadir
+                            @elseif ($item->keterangan == 'libur')
+                                Libur
+                            @elseif ($item->keterangan == 'tidak_masuk_pkl')
+                                Tidak Masuk PKL
+                            @elseif ($item->keterangan == 'absen')
+                                Alpha
+                            @endif
+                        </dd>
                         <dt class="col-sm-4">Pembimbing</dt>
                         <dd class="col-sm-8">{{ $item->nama_pembimbing }}</dd>
                     </dl>

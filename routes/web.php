@@ -165,11 +165,16 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/dashboardguru', 'FiturGuruController@dashboardguru')->name('dashboardguru');
     Route::get('/dataabsensi', 'FiturGuruController@absensisiswa')->name('dataabsensi');
+    Route::get('/searchabsensisiswa', 'FiturGuruController@searchabsensisiswa')->name('dataabsensi.searchabsensisiswa');
+    Route::get('/rekapabsen', 'FiturGuruController@rekapabsen')->name('dataabsensi.rekapabsen');
+    Route::get('/seachrekapabsen', 'FiturGuruController@seachrekapabsen')->name('dataabsensi.seachrekapabsen');
+    Route::get('/detailrekapabsen/{siswa_id}', 'FiturGuruController@detailabsen')->name('dataabsensi.detailrekapabsensi');
     Route::get('/jurnalhariini', 'FiturGuruController@jurnalhariini')->name('dashboardguru.jurnalhariini');
     Route::get('/belumabsen', 'FiturGuruController@belumabsen')->name('dashboardguru.belumabsen');
     Route::get('/sudahabsen', 'FiturGuruController@sudahabsen')->name('dashboardguru.sudahabsen');
     Route::get('/datasiswa', 'FiturGuruController@datasiswa')->name('datasiswa');
     Route::get('/datajurnal', 'FiturGuruController@jurnalsiwa')->name('datajurnal');
+    Route::get('/searchdatajurnal', 'FiturGuruController@searchjurnalsiwa')->name('datajurnal.search');
     Route::get('/validasisetuju/{id}', 'FiturGuruController@validasisetuju')->name('validasisetuju');
     Route::get('/validasiditolak/{id}', 'FiturGuruController@validasiditolak')->name('validasiditolak');
     Route::post('/validasi/{id}', 'FiturGuruController@validasi')->name('validasi');

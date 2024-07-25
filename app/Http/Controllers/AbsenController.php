@@ -424,7 +424,7 @@ class AbsenController extends Controller
         $a = sin($dLat / 2) * sin($dLat / 2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon / 2) * sin($dLon / 2);
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        $distance = $earthRadius * $c;
+        $distance = $earthRadius * $c *1000;
 
         return $distance;
     }
@@ -465,6 +465,7 @@ class AbsenController extends Controller
         } else {
             $jarak_formatted = round($jarak_meter / 1000, 2) . ' KM';
         }
+        // dd($jarak_formatted);
         $absensisiswa = absensisiswa::findOrFail($id);
 
         $absensisiswa->update([

@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SIMAE-2024</title>
-   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('sidebar1/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
@@ -28,19 +29,22 @@
         </div>
         <div class="menu-content">
             <ul class="menu-items">
-                <li class="item {{ \Route::is('dashboardguru*') ? 'active' : '' }}">
+                <li class="item {{ \Route::is('dashboardguru*') ? 'active1' : '' }}">
                     <a href="{{ route('dashboardguru') }}"><i class="fas fa-home mx-2"></i> Home</a>
 
                 </li>
 
                 
-                <li class="item {{ \Route::is('dataabsensi*') ? 'active' : '' }}">
+                <li class="item {{ \Route::is('dataabsensi*') ? 'active1' : '' }}">
                     <a href="{{ route('dataabsensi') }}"><i class="fas fa-list mx-2"></i> Absensi</a>
                 </li>
-                <li class="item {{ \Route::is('datajurnal') ? 'active' : '' }}">
+                <li class="item {{ \Route::is('dataabsensi.rekapabsen*') ? 'active1' : '' }}">
+                    <a href="{{ route('dataabsensi.rekapabsen') }}"><i class="fas fa-list mx-2"></i> Rekap Absen</a>
+                </li>
+                <li class="item {{ \Route::is('datajurnal') ? 'active1' : '' }}">
                     <a href="{{ route('datajurnal') }}"><i class="fas fa-book mx-2"></i> Jurnal</a>
                 </li>
-                <li class="item {{ \Route::is('datasiswa') ? 'active' : '' }}">
+                <li class="item {{ \Route::is('datasiswa') ? 'active1' : '' }}">
                     <a href="{{ route('datasiswa') }}"><i class="fas fa-user mx-2"></i>
                         Siswa</a>
 
@@ -90,7 +94,6 @@
     <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     
     <script>
         new DataTable('#example');
@@ -160,7 +163,13 @@
             });
         });
     </script>
-    
+    <script>
+        $(document).ready(function() {
+            $('#toggleFilter').click(function() {
+                $('#filterForm').toggle();
+            });
+        });
+    </script>
 </body>
 
 </html>

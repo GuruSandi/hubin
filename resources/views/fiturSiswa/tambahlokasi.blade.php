@@ -27,12 +27,12 @@
 
                             <div class="form-group">
                                 <label for="latitude">Latitude</label>
-                                <input type="text" name="latitude" id="latitude" class="form-control" readonly>
+                                <input type="text" name="latitude" required id="latitude" class="form-control" readonly>
                             </div>
 
                             <div class="form-group">
                                 <label for="longitude">Longitude</label>
-                                <input type="text" name="longitude" id="longitude" class="form-control" readonly>
+                                <input type="text" name="longitude" required id="longitude" class="form-control" readonly>
                             </div>
                             <button class="btn w-100 text-white" style="border-radius: 20px; background-color: #080761">Simpan</button>
 

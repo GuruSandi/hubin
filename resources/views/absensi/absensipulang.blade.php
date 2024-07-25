@@ -38,8 +38,8 @@
                         <textarea class="form-control" name="deskripsi_jurnal" required placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px"></textarea>
                       </div>
                     
-                    <input type="hidden" name="latitude" id="latitude">
-                    <input type="hidden" name="longitude" id="longitude">
+                    <input type="hidden" name="latitude" required id="latitude">
+                    <input type="hidden" name="longitude" required id="longitude">
     
                     <button type="submit" class="btn w-100 text-white mt-4" style="border-radius: 20px; background-color: #080761">Simpan</button>
 

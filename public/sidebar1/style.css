@@ -181,7 +181,7 @@ a {
   /* Jarak antara logo dan judul */
 }
 
-.active a {
+.active1 a {
   background: #080761;
   color: #fff;
   display: inline-block;
@@ -219,7 +219,42 @@ a {
 
 
 
-/* CSS untuk modal */
+/* .custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+} */
+
+.custom-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  max-width: 90%;
+  /* Memastikan modal tidak terlalu lebar di perangkat kecil */
+  max-height: 90vh;  /* Batas maksimal tinggi modal */
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  z-index: 1050;
+  /* Pastikan modal berada di atas backdrop */
+  overflow: hidden;
+  /* Sembunyikan scroll pada modal utama */
+}
+
+.custom-modal .modal-content {
+  max-height: 100%;  /* Agar konten tidak melampaui batas modal */
+  overflow-y: auto;  /* Tambahkan scroll pada konten modal jika diperlukan */
+  padding: 1rem; 
+ 
+}
+
+
+/* CSS untuk backdrop/modal overlay jika Anda membutuhkannya */
 .custom-modal-backdrop {
   position: fixed;
   top: 0;
@@ -227,27 +262,9 @@ a {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  /* Background semi-transparan */
-  z-index: 1040;
-  /* Pastikan di atas semua konten lainnya */
+  z-index: 1040;  /* Pastikan backdrop berada di bawah modal */
 }
 
-.custom-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
-  ;
-  max-width: 90%;
-  /* Memastikan modal tidak terlalu lebar di perangkat kecil */
-  background-color: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-  z-index: 1050;
-  /* Pastikan modal berada di atas backdrop */
-  overflow: auto;
-  /* Scroll modal body jika konten terlalu panjang */
-}
 
 .custom-modal-header,
 .custom-modal-footer {
@@ -311,4 +328,112 @@ a {
   }
 
   
+}
+.custom-modal-backdrop1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparansi backdrop */
+  z-index: 1050; /* Z-index di atas konten utama */
+  display: none; /* Awalnya disembunyikan */
+}
+
+/* Modal Container */
+.custom-modal1 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  display: flex;
+  z-index: 9999; /* Z-index tinggi agar tampil di atas konten lain */
+
+  /* Animasi fade-in */
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Animasi fade-in */
+@keyframes fadeIn {
+  to {
+      opacity: 1;
+  }
+}
+
+/* Modal Content */
+.custom-modal1 .modal-content1 {
+  background-color: #fff;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden; /* menghindari bayangan yang muncul di luar konten */
+}
+
+/* Header Modal */
+.custom-modal1 .modal-header1 {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Judul Modal */
+.custom-modal1 .modal-title1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* Isi Modal */
+.custom-modal1 .modal-body1 {
+  padding: 20px;
+}
+
+/* Tombol Modal */
+.custom-modal1 .modal-footer1 {
+  padding: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.custom-modal1 .modal-footer1 .btn1 {
+  padding: 8px 20px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.custom-modal1 .modal-footer1 .btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.custom-modal1 .modal-footer1 .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.custom-modal1 .modal-footer1 .btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+}
+
+.custom-modal1 .modal-footer1 .btn-secondary:hover {
+  background-color: #5a6268;
+}
+.custom-close-btn1 {
+  border: none;
+  margin-top: 5px;
+  background: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  /* Jarak antara tombol close dan judul */
+}
+.custom-modal-title1 {
+  margin-top: 10px;
+  /* Menghapus margin default */
+  font-size: 1.25rem;
+  flex-grow: 1;
+  /* Membuat judul modal mengisi ruang tersisa */
 }
