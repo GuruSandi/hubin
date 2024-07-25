@@ -23,14 +23,14 @@
                                     <div class="row">
                                         <div class="col-5">
                                             <label for="tanggal_mulai">Tanggal Mulai:</label>
-                                            <input type="date" required class="form-control form-control-sm mb-3" id="tanggal_mulai"
-                                                name="tanggal_mulai">
+                                            <input type="date" required class="form-control form-control-sm mb-3"
+                                                id="tanggal_mulai" name="tanggal_mulai">
 
                                         </div>
                                         <div class="col-5">
                                             <label for="tanggal_akhir">Tanggal Selesai:</label>
-                                            <input type="date" required class="form-control form-control-sm mb-3 " id="tanggal_akhir"
-                                                name="tanggal_akhir">
+                                            <input type="date" required class="form-control form-control-sm mb-3 "
+                                                id="tanggal_akhir" name="tanggal_akhir">
 
                                         </div>
                                         <div class="col-2">
@@ -43,7 +43,8 @@
                             </div>
                         </div>
                         <div class="table-responsive mt-3">
-                            <table class="table table-sm table-striped table-bordered" id="example" style="font-size: 12px">
+                            <table class="table table-sm table-striped table-bordered" id="example"
+                                style="font-size: 12px">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -61,10 +62,20 @@
                                     @foreach ($rekapabsen as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td><a href="{{ route('dataabsensi.detailrekapabsensi', $item->siswa_id) }}">
-                                                    {{ $item->nama_siswa }}
-
-                                                </a>
+                                            <td>
+                                                @if ($tanggalMulai && $tanggalAkhir)
+                                                    <!-- Jika filter tanggal aktif, arahkan ke halaman pencarian absensi -->
+                                                    <a href="{{ route('dataabsensi.seachdetailrekapabsen', ['siswa_id' => $item->siswa_id]) }}?tanggal_mulai={{ request('tanggal_mulai') }}&tanggal_akhir={{ request('tanggal_akhir') }}"
+                                                        class="text-dark" style="text-decoration: none">
+                                                        {{ $item->nama_siswa }}
+                                                    </a>
+                                                @else
+                                                    <!-- Jika filter tanggal tidak aktif, arahkan ke detail absensi -->
+                                                    <a href="{{ route('dataabsensi.detailrekapabsensi', ['siswa_id' => $item->siswa_id]) }}"
+                                                        class="text-dark" style="text-decoration: none;">
+                                                        {{ $item->nama_siswa }}
+                                                    </a>
+                                                @endif
                                             </td>
                                             <td>{{ $item->kelas_siswa }}</td>
                                             <td>{{ $item->instansi_siswa }}</td>
@@ -73,11 +84,24 @@
                                             <td>{{ $item->total_absen }}</td>
                                             <td>{{ $item->total_tidak_hadir_pkl }}</td>
                                             <td>
-                                                <a href="{{ route('dataabsensi.detailrekapabsensi', ['siswa_id' => $item->siswa_id, 'tanggal_mulai' => $tanggalMulai, 'tanggal_akhir' => $tanggalAkhir]) }}"
+                                                {{-- <a href="{{ route('dataabsensi.detailrekapabsensi', ['siswa_id' => $item->siswa_id, 'tanggal_mulai' => $tanggalMulai, 'tanggal_akhir' => $tanggalAkhir]) }}"
                                                     class="btn btn-sm mx-1 btn-success">
                                                      <i class="fas fa-eye"></i>
-                                                 </a>
-                                                 
+                                                 </a> --}}
+                                                @if ($tanggalMulai && $tanggalAkhir)
+                                                    <!-- Jika filter tanggal aktif, arahkan ke halaman pencarian absensi -->
+                                                    <a href="{{ route('dataabsensi.seachdetailrekapabsen', ['siswa_id' => $item->siswa_id]) }}?tanggal_mulai={{ request('tanggal_mulai') }}&tanggal_akhir={{ request('tanggal_akhir') }}"
+                                                        class="btn btn-sm mx-1 btn-success">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                @else
+                                                    <!-- Jika filter tanggal tidak aktif, arahkan ke detail absensi -->
+                                                    <a href="{{ route('dataabsensi.detailrekapabsensi', ['siswa_id' => $item->siswa_id]) }}"
+                                                        class="btn btn-sm mx-1 btn-success">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                @endif
+
 
                                             </td>
 
@@ -85,14 +109,14 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            
+
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
-       
+
     </div>
 
 @endsection

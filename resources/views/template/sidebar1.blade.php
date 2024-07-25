@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SIMAE-2024</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('sidebar1/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <nav class="sidebar"  style="box-shadow: ">
+    <nav class="sidebar" style="box-shadow: ">
         <div class="text-center" style="background-color: #080761; height: 60px; padding-top: 15px">
             <a href="#" class="logo text-white ">SIMAE-2024</a>
         </div>
@@ -34,13 +34,31 @@
 
                 </li>
 
+                <li class="item">
+                    <div class="submenu-item">
+                        <span>Absensi Siswa</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+
+                    <ul class="menu-items submenu">
+                        <div class="menu-title">
+                            <i class="fa-solid fa-chevron-left"></i>
+                            Absensi Siswa
+                        </div>
+                        <li class="item {{ \Route::is('dataabsensi') ? 'active1' : '' }}">
+                            <a href="{{ route('dataabsensi') }}"><i class="fas fa-list mx-2"></i>Data Absensi</a>
+
+                        </li>
+                        <li class="item {{ \Route::is('dataabsensi.rekapabsen') ? 'active1' : '' }}">
+                            <a href="{{ route('dataabsensi.rekapabsen') }}"> <i class="fas fa-chart-bar mx-2"></i> Rekap Absen</a>
+
+                        </li>
+                    </ul>
+
+
+
+                </li>
                 
-                <li class="item {{ \Route::is('dataabsensi*') ? 'active1' : '' }}">
-                    <a href="{{ route('dataabsensi') }}"><i class="fas fa-list mx-2"></i> Absensi</a>
-                </li>
-                <li class="item {{ \Route::is('dataabsensi.rekapabsen*') ? 'active1' : '' }}">
-                    <a href="{{ route('dataabsensi.rekapabsen') }}"><i class="fas fa-list mx-2"></i> Rekap Absen</a>
-                </li>
                 <li class="item {{ \Route::is('datajurnal') ? 'active1' : '' }}">
                     <a href="{{ route('datajurnal') }}"><i class="fas fa-book mx-2"></i> Jurnal</a>
                 </li>
@@ -50,7 +68,7 @@
 
                 </li>
 
-                
+
             </ul>
         </div>
     </nav>
@@ -60,27 +78,27 @@
         <div class="d-flex justify-content-end">
             <!-- Tombol Dropdown -->
             <a href="#" id="dropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" class="imaged w64 rounded">
+                <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" class="imaged w64 rounded">
             </a>
-          
+
             <!-- Menu Dropdown -->
             <ul class="dropdown-menu dropdown-menu-profile rounded" style="margin-top: 40px" id="dropdownMenu">
-              <li>
-                <a href="{{ route('editpassword') }}" class="dropdown-item1" style="font-size: 14px;">
-                  <i class="bi bi-lock-fill"></i>
-                  <span>Edit Password</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('logout') }}" class="dropdown-item1" style="font-size: 14px;">
-                  <i class="bi bi-box-arrow-right"></i>
-                  <span>Logout</span>
-                </a>
-              </li>
+                <li>
+                    <a href="{{ route('editpassword') }}" class="dropdown-item1" style="font-size: 14px;">
+                        <i class="bi bi-lock-fill"></i>
+                        <span>Edit Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('logout') }}" class="dropdown-item1" style="font-size: 14px;">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
             </ul>
-          </div>
-          
-       
+        </div>
+
+
     </nav>
 
     <main class="main">
@@ -94,7 +112,7 @@
     <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
-    
+
     <script>
         new DataTable('#example');
     </script>
@@ -110,17 +128,17 @@
             }
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script>
         // Tangkap klik tombol validasi
         $('.validate-btn').click(function(e) {
-            e.preventDefault();  // Cegah aksi default dari link
-    
-            var validateUrl = $(this).attr('href');  // Ambil URL validasi dari atribut href
-            var dataId = $(this).data('id');  // Ambil ID data untuk digunakan dalam SweetAlert
-    
+            e.preventDefault(); // Cegah aksi default dari link
+
+            var validateUrl = $(this).attr('href'); // Ambil URL validasi dari atribut href
+            var dataId = $(this).data('id'); // Ambil ID data untuk digunakan dalam SweetAlert
+
             Swal.fire({
                 title: 'Anda yakin?',
                 text: "Anda akan menyetujui jurnal ini!",
@@ -141,11 +159,11 @@
     <script>
         // Tangkap klik tombol validasi
         $('.tolakvalidate-btn').click(function(e) {
-            e.preventDefault();  // Cegah aksi default dari link
-    
-            var validateUrl = $(this).attr('href');  // Ambil URL validasi dari atribut href
-            var dataId = $(this).data('id');  // Ambil ID data untuk digunakan dalam SweetAlert
-    
+            e.preventDefault(); // Cegah aksi default dari link
+
+            var validateUrl = $(this).attr('href'); // Ambil URL validasi dari atribut href
+            var dataId = $(this).data('id'); // Ambil ID data untuk digunakan dalam SweetAlert
+
             Swal.fire({
                 title: 'Anda yakin?',
                 text: "Anda akan menolak jurnal ini!",

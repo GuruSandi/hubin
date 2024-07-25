@@ -50,14 +50,20 @@
 
    
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                document.getElementById('latitude').value = latitude;
-                document.getElementById('longitude').value = longitude;
-            });
+<script>
+    // Cek apakah browser mendukung geolocation
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            // Mengambil latitude dan longitude dari objek position
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Mengisi nilai latitude dan longitude ke dalam input hidden
+            document.getElementById('latitude').value = latitude;
+            document.getElementById('longitude').value = longitude;
         });
-    </script>
+    } else {
+        console.log('Geolocation tidak didukung di browser ini.');
+    }
+</script>
 @endsection

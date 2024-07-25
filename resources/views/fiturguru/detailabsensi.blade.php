@@ -9,7 +9,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <p class="fw-bold mb-4">Detail Absensi Siswa</p>
+                        <p class="fw-bold mb-4">Detail Rekap Absensi Siswa</p>
                         <dl class="row">
                             @foreach ($rekapabsen as $item)
                                 <dt class="col-sm-4">Nama Siswa</dt>

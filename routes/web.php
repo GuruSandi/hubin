@@ -168,6 +168,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/searchabsensisiswa', 'FiturGuruController@searchabsensisiswa')->name('dataabsensi.searchabsensisiswa');
     Route::get('/rekapabsen', 'FiturGuruController@rekapabsen')->name('dataabsensi.rekapabsen');
     Route::get('/seachrekapabsen', 'FiturGuruController@seachrekapabsen')->name('dataabsensi.seachrekapabsen');
+    Route::get('/seachdetailrekapabsen/{siswa_id}', 'FiturGuruController@seachdetailrekapabsen')->name('dataabsensi.seachdetailrekapabsen');
     Route::get('/detailrekapabsen/{siswa_id}', 'FiturGuruController@detailabsen')->name('dataabsensi.detailrekapabsensi');
     Route::get('/jurnalhariini', 'FiturGuruController@jurnalhariini')->name('dashboardguru.jurnalhariini');
     Route::get('/belumabsen', 'FiturGuruController@belumabsen')->name('dashboardguru.belumabsen');

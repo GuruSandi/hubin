@@ -180,17 +180,110 @@ class FiturGuruController extends Controller
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->join('absensisiswas', 'membimbings.siswa_id', '=', 'absensisiswas.siswa_id')
             ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
-            ->where('absensisiswas.siswa_id', $siswa->id)           
+            ->where('absensisiswas.siswa_id', $siswa->id)
             ->groupBy('siswas.id', 'siswas.nama', 'siswas.kelas', 'instansis.instansi')
             ->orderBy('siswas.nama')
             ->when($tanggalMulai && $tanggalAkhir, function ($query) use ($tanggalMulai, $tanggalAkhir) {
                 return $query->whereBetween('absensisiswas.tanggal', [$tanggalMulai, $tanggalAkhir]);
-            }) 
+            })
             ->get();
+            foreach ($detailAbsensi as $item) {
+                $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+            }
         // dd($rekapabsen);
 
         return view('fiturguru.detailabsensi', compact('rekapabsen', 'guru_mapel_pkl', 'detailAbsensi'));
     }
+    public function seachdetailrekapabsen(Request $request, $siswa_id)
+    {
+        $tanggalMulai = $request->input('tanggal_mulai');
+        $tanggalAkhir = $request->input('tanggal_akhir');
+
+        date_default_timezone_set('Asia/Jakarta');
+        Carbon::setLocale('id_ID');
+
+        $user = User::find(Auth::id());
+        $guru_mapel_pkl = guru_mapel_pkl::where('user_id', $user->id)->first();
+        $siswa = siswa::findOrFail($siswa_id);
+
+        $detailAbsensi = DB::table('membimbings')
+            ->select(
+                'siswas.id as siswa_id',
+                'siswas.nama as nama_siswa',
+                'siswas.kelas as kelas_siswa',
+                'instansis.instansi as instansi_siswa',
+                'absensisiswas.tanggal',
+                'absensisiswas.keterangan'
+            )
+            ->join('siswas', 'membimbings.siswa_id', '=', 'siswas.id')
+            ->join('menempatis', 'membimbings.siswa_id', '=', 'menempatis.siswa_id')
+            ->join('instansis', 'menempatis.siswa_id', '=', 'instansis.id')
+            ->join('absensisiswas', 'membimbings.siswa_id', '=', 'absensisiswas.siswa_id')
+            ->leftJoin('jurnals', function ($join) {
+                $join->on('absensisiswas.user_id', '=', 'jurnals.user_id')
+                    ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
+            })
+            ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
+            ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
+            ->where('siswas.id', $siswa_id)
+            ->whereIn('absensisiswas.keterangan', ['hadir', 'libur', 'absen', 'tidak_masuk_pkl'])
+            ->when($tanggalMulai && $tanggalAkhir, function ($query) use ($tanggalMulai, $tanggalAkhir) {
+                $query->whereBetween('absensisiswas.tanggal', [$tanggalMulai, $tanggalAkhir]);
+            })
+            ->orderBy('siswas.nama')
+            ->orderBy('absensisiswas.tanggal')
+            ->get();
+
+        $rekapabsenQuery = "
+    SELECT
+        siswas.id as siswa_id,
+        siswas.nama as nama_siswa,
+        siswas.kelas as kelas_siswa,
+        instansis.instansi as instansi_siswa,
+        (SELECT COUNT(*) FROM absensisiswas 
+            WHERE absensisiswas.siswa_id = siswas.id 
+            AND absensisiswas.keterangan = 'hadir'
+            AND absensisiswas.tanggal BETWEEN ? AND ?) as total_hadir,
+        (SELECT COUNT(*) FROM absensisiswas 
+            WHERE absensisiswas.siswa_id = siswas.id 
+            AND absensisiswas.keterangan = 'libur'
+            AND absensisiswas.tanggal BETWEEN ? AND ?) as total_libur,
+        (SELECT COUNT(*) FROM absensisiswas 
+            WHERE absensisiswas.siswa_id = siswas.id 
+            AND absensisiswas.keterangan = 'absen'
+            AND absensisiswas.tanggal BETWEEN ? AND ?) as total_absen,
+        (SELECT COUNT(*) FROM absensisiswas 
+            WHERE absensisiswas.siswa_id = siswas.id 
+            AND absensisiswas.keterangan = 'tidak_masuk_pkl'
+            AND absensisiswas.tanggal BETWEEN ? AND ?) as total_tidak_hadir_pkl
+    FROM membimbings
+    INNER JOIN siswas ON membimbings.siswa_id = siswas.id
+    INNER JOIN menempatis ON membimbings.siswa_id = menempatis.siswa_id
+    INNER JOIN instansis ON menempatis.siswa_id = instansis.id
+    INNER JOIN pembimbings ON membimbings.pembimbing_id = pembimbings.id
+    INNER JOIN absensisiswas ON membimbings.siswa_id = absensisiswas.siswa_id
+    WHERE membimbings.guru_mapel_pkl_id = ?
+    AND siswas.id = ?
+    AND absensisiswas.tanggal BETWEEN ? AND ?
+    GROUP BY siswas.id, siswas.nama, siswas.kelas, instansis.instansi
+    ORDER BY siswas.nama
+    ";
+
+        $rekapabsen = DB::select($rekapabsenQuery, [
+            $tanggalMulai, $tanggalAkhir,
+            $tanggalMulai, $tanggalAkhir,
+            $tanggalMulai, $tanggalAkhir,
+            $tanggalMulai, $tanggalAkhir,
+            $guru_mapel_pkl->id,
+            $siswa_id,
+            $tanggalMulai, $tanggalAkhir
+        ]);
+        foreach ($detailAbsensi as $item) {
+            $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+        }
+        return view('fiturguru.detailabsensi', compact('rekapabsen', 'guru_mapel_pkl', 'detailAbsensi'));
+    }
+
     public function rekapabsen(Request $request)
     {
         $tanggalMulai = $request->input('tanggal_mulai');
@@ -263,10 +356,14 @@ class FiturGuruController extends Controller
         if (!$tanggalAkhir) {
             $tanggalAkhir = null;
         }
+
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
+
         $user = User::find(Auth::id());
         $guru_mapel_pkl = guru_mapel_pkl::where('user_id', $user->id)->first();
+
+        // Detail absensi
         $detailAbsensi = DB::table('membimbings')
             ->select(
                 'siswas.id as siswa_id',
@@ -294,37 +391,57 @@ class FiturGuruController extends Controller
             ->orderBy('absensisiswas.tanggal')
             ->get();
 
-        $rekapabsen = DB::table('membimbings')
-            ->select(
-                'siswas.id as siswa_id',
-                'siswas.nama as nama_siswa',
-                'siswas.kelas as kelas_siswa',
-                'instansis.instansi as instansi_siswa',
-                DB::raw('(SELECT COUNT(*) FROM absensisiswas WHERE absensisiswas.siswa_id = siswas.id AND absensisiswas.keterangan = "hadir") as total_hadir'),
-                DB::raw('(SELECT COUNT(*) FROM absensisiswas WHERE absensisiswas.siswa_id = siswas.id AND absensisiswas.keterangan = "libur") as total_libur'),
-                DB::raw('(SELECT COUNT(*) FROM absensisiswas WHERE absensisiswas.siswa_id = siswas.id AND absensisiswas.keterangan = "absen") as total_absen'),
-                DB::raw('(SELECT COUNT(*) FROM absensisiswas WHERE absensisiswas.siswa_id = siswas.id AND absensisiswas.keterangan = "tidak_masuk_pkl") as total_tidak_hadir_pkl')
-            )
-            ->join('siswas', 'membimbings.siswa_id', '=', 'siswas.id')
-            ->join('menempatis', 'membimbings.siswa_id', '=', 'menempatis.siswa_id')
-            ->join('instansis', 'menempatis.siswa_id', '=', 'instansis.id')
-            ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
-            ->join('absensisiswas', 'membimbings.siswa_id', '=', 'absensisiswas.siswa_id')
-            ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
-            ->when($tanggalMulai && $tanggalAkhir, function ($query) use ($tanggalMulai, $tanggalAkhir) {
-                $query->whereBetween('absensisiswas.tanggal', [$tanggalMulai, $tanggalAkhir]);
-            })
-            ->groupBy('siswas.id', 'siswas.nama', 'siswas.kelas', 'instansis.instansi')
-            ->orderBy('siswas.nama')
-            ->get();
+        // Rekap absensi
+        $rekapabsenQuery = "
+        SELECT
+            siswas.id as siswa_id,
+            siswas.nama as nama_siswa,
+            siswas.kelas as kelas_siswa,
+            instansis.instansi as instansi_siswa,
+            (SELECT COUNT(*) FROM absensisiswas 
+                WHERE absensisiswas.siswa_id = siswas.id 
+                AND absensisiswas.keterangan = 'hadir'
+                AND absensisiswas.tanggal BETWEEN ? AND ?) as total_hadir,
+            (SELECT COUNT(*) FROM absensisiswas 
+                WHERE absensisiswas.siswa_id = siswas.id 
+                AND absensisiswas.keterangan = 'libur'
+                AND absensisiswas.tanggal BETWEEN ? AND ?) as total_libur,
+            (SELECT COUNT(*) FROM absensisiswas 
+                WHERE absensisiswas.siswa_id = siswas.id 
+                AND absensisiswas.keterangan = 'absen'
+                AND absensisiswas.tanggal BETWEEN ? AND ?) as total_absen,
+            (SELECT COUNT(*) FROM absensisiswas 
+                WHERE absensisiswas.siswa_id = siswas.id 
+                AND absensisiswas.keterangan = 'tidak_masuk_pkl'
+                AND absensisiswas.tanggal BETWEEN ? AND ?) as total_tidak_hadir_pkl
+        FROM membimbings
+        INNER JOIN siswas ON membimbings.siswa_id = siswas.id
+        INNER JOIN menempatis ON membimbings.siswa_id = menempatis.siswa_id
+        INNER JOIN instansis ON menempatis.siswa_id = instansis.id
+        INNER JOIN pembimbings ON membimbings.pembimbing_id = pembimbings.id
+        INNER JOIN absensisiswas ON membimbings.siswa_id = absensisiswas.siswa_id
+        WHERE membimbings.guru_mapel_pkl_id = ?
+        AND absensisiswas.tanggal BETWEEN ? AND ?
+        GROUP BY siswas.id, siswas.nama, siswas.kelas, instansis.instansi
+        ORDER BY siswas.nama
+    ";
 
+        $rekapabsen = DB::select($rekapabsenQuery, [
+            $tanggalMulai, $tanggalAkhir,
+            $tanggalMulai, $tanggalAkhir,
+            $tanggalMulai, $tanggalAkhir,
+            $tanggalMulai, $tanggalAkhir,
+            $guru_mapel_pkl->id,
+            $tanggalMulai, $tanggalAkhir
+        ]);
+
+        // Format tanggal untuk detail absensi
         foreach ($detailAbsensi as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
         }
 
         return view('fiturguru.rekapabsen', compact('rekapabsen', 'guru_mapel_pkl', 'detailAbsensi', 'tanggalMulai', 'tanggalAkhir'));
     }
-
 
     public function absensisiswa()
     {
