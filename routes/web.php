@@ -179,5 +179,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/validasisetuju/{id}', 'FiturGuruController@validasisetuju')->name('validasisetuju');
     Route::get('/validasiditolak/{id}', 'FiturGuruController@validasiditolak')->name('validasiditolak');
     Route::post('/validasi/{id}', 'FiturGuruController@validasi')->name('validasi');
+    Route::get('/nilaisiswa', 'NilaiSiswaController@nilaisiswa')->name('nilaisiswa');
+
     
 });

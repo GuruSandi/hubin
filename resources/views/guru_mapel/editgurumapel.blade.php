@@ -16,7 +16,7 @@
                     <label for="">No HP</label>
                     <input type="text" class="form-control" required name="no_hp" value="{{ $item->no_hp }}">
                     <label for="">Foto</label>
-                    <input type="file" class="form-control"  name="foto" value="{{ $item->foto }}">
+                    <input type="file" class="form-control" accept="img/fotoguru*"  name="foto" value="{{ $item->foto }}">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>

@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap-icon/bootstrap-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
@@ -62,13 +64,17 @@
                 <li class="item {{ \Route::is('datajurnal') ? 'active1' : '' }}">
                     <a href="{{ route('datajurnal') }}"><i class="fas fa-book mx-2"></i> Jurnal</a>
                 </li>
+                <li class="item {{ \Route::is('nilaisiswa') ? 'active1' : '' }}">
+                    <a href="{{ route('nilaisiswa') }}"><i class="fas fa-book mx-2"></i> Nilai siswa</a>
+                </li>
                 <li class="item {{ \Route::is('datasiswa') ? 'active1' : '' }}">
                     <a href="{{ route('datasiswa') }}"><i class="fas fa-user mx-2"></i>
                         Siswa</a>
-
                 </li>
-
-
+                <li class="item {{ \Route::is('datasiswa') ? 'active1' : '' }}">
+                    <a href="{{ route('datasiswa') }}"><i class="fas fa-user mx-2"></i>
+                        Nilai Siswa</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -84,7 +90,7 @@
             <!-- Menu Dropdown -->
             <ul class="dropdown-menu dropdown-menu-profile rounded" style="margin-top: 40px" id="dropdownMenu">
                 <li>
-                    <a href="{{ route('editpassword') }}" class="dropdown-item1" style="font-size: 14px;">
+                    <a href="" class="dropdown-item1" style="font-size: 14px;">
                         <i class="bi bi-lock-fill"></i>
                         <span>Edit Password</span>
                     </a>
@@ -186,6 +192,21 @@
             $('#toggleFilter').click(function() {
                 $('#filterForm').toggle();
             });
+        });
+    </script>
+     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+     <script src="{{ asset('js/jquery.min.js') }}"></script>
+     <script src="{{ asset('js/select2.min.js') }}"></script>
+     <script>
+        $(document).ready(function() {
+            
+            
+            $('#siswas').select2({
+
+                placeholder: "Silahkan masukan nama siswa",
+                allowClear: true,
+            });
+           
         });
     </script>
 </body>
