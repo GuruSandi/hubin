@@ -92,7 +92,6 @@ class PembimbingController extends Controller
             unset($data['foto']);
         }
         guru_mapel_pkl::where('id', $pembimbing->id)->update($data);
-
         $pembimbing->update($data);
 
         toastr()->success('Data berhasil di update!');

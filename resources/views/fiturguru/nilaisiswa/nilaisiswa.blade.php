@@ -4,14 +4,62 @@
 @section('content')
 
     <div class="container mt-4">
+        <form action="{{ route('nilaisiswa.tambahnilaisiswa') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <label for="" class="mb-2 fw-bold" style="color: rgb(19, 19, 59)">Pilih Siswa</label>
+            <select style="width: 99.7%" class="form-control form-control-lg mb-3 " id="siswas"
+                name="siswa_ids" required>
+                @foreach ($siswa_tersedia as $item)
+                    <option value="{{ $item->siswa->id }}">{{ $item->siswa->id }} - {{ $item->siswa->nama }} - {{ $item->siswa->kelas }}</option>
+                @endforeach
+            </select>
+            
+           
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group mt-3">
+                        <label for="nilai1">Nilai 1</label>
+                        <input type="number" class="form-control" id="nilai1" name="nilai1" required>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group mt-3">
+                        <label for="nilai2">Nilai 2</label>
+                        <input type="number" class="form-control" id="nilai2" name="nilai2" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="nilai3">Nilai 3</label>
+                        <input type="number" class="form-control" id="nilai3" name="nilai3" required>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="nilai4">Nilai 4</label>
+                        <input type="number" class="form-control" id="nilai4" name="nilai4" required>
+                    </div>
+                </div>
+            </div>
+           
+            
+            <div class="custom-modal-footer">
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mx-1">Simpan</button>
 
+                    <button type="button" class="btn btn-danger" onclick="closeModal()">Batal</button>
+                </div>
+            </div>
+        </form>
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <p class="fw-bold mb-4">Nilai Siswa</p>
                         <div class="row mb-3">
-                            <div class="col-3">
+                            <div class="col-md-12 col-lg-3">
                                 <button class="btn btn-sm btn-primary text-white"  onclick="openModal()">
                                     <i class="bi bi-plus-circle"></i> Tambah Nilai
                                 </button>
@@ -31,7 +79,7 @@
                                         <th>Nilai 2</th>
                                         <th>Nilai 3</th>
                                         <th>Nilai 4</th>
-                                        <th>aksi</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>

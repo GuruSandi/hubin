@@ -33,7 +33,7 @@
                     <div class="col-12">
                         <label for="" class="mb-2 fw-bold" style="color: rgb(19, 19, 59)">Pilih Siswa</label>
                         <select style="width: 99.7%"  class="form-control form-control-lg mb-3 " id="siswas" name="siswa_ids[]"
-                            multiple="multiple">
+                            multiple="multiple" required>
                             @foreach ($siswa_tersedia as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
                             @endforeach

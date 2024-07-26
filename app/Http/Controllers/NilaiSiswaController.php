@@ -18,8 +18,56 @@ class NilaiSiswaController extends Controller
         $siswa = membimbing::where('guru_mapel_pkl_id', $guru_mapel_pkl->id)
         ->with('siswa')->get();
         $nilaisiswa = nilai_pkl::where('guru_mapel_pkl_id', $guru_mapel_pkl->id)->with('siswa')->get();
-        
+        $siswa_terpilih = nilai_pkl::pluck('siswa_id')->toArray();
+        $siswa_tersedia = $siswa->whereNotIn('id', $siswa_terpilih);
         // dd($nilaisiswa);
-        return view('fiturguru.nilaisiswa.nilaisiswa', compact('siswa', 'nilaisiswa', 'guru_mapel_pkl'));
+        return view('fiturguru.nilaisiswa.nilaisiswa', compact('siswa', 'nilaisiswa', 'guru_mapel_pkl','siswa_tersedia'));
     }
+    public function posttambahnilaisiswa(Request $request)
+    {
+        $request->validate([
+            'siswa_ids' => 'required',
+            'guru_mapel_pkl_id' => 'required',
+            'nilai1' => 'required|numeric',
+            'nilai2' => 'required|numeric',
+            'nilai3' => 'required|numeric',
+            'nilai4' => 'required|numeric',
+
+        ]);
+        nilai_pkl::create([
+            'siswa_id' => $request->siswa_ids,
+            'guru_mapel_pkl_id' => $request->guru_mapel_pkl_id,
+            'user_id' => Auth::id(),
+            'nilai1' => $request->nilai1,
+            'nilai2' => $request->nilai2,
+            'nilai3' => $request->nilai3,
+            'nilai4' => $request->nilai4,
+        ]);
+        toastr()->success('Data berhasil ditambahkan!');
+        return view('fiturguru.nilaisiswa.nilaisiswa', compact('siswa', 'nilaisiswa', 'guru_mapel_pkl','siswa_tersedia'));
+    }
+    public function editnilaisiswa(Request $request, nilai_pkl $nilai_pkl)
+    {
+        $request->validate([
+            'siswa_ids' => 'required|array',
+            'guru_mapel_pkl_id' => 'required|exists:guru_mapel_pkls,id',
+            'nilai1' => 'required|numeric',
+            'nilai2' => 'required|numeric',
+            'nilai3' => 'required|numeric',
+            'nilai4' => 'required|numeric',
+
+        ]);
+        $nilai_pkl->update([
+            'siswa_id' => $request->siswa_ids,
+            'guru_mapel_pkl_id' => $request->guru_mapel_pkl_id,
+            'user_id' => Auth::id(),
+            'nilai1' => $request->nilai1,
+            'nilai2' => $request->nilai2,
+            'nilai3' => $request->nilai3,
+            'nilai4' => $request->nilai4,
+        ]);
+        toastr()->success('Data berhasil disimpan!');
+        return redirect()->back();
+    }
+
 }
