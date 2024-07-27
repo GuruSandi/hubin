@@ -65,7 +65,8 @@
 
                         </li>
                         <li class="item {{ \Route::is('dataabsensi.rekapabsen') ? 'active1' : '' }}">
-                            <a href="{{ route('dataabsensi.rekapabsen') }}"> <i class="fas fa-chart-bar mx-2"></i> Rekap Absen</a>
+                            <a href="{{ route('dataabsensi.rekapabsen') }}"> <i class="fas fa-chart-bar mx-2"></i>
+                                Rekap Absen</a>
 
                         </li>
                     </ul>
@@ -73,7 +74,7 @@
 
 
                 </li>
-                
+
                 <li class="item {{ \Route::is('datajurnal') ? 'active1' : '' }}">
                     <a href="{{ route('datajurnal') }}"><i class="fas fa-book mx-2"></i> Jurnal</a>
                 </li>
@@ -84,10 +85,7 @@
                     <a href="{{ route('datasiswa') }}"><i class="fas fa-user mx-2"></i>
                         Siswa</a>
                 </li>
-                <li class="item {{ \Route::is('datasiswa') ? 'active1' : '' }}">
-                    <a href="{{ route('datasiswa') }}"><i class="fas fa-user mx-2"></i>
-                        Nilai Siswa</a>
-                </li>
+               
             </ul>
         </div>
     </nav>
@@ -207,21 +205,59 @@
             });
         });
     </script>
-     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-     <script src="{{ asset('js/jquery.min.js') }}"></script>
-     <script src="{{ asset('js/select2.min.js') }}"></script>
-     <script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script>
         $(document).ready(function() {
-            
-            
+
+
             $('#siswas').select2({
 
-                placeholder: "Silahkan masukan nama siswa",
+                placeholder: "Pilih Siswa",
                 allowClear: true,
             });
-           
+            $('#siswa').select2({
+
+                placeholder: "Pilih siswa",
+                allowClear: true,
+            }).on('select2:open', function() {
+                // Mengatur lebar dropdown secara dinamis
+                $('.select2-dropdown').css('width', '100px'); // Atur lebar sesuai kebutuhan
+            });
+
         });
     </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk memeriksa nilai dan menampilkan pesan kesalahan
+            function validateInput(id, min, max) {
+                var input = document.getElementById(id);
+                var feedback = document.getElementById(id + '-feedback');
+                input.addEventListener('input', function() {
+                    var value = parseInt(input.value, 10);
+                    if (isNaN(value) || value < min || value > max) {
+                        feedback.textContent = `Nilai harus berada dalam rentang ${min} hingga ${max}.`;
+                        feedback.style.display = 'block';
+                        input.classList.add('is-invalid');
+                    } else {
+                        feedback.textContent = '';
+                        feedback.style.display = 'none';
+                        input.classList.remove('is-invalid');
+                    }
+                });
+            }
+
+            // Terapkan validasi untuk semua input yang relevan
+            validateInput('nilai1', 1, 100);
+            validateInput('nilai2', 1, 100);
+            validateInput('nilai3', 1, 100);
+            validateInput('nilai4', 1, 100);
+        });
+    </script>
+
+
 </body>
 
 </html>

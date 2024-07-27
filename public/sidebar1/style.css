@@ -115,7 +115,15 @@
   transition: all 0.5s ease;
   z-index: 1000;
 }
-
+.is-invalid {
+  border-color: #dc3545; /* Warna border merah */
+  background-color: #f8d7da; /* Background merah muda untuk input error */
+}
+.invalid-feedback {
+  color: red;
+  font-size: 0.875em;
+  display: none; /* Tampilkan hanya jika ada kesalahan */
+}
 .sidebar.close~.navbar,
 .sidebar.close~.main {
   left: 0;
