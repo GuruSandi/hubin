@@ -75,7 +75,7 @@
                     <i class="lni lni-grid-alt"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#" class="text-white">SIMAE-2024</a>
+                    <a href="#" class="text-white">SIPAPI-2024</a>
                 </div>
             </div>
             <hr style="color: #ffffff ; height: 2px; margin-top: -5px" class="w-100 fw-bold">
