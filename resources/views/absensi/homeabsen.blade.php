@@ -1,268 +1,151 @@
-@extends('template.navbar')
-@section('title', 'Absensi Siswa')
+@extends('template.nav')
+@section('title', 'Absensi')
 
 @section('content')
+    {{-- @if (Session::has('status'))
+<div class="alert alert-success d-flex align-items-center" role="alert">
+    <strong class="mr-auto">Success: {{ Session::get('status') }}</strong>
+    <!-- mr-auto untuk memberikan margin kanan otomatis agar teks sejajar dengan tombol close -->
+    <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
+        <!-- ml-2 untuk memberikan margin kiri -->
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif --}}
+    <div id="bgabsen">
+        <div class="container">
 
-
-
-
-    <div class="section" id="bg">
-        @if (Session::has('status'))
-            <div class="alert alert-success d-flex align-items-center" role="alert">
-                <strong class="mr-auto">Success: {{ Session::get('status') }}</strong>
-                <!-- mr-auto untuk memberikan margin kanan otomatis agar teks sejajar dengan tombol close -->
-                <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
-                    <!-- ml-2 untuk memberikan margin kiri -->
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        <h1 id="current-time" class="fw-bold text-center text-white mt-5"></h1>
-        <p id="date" class=" text-center text-white "></p>
-        <div class="card text-center">
-            <div class="card-body">
-
-                <span>Jadwal : {{ $tanggal }} {{ $bulan }} {{ $tahun }}</span>
-                <h3 class="mt-1">Normal</h3>
-                <h2 style="margin-top: -5px">08:00 AM - 15:00 PM</h2>
-                <hr>
-                <div class="row">
-
-                    <div class="col-12">
-                        <a href="{{ route('absensi') }}">
-                            <div class="card button">
-                                <div class="card-body">
-                                    <div class="icon-text-container">
-                                        <ion-icon name="time" size="large" class="md hydrated"></ion-icon>
-                                        <span class="text">Absen</span>
-                                    </div>
-                                </div>
+            <div class="row">
+                <div class="col-4">
+                    <div style="width: 40px">
+                        <a href="{{ route('dashboardsiswa') }}">
+                            <div style="background-color: #faac05; border-radius: 50px; width: 40px; height: 40px; padding: 2px; font-size: 22px;"
+                                class="text-center text-white"> <i class="bi bi-arrow-left bi-lg"></i>
                             </div>
                         </a>
                     </div>
 
+                    <h4 class="text-white mt-3">Absensi</h4>
                 </div>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12 col-md-12 col-lg-12 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Jam Masuk</th>
-                                    <th>Jam Pulang</th>
-                                    <th>Jurnal</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($absensisiswa as $item)
-                                    <tr>
-                                        <td>{{ $item->tanggal }}</td>
-                                        <td>{{ $item->jam_masuk }}</td>
-                                        <td>{{ $item->jam_pulang }}</td>
-                                        <td>
-                                            @if ($item->validasi == 'belum_tervalidasi')
-                                                <p class="text-danger">Belum divalidasi Guru Mapel PKL</p>
-                                            @elseif ($item->validasi == 'ditolak')
-                                                <p class="text-danger">di Tolak</p>
-                                            @elseif ($item->validasi == 'tervalidasi')
-                                                {{ $item->deskripsi_jurnal }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($item->validasi == 'belum_tervalidasi')
-                                                <a href="{{ route('jurnal.edit', $item->id) }}" class="btn btn-primary">Ubah
-                                                    Jurnal</a>
-                                            @elseif ($item->validasi == 'ditolak')
-                                                <a href="{{ route('jurnal.edit', $item->id) }}"
-                                                    class="btn btn-primary">Ubah Jurnal</a>
-                                            @elseif ($item->validasi == 'tervalidasi')
-                                                <ion-icon class="green" name="checkmark-circle"></ion-icon>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-5">
-
-            <div class="col-12 col-md-12 col-lg-12 mb-4">
-                <div class="card ">
-                    <div class="card-body">
-                        <h6 class="card-title">Waktu Masuk {{ $item->jam_masuk }}</h6>
-                        <h6 class="card-title">Waktu Pulang {{ $item->jam_pulang }}</h6>
-                        <hr>
-                        <p class="card-text">Nama: {{ $siswa->nama }}</p>
-                        <hr>
-                        <p class="card-text">Tanggal: {{ $item->tanggal }}</p>
-                        <p class="card-text">Jurnal: {{ $item->deskripsi_jurnal }}</p>
-
-                        <hr>
-                        <p class="card-text">Keterangan:
-                            @if ($item->keterangan == 'hadir')
-                                <ion-icon class="green" name="checkmark-circle"></ion-icon> Hadir
-                            @elseif ($item->keterangan == 'libur')
-                                <ion-icon style="color: red;" name="calendar"></ion-icon> Libur
-                            @else
-                                <ion-icon style="color: red;" name="close-circle"></ion-icon> Tidak Hadir
-                            @endif
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-
-            @foreach ($absensisiswa as $item)
-                {{-- @if ($item->updated_at->isToday())
-                    
-                @endif --}}
-                <div class="col-12 col-md-12 col-lg-12 mb-4">
-                    <div class="card ">
-                        <div class="card-body">
-                            <h6 class="card-title">Waktu Masuk {{ $item->jam_masuk }}</h6>
-                            <h6 class="card-title">Waktu Pulang {{ $item->jam_pulang }}</h6>
-                            <hr>
-                            <p class="card-text">Nama: {{ $siswa->nama }}</p>
-                            <hr>
-                            <p class="card-text">Tanggal: {{ $item->tanggal }}</p>
-                            <p class="card-text">Jurnal: {{ $item->deskripsi_jurnal }}</p>
-
-                            <hr>
-                            <p class="card-text">Keterangan:
-                                @if ($item->keterangan == 'hadir')
-                                    <ion-icon class="green" name="checkmark-circle"></ion-icon> Hadir
-                                @elseif ($item->keterangan == 'libur')
-                                    <ion-icon style="color: red;" name="calendar"></ion-icon> Libur
-                                @else
-                                    <ion-icon style="color: red;" name="close-circle"></ion-icon> Tidak Hadir
-                                @endif
-                            </p>
+                <div class="col-8">
+                    <div class="d-flex justify-content-end">
+                        <div id="toggleFilter" class="filter-item p-2 mt-5" style="font-size: 12px">
+                            <i class="bi bi-funnel"></i> Filter Tanggal
                         </div>
                     </div>
+
                 </div>
-            @endforeach
-        </div>
-        <div class=" mt-5">
-
-
-            {{-- <div class="card col-12 col-md-12 col-sm-12 shadow mx-auto p-4">
-                <h5 class="fw-bold mb-5">Absensi Siswa hari ini</h5>
-
-                <div class="row">
-                    <div class="col-12 col-md-12 col-sm-8">
-                        <div class="table-responsive">
-                            <table class="table table-bordered text-center" id="example">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama</th>
-                                        <th>Waktu</th>
-                                        <th>Keterangan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @foreach ($absensisiswa as $item)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->updated_at->format('d m Y') }}</td>
-                                            <td>{{ $siswa->nama }}</td>
-                                            <td>{{ $item->updated_at->format('H:i') }}</td>
-                                            <td>
-                                                @if ($item->keterangan == 'hadir')
-                                                    <div class="iconpresence">
-                                                        <ion-icon class="green" name="checkmark-circle"></ion-icon>
-
-                                                    </div>
-                                                @elseif ($item->keterangan == 'libur')
-                                                    <div class="iconpresence">
-                                                        <ion-icon style="color: red;" name="calendar"></ion-icon>
-
-                                                    </div>
-                                                @else
-                                                    <div class="iconpresence">
-                                                        <ion-icon style="color: red;" name="close-circle"></ion-icon>
-
-                                                    </div>
-                                                @endif
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div> --}}
+            </div>
 
         </div>
     </div>
+    <div class="container" style="margin-bottom: 90px">
+
+        <div class="row mt-3">
+            <div id="filterForm" style="display: none;">
+                <form action="{{ route('searchabsen') }}" method="GET">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4">
+                            <label for="start_date">Tanggal Mulai:</label>
+                            <input type="date" id="start_date" name="start_date" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <label for="end_date">Tanggal Akhir:</label>
+                            <input type="date" id="end_date" name="end_date" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <button type="submit" name="action" class="btn btn-primary" style="margin-top: 30px" value="search"><i
+                                    class="bi bi-search"></i> Cari</button>
+
+                            <button type="submit" name="action" class="btn btn-success" style="margin-top: 30px" value="download_excel"><i
+                                    class="bi bi-file-excel"></i> Export Excel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row g-3">
+            @foreach ($absensisiswa as $item)
+                <div class="col-md-6 col-lg-4">
+                    <div class="card mt-3" style="border-radius: 10px">
+                        <div class="card-body ">
+
+                            <div class="row">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        {{-- <p class="fw-bold">{{ substr($item->deskripsi_jurnal, 0, strpos($item->deskripsi_jurnal, ' ', strpos($item->deskripsi_jurnal, ' ') + 1)) }}</p> --}}
+                                        <h5 class="fw-bold">{{ $item->tanggal }}</h5>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>
+
+                                            </div>
+                                            <div class="col-8">
+                                                <h4 class="text-muted"> Jam Masuk</h4>
+                                                <p class="text-primary fw-bold">{{ $item->jam_masuk }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>
+
+                                            </div>
+                                            <div class="col-8">
+                                                <h4 class="text-muted"> Jam Pulang</h4>
+                                                <p class="text-primary fw-bold">{{ $item->jam_pulang }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="width: 90%">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="text-muted">Keterangan : @if ($item->keterangan == 'hadir')
+                                                Hadir
+                                            @elseif ($item->keterangan == 'libur')
+                                                Libur
+                                            @elseif ($item->keterangan == 'tidak_masuk_pkl')
+                                                Tidak Masuk PKL
+                                            @elseif ($item->keterangan == 'absen')
+                                                Alpha
+                                            @endif
+                                        </p>
 
 
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            @endforeach
 
 
+        </div>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function updateTime() {
-            var currentTime = new Date();
-            var hours = currentTime.getHours();
-            var minutes = currentTime.getMinutes();
-            var seconds = currentTime.getSeconds();
-            var meridiem = "AM"; // default AM
-
-            // Cek apakah jam lebih dari 12 untuk menentukan AM atau PM
-            if (hours >= 12) {
-                meridiem = "PM";
-            }
-
-            // Ubah format jam dari 24 jam ke 12 jam
-            hours = (hours % 12 === 0) ? 12 : hours % 12;
-
-            // Format waktu agar selalu dua digit
-            hours = (hours < 10 ? "0" : "") + hours;
-            minutes = (minutes < 10 ? "0" : "") + minutes;
-            seconds = (seconds < 10 ? "0" : "") + seconds;
-
-            var timeString = hours + ":" + minutes + ":" + seconds + " " + meridiem;
-            document.getElementById('current-time').innerHTML = timeString;
-        }
-
-        // Panggil updateTime() setiap detik
-        setInterval(updateTime, 1000);
+        $(document).ready(function() {
+            $('#toggleFilter').click(function() {
+                $('#filterForm').toggle();
+            });
+        });
     </script>
 
-    <script>
-        function updateDate() {
-            var currentDate = new Date();
-            var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-            var day = days[currentDate.getDay()];
-            var date = currentDate.getDate();
-            var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
-                'November', 'Desember'
-            ];
-            var month = months[currentDate.getMonth()];
-            var year = currentDate.getFullYear();
 
-            var dateString = day + ', ' + date + ' ' + month + ' ' + year;
-            document.getElementById('date').innerHTML = dateString;
-        }
 
-        // Panggil updateDate() setiap detik (untuk memastikan tanggal diperbarui)
-        setInterval(updateDate, 1000);
 
-        // Panggil updateDate() pertama kali saat halaman dimuat
-        updateDate();
-    </script>
 @endsection

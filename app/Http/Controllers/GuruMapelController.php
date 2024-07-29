@@ -21,6 +21,17 @@ class GuruMapelController extends Controller
         $gurumapel = guru_mapel_pkl::all();
         return view('guru_mapel.homegurumapel', compact('gurumapel'));
     }
+    public function generateNumericPassword($length = 8)
+    {
+        $chars = '0123456789';
+        $password = '';
+        
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $chars[rand(0, strlen($chars) - 1)];
+        }
+        
+        return $password;
+    }
    
     public function posttambahgurumapel(Request $request)
     {
@@ -30,7 +41,7 @@ class GuruMapelController extends Controller
             'foto' => 'required|file',
         ]);
         $username = substr($request->nama, 0, 3) . mt_rand(10, 99); // Generate username
-        $password = Str::random(8); // Generate password
+        $password = $this->generateNumericPassword(8);
         DB::transaction(function () use ($request, $username, $password,  ) {
             // Membuat data pengguna (user) terkait
             $user = User::create([

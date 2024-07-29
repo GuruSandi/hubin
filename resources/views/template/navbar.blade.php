@@ -21,8 +21,61 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap-icon/bootstrap-icons.min.css') }}">
     <style>
-        a{
+        a {
             text-decoration: none;
+        }
+
+        .active {
+            color: skyblue;
+            /* Atur warna sesuai keinginan Anda */
+        }
+        
+        .filter-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            justify-items: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #ffffff;
+            color: #080761;
+            border-radius: 10px;
+            box-shadow: none;
+            border: 1px solid rgb(197, 197, 197);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            /* Sesuaikan dengan tinggi yang diinginkan */
+        }
+
+        .filter-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .filter-item i {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 575.98px) {
+            .row-cols-2 {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                /* Untuk dukungan smooth scroll di iOS */
+            }
+
+            .col {
+                flex: 0 0 auto;
+            }
+
+
         }
     </style>
 
@@ -35,9 +88,9 @@
         <div class="spinner-border text-primary" role="status"></div>
     </div>
     <!-- * loader -->
+    {{-- id="appCapsule" --}}
 
-
-    <div id="appCapsule">
+    <div class="">
         @yield('content')
 
     </div>
@@ -49,48 +102,58 @@
 
     <!-- App Bottom Menu -->
     <div class="appBottomMenu">
-        <a href="{{ route('dashboardsiswa') }}" class="item">
+        <a href="{{ route('dashboardsiswa') }}" class="item {{ \Route::is('dashboardsiswa') ? 'active' : '' }}">
             <div class="col">
-                <ion-icon name="home-outline" role="img" class="md hydrated" aria-label="file tray full outline">
+                <ion-icon name="home-outline" role="img" class="md hydrated text-muted fw-bold"
+                    aria-label="file tray full outline">
                 </ion-icon>
                 <strong>Home</strong>
             </div>
         </a>
-        {{-- <a href="{{ route('homeabsen') }}" class="item active">
+
+
+        <a href="{{ route('jurnal') }}" class="item {{ \Route::is('jurnal') ? 'active' : '' }}">
             <div class="col">
-                <ion-icon name="calendar-outline" role="img" class="md hydrated" aria-label="calendar outline">
-                </ion-icon>
-                <strong>Jurnal</strong>
-            </div>
-        </a> --}}
-        {{-- <a href="{{ route('homeabsen') }}" class="item">
-            <div class="col">
-                <div class="action-button large">
-                    <ion-icon name="finger-print" role="img" class="md hydrated" aria-label="add outline">
-                    </ion-icon>
-                </div>
-            </div>
-        </a> --}}
-        <a href="{{ route('jurnal') }}" class="item">
-            <div class="col">
-                <ion-icon name="document-text-outline" role="img" class="md hydrated"
+                <ion-icon name="document-text-outline" role="img" class="md hydrated text-muted fw-bold"
                     aria-label="document text outline"></ion-icon>
                 <strong>Jurnal</strong>
             </div>
         </a>
-        <a href="{{route('logout')}}" class="item">
+
+        <a href="{{ route('profilesiswa') }}" class="item  {{ \Route::is('profilesiswa') ? 'active' : '' }}">
             <div class="col">
-                <ion-icon name="people-outline" role="img" class="md hydrated" aria-label="people outline">
+                <ion-icon name="people-outline" role="img" class="md hydrated text-muted fw-bold"
+                    aria-label="people outline">
                 </ion-icon>
                 <strong>Profile</strong>
             </div>
         </a>
+
     </div>
-    <!-- * App Bottom Menu -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#jurnalLink').click(function(e) {
+                e.preventDefault(); // Mencegah tautan untuk berpindah ke halaman baru
+
+                // Hapus class 'active' dari semua item lain jika diperlukan
+                $('.item').removeClass('active');
+
+                // Tambahkan class 'active' pada item yang diklik
+                $(this).find('.item').addClass('active');
+
+                // Lalu, navigasi ke halaman yang dituju
+                window.location.href = $(this).attr('href');
+            });
+        });
+    </script>
 
 
-
-
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
     <!-- ///////////// Js Files ////////////////////  -->
     <!-- Jquery -->
     <script src="{{ asset('assets/js/lib/jquery-3.4.1.min.js') }}"></script>

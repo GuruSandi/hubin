@@ -1,0 +1,467 @@
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.sidebar {
+  position: fixed;
+  height: 100%;
+  width: 260px;
+  background: #fff;
+  padding: 0 0 15px 0px;
+  z-index: 99;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+}
+
+.logo {
+  font-size: 20px;
+  padding: 15px;
+  margin: 45px;
+}
+
+.sidebar a {
+  text-decoration: none;
+}
+
+.menu-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.menu-content::-webkit-scrollbar {
+  display: none;
+}
+
+.menu-items {
+  height: 100%;
+  width: 100%;
+  list-style: none;
+  transition: all 0.4s ease;
+}
+
+.submenu-active .menu-items {
+  transform: translateX(-56%);
+}
+
+.menu-title {
+  font-size: 14px;
+  padding: 15px 20px;
+
+}
+
+.item a,
+.submenu-item {
+  color: #616161;
+  padding: 16px;
+  display: inline-block;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.item i {
+  font-size: 14px;
+}
+
+.item a:hover,
+.submenu-item:hover,
+.submenu .menu-title:hover {
+  background: #080761;
+  color: #fff;
+}
+
+.submenu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #9b9797;
+  cursor: pointer;
+}
+
+.submenu {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: calc(-100% - 26px);
+  height: calc(100% + 100vh);
+  background: #fff;
+  display: none;
+}
+
+.show-submenu~.submenu {
+  display: block;
+}
+
+.submenu .menu-title {
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.submenu .menu-title i {
+  margin-right: 10px;
+}
+
+.navbar,
+.main {
+  left: 260px;
+  width: calc(100% - 260px);
+  transition: all 0.5s ease;
+  z-index: 1000;
+}
+.is-invalid {
+  border-color: #dc3545; /* Warna border merah */
+  background-color: #f8d7da; /* Background merah muda untuk input error */
+}
+.invalid-feedback {
+  color: red;
+  font-size: 0.875em;
+  display: none; /* Tampilkan hanya jika ada kesalahan */
+}
+.sidebar.close~.navbar,
+.sidebar.close~.main {
+  left: 0;
+  width: 100%;
+}
+
+.navbar {
+  position: fixed;
+  color: #fff;
+  height: 60px;
+  padding: 30px 30px;
+  font-size: 25px;
+  background: #0b097c;
+  cursor: pointer;
+}
+
+.navbar #sidebar-close {
+  cursor: pointer;
+}
+
+.main {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  z-index: 100;
+  background: #f7f5f5;
+}
+
+.main h1 {
+  color: #11101d;
+  font-size: 40px;
+  text-align: center;
+}
+
+.dropdown-item1 {
+  padding: 10px 20px;
+  /* Atur padding sesuai kebutuhan */
+  font-size: 16px;
+  /* Atur ukuran font sesuai kebutuhan */
+  color: #333;
+  /* Warna teks */
+  text-decoration: none;
+  /* Hilangkan garis bawah pada tautan */
+  display: block;
+  /* Agar item dropdown tampil sebagai blok */
+}
+
+.imaged {
+  border-radius: 50%;
+}
+
+
+
+a {
+  text-decoration: none;
+}
+
+.logofoto {
+  padding: 0px 20px 10px;
+  /* Jarak antara logo dan judul */
+}
+
+.active1 a {
+  background: #080761;
+  color: #fff;
+  display: inline-block;
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.dropdown-menu-profile {
+  margin-top: 10px;
+  /* Jarak antara gambar dan dropdown */
+}
+
+.dropdown-item i {
+  margin-right: 8px;
+  /* Jarak antara ikon dan teks */
+}
+
+.dropdown-menu-profile {
+  /* Menambahkan gaya khusus untuk memastikan dropdown berada di bawah gambar */
+  left: auto;
+  /* Mengatur posisi horizontal */
+  right: 0;
+  /* Menempatkan dropdown di sisi kanan */
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Menambahkan efek gulir yang lebih baik pada iOS */
+}
+
+
+
+
+/* .custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+} */
+.custom-modal-tambah{
+  width: 50%;
+}
+.custom-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  max-width: 90%;
+  /* Memastikan modal tidak terlalu lebar di perangkat kecil */
+  max-height: 90vh;  /* Batas maksimal tinggi modal */
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  z-index: 1050;
+  /* Pastikan modal berada di atas backdrop */
+  overflow: hidden;
+  /* Sembunyikan scroll pada modal utama */
+}
+
+.custom-modal .modal-content {
+  max-height: 100%;  /* Agar konten tidak melampaui batas modal */
+  overflow-y: auto;  /* Tambahkan scroll pada konten modal jika diperlukan */
+  padding: 1rem; 
+ 
+}
+
+
+/* CSS untuk backdrop/modal overlay jika Anda membutuhkannya */
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;  /* Pastikan backdrop berada di bawah modal */
+}
+
+
+.custom-modal-header,
+.custom-modal-footer {
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.custom-modal-header {
+  background-color: #f8f9fa;
+}
+
+
+
+.custom-modal-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+}
+
+.custom-modal-title {
+  margin: 0;
+  /* Menghapus margin default */
+  font-size: 1.25rem;
+  flex-grow: 1;
+  /* Membuat judul modal mengisi ruang tersisa */
+}
+
+.custom-close-btn {
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  /* Jarak antara tombol close dan judul */
+}
+
+/* Gaya untuk responsivitas tabel */
+@media (max-width: 768px) {
+  .table {
+    font-size: 10px;
+  }
+}
+
+/* Gaya tombol close */
+.custom-close-btn {
+  color: #000;
+}
+
+/* Responsivitas modal */
+@media (max-width: 768px) {
+  .custom-modal {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Opsional: Styling untuk memperbaiki tampilan pada perangkat mobile */
+@media (max-width: 768px) {
+  .table {
+    font-size: 10px;
+    /* Mengurangi ukuran font untuk perangkat kecil */
+  }
+
+  
+}
+.custom-modal-backdrop1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparansi backdrop */
+  z-index: 1050; /* Z-index di atas konten utama */
+  display: none; /* Awalnya disembunyikan */
+}
+
+/* Modal Container */
+.custom-modal1 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  display: flex;
+  z-index: 9999; /* Z-index tinggi agar tampil di atas konten lain */
+
+  /* Animasi fade-in */
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Animasi fade-in */
+@keyframes fadeIn {
+  to {
+      opacity: 1;
+  }
+}
+
+/* Modal Content */
+.custom-modal1 .modal-content1 {
+  background-color: #fff;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden; /* menghindari bayangan yang muncul di luar konten */
+}
+
+/* Header Modal */
+.custom-modal1 .modal-header1 {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Judul Modal */
+.custom-modal1 .modal-title1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* Isi Modal */
+.custom-modal1 .modal-body1 {
+  padding: 20px;
+}
+
+/* Tombol Modal */
+.custom-modal1 .modal-footer1 {
+  padding: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.custom-modal1 .modal-footer1 .btn1 {
+  padding: 8px 20px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.custom-modal1 .modal-footer1 .btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.custom-modal1 .modal-footer1 .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.custom-modal1 .modal-footer1 .btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+}
+
+.custom-modal1 .modal-footer1 .btn-secondary:hover {
+  background-color: #5a6268;
+}
+.custom-close-btn1 {
+  border: none;
+  margin-top: 5px;
+  background: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  /* Jarak antara tombol close dan judul */
+}
+.custom-modal-title1 {
+  margin-top: 10px;
+  /* Menghapus margin default */
+  font-size: 1.25rem;
+  flex-grow: 1;
+  /* Membuat judul modal mengisi ruang tersisa */
+}
+/* Pastikan container memiliki posisi relatif */
+.dropdown-container {
+  position: relative; /* Menjadikan container sebagai referensi posisi */
+  display: inline-block; /* Agar dropdown tidak memanjang ke seluruh lebar container */
+}
+
+/* Dropdown menu yang harus muncul di bawah gambar */
+#dropdownMenu {
+  display: none; /* Sembunyikan dropdown secara default */
+  position: absolute; /* Posisi absolut terhadap container */
+  top: 80%; /* Tempatkan tepat di bawah gambar */
+  right: 0; /* Aligment kiri sesuai dengan gambar */
+  margin-top: 10px; /* Jarak antara gambar dan dropdown menu */
+  z-index: 1000; /* Pastikan dropdown muncul di atas elemen lain */
+}
+
+/* Tampilkan dropdown ketika aktif */
+.dropdown-container:hover #dropdownMenu {
+  display: block; /* Tampilkan dropdown saat hover pada container */
+}
+

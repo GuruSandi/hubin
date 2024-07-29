@@ -120,7 +120,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/unduhakunadmin', 'AuthController@unduhakunadmin')->name('unduhakunadmin');
     });
 
-    Route::group(['middleware' => ['auth', 'role:siswa']], function () {
+    Route::group(['middleware' => ['role:siswa']], function () {
         //fitursiswa
         Route::get('/dashboardsiswa', 'FiturSiswaController@dashboardsiswa')->name('dashboardsiswa');
         Route::get('/tambahlokasi', 'FiturSiswaController@tambahlokasi')->name('tambahlokasi');
@@ -143,12 +143,52 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/jurnal', 'AbsenController@jurnal')->name('jurnal');
         Route::get('/jurnaledit/{id}', 'AbsenController@editjurnal')->name('jurnal.edit');
         Route::post('/jurnalupdate/{id}', 'AbsenController@updatejurnal')->name('jurnal.update');
+        Route::get('/jurnal/search', 'AbsenController@search')->name('jurnal.search');
+        Route::get('/absensi/search', 'AbsenController@searchabsen')->name('searchabsen');
+        Route::get('/jurnal/belumdivalidasi', 'AbsenController@jurnalbelumdivalidasi')->name('jurnalbelumdivalidasi');
+        Route::get('/jurnal/ditolak', 'AbsenController@jurnalditolak')->name('jurnalditolak');
+        Route::get('/jurnal/tervalidasi', 'AbsenController@jurnaltervalidasi')->name('jurnaltervalidasi');
+        Route::get('/profile/siswa', 'FiturSiswaController@profilesiswa')->name('profilesiswa');
+        Route::get('/profile/guruMapelPkl', 'FiturSiswaController@profilegurumapel')->name('profilegurumapel');
+        Route::get('/profile/pembimbing', 'FiturSiswaController@profilepembimbing')->name('profilepembimbing');
+        Route::post('/change-passwordsiswa','FiturSiswaController@changePassword')
+        ->name('change.password');
+        Route::get('/edit-passwordsiswa','FiturSiswaController@editpassword')
+        ->name('editpassword');
+
 
     });
 
     Route::group(['middleware' => ['auth', 'role:guru']], function () {
-       
-
-        // Tambahkan rute-rute guru lainnya di sini
+        Route::get('/dashboardguru', 'FiturGuruController@dashboardguru')->name('dashboardguru');
+        Route::get('/dataabsensi', 'FiturGuruController@absensisiswa')->name('dataabsensi');
+        Route::get('/searchabsensisiswa', 'FiturGuruController@searchabsensisiswa')->name('dataabsensi.searchabsensisiswa');
+        Route::get('/rekapabsen', 'FiturGuruController@rekapabsen')->name('dataabsensi.rekapabsen');
+        Route::get('/seachrekapabsen', 'FiturGuruController@seachrekapabsen')->name('dataabsensi.seachrekapabsen');
+        Route::get('/seachdetailrekapabsen/{siswa_id}', 'FiturGuruController@seachdetailrekapabsen')->name('dataabsensi.seachdetailrekapabsen');
+        Route::get('/detailrekapabsen/{siswa_id}', 'FiturGuruController@detailabsen')->name('dataabsensi.detailrekapabsensi');
+        Route::get('/jurnalhariini', 'FiturGuruController@jurnalhariini')->name('dashboardguru.jurnalhariini');
+        Route::get('/belumabsen', 'FiturGuruController@belumabsen')->name('dashboardguru.belumabsen');
+        Route::get('/sudahabsen', 'FiturGuruController@sudahabsen')->name('dashboardguru.sudahabsen');
+        Route::get('/datasiswa', 'FiturGuruController@datasiswa')->name('datasiswa');
+        Route::get('/datajurnal', 'FiturGuruController@jurnalsiwa')->name('datajurnal');
+        Route::get('/searchdatajurnal', 'FiturGuruController@searchjurnalsiwa')->name('datajurnal.search');
+        Route::get('/validasisetuju/{id}', 'FiturGuruController@validasisetuju')->name('validasisetuju');
+        Route::get('/validasiditolak/{id}', 'FiturGuruController@validasiditolak')->name('validasiditolak');
+        Route::post('/validasi/{id}', 'FiturGuruController@validasi')->name('validasi');
+        Route::get('/nilaisiswa', 'NilaiSiswaController@nilaisiswa')->name('nilaisiswa');
+        Route::get('/exportnilaisiswa', 'NilaiSiswaController@exportnilaisiswa')->name('exportnilaisiswa');
+        Route::post('/tambahnilaisiswa', 'NilaiSiswaController@posttambahnilaisiswa')->name('nilaisiswa.tambahnilaisiswa');
+        Route::post('/editnilaisiswa/{id}', 'NilaiSiswaController@editnilaisiswa')->name('nilaisiswa.editnilaisiswa');
+        Route::post('/change-password','FiturGuruController@changePassword')
+        ->name('dashboardguru.changepassword');
+        Route::post('/editfoto','FiturGuruController@editfoto')
+        ->name('dashboardguru.editfoto');
+        Route::get('/edit-password','FiturGuruController@editpassword')
+        ->name('dashboardguru.editpassword');
     });
+    
+    
+
+    
 });

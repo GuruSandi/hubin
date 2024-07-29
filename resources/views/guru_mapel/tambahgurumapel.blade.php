@@ -14,7 +14,7 @@
                     <label for="">No HP</label>
                     <input type="text" class="form-control" required name="no_hp">
                     <label for="">Foto</label>
-                    <input type="file" class="form-control" required name="foto">
+                    <input type="file" class="form-control" accept="img/fotoguru*" required name="foto">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>

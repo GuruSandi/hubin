@@ -10,6 +10,17 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class GuruMapelImport implements ToModel, WithHeadingRow
 {
+    public function generateNumericPassword($length = 8)
+    {
+        $chars = '0123456789';
+        $password = '';
+        
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $chars[rand(0, strlen($chars) - 1)];
+        }
+        
+        return $password;
+    }
     public function model(array $row)
     {
         // Mendapatkan data gambar dari kolom 'foto' Excel (misalnya dalam format base64)
@@ -19,7 +30,7 @@ class GuruMapelImport implements ToModel, WithHeadingRow
         $username = substr( $row['nama'], 0, 3) . mt_rand(10, 99); // Generate username
         
        
-        $password = Str::random(8); 
+        $password = $this->generateNumericPassword(8);
         $user = new User();
         $user->username = $username;
         $user->password = bcrypt($password); 

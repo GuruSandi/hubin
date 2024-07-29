@@ -16,13 +16,14 @@ class CreateAbsensisiswasTable extends Migration
         Schema::create('absensisiswas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('siswa_id')->constrained()->onDelete('cascade');
             $table->date('tanggal');
-            $table->decimal('latitude', 10, 8); // Precision 10, scale 8 for latitude
-            $table->decimal('longitude', 11, 8); // Precision 11, scale 8 for longitude
-            $table->string('jarak');
-            $table->time('jam_masuk');
+            $table->decimal('latitude', 10, 8)->nullable(); // Precision 10, scale 8 for latitude
+            $table->decimal('longitude', 11, 8)->nullable(); // Precision 11, scale 8 for longitude
+            $table->string('jarak')->nullable();
+            $table->time('jam_masuk')->nullable();
             $table->time('jam_pulang')->nullable();
-            $table->enum('keterangan', ['hadir', 'libur', 'absen']);
+            $table->enum('keterangan', ['hadir', 'libur', 'absen','tidak_hadir_pkl']);
             $table->timestamps();
         });
     }

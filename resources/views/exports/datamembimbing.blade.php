@@ -53,10 +53,13 @@
     <table class="tabel tabel-bordered">
         <thead>
             <tr>
-                <th>No</th>
+                <th>membimbing_id</th>
+                <th>siswa_id</th>
                 <th>NIS</th>
                 <th>Nama Siswa</th>
+                <th>Pembimbing_id</th>
                 <th>Nama Guru Pembimbing</th>
+                <th>Guru_Mapel_PKL_id</th>
                 <th>Nama Guru Mapel PKL</th>
 
             </tr>
@@ -64,10 +67,13 @@
         <tbody>
             @foreach ($dataMembimbing as $item)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->id }}</td>
+                    <td style=" width: 70px;">{{ $item->siswa->id }}</td>
                     <td style=" width: 70px;">{{ $item->siswa->nis }}</td>
                     <td style=" width: 200px;">{{ $item->siswa->nama }}</td>
+                    <td style=" width: 200px;">{{ $item->pembimbing->id }}</td>
                     <td style=" width: 200px;">{{ $item->pembimbing->nama }}</td>
+                    <td style=" width: 200px;">{{ $item->guru_mapel_pkl->id }}</td>
                     <td style=" width: 200px;">{{ $item->guru_mapel_pkl->nama }}</td>
                 </tr>
             @endforeach

@@ -1,164 +1,134 @@
 <!DOCTYPE html>
+<!-- YouTube or Website - CodingLab -->
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIMAE-2024</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('sidebar1/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap-icon/bootstrap-icons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
 
-
-    <title>@yield('title')</title>
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <style>
-        .sidebar {
-            width: 255px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #f8f9fa;
-            padding-top: 20px;
-            z-index: 1000;
-            /* Ensure sidebar is above other content */
+        .select2-container .select2-selection--single {
+            height: 100% !important;
         }
 
-        .sidebar a,
-        .logout-btn {
-            padding: 15px 20px;
-            display: block;
-            color: black;
-            text-decoration: none;
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 2.5 !important;
         }
 
-        .sidebar a:hover,
-        .logout-btn:hover {
-            background-color: #080761;
-            color: white;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .navbar-custom {
-            height: 56px;
-            /* Adjust as needed */
-        }
-
-        .dropdown-item.active {
-            background-color: #080761;
-            /* Warna latar belakang yang diinginkan */
-        }
-
-        .logo {
-            padding: 0px 20px 20px;
-            /* Jarak antara logo dan judul */
-        }
-
-        @media (min-width: 768px) {
-            .sidebar {
-                height: 100vh;
-            }
-
-            .content {
-                margin-left: 255px;
-            }
-
-            .navbar-custom {
-                margin-left: 255px;
-            }
-        }
-
-        @media (min-width: 576px) {
-            .sidebar {
-                height: 100vh;
-            }
-
-            .content {
-                margin-left: 255px;
-            }
-
-            .navbar-custom {
-                margin-left: 255px;
-            }
-        }
-
-        @media (max-width: 767px) {
-
-            /* CSS rules for devices with width up to 767px (e.g., smartphones) */
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                padding-top: 0;
-            }
-
-            .content {
-                margin-left: 0;
-            }
-
-            .navbar-custom {
-                margin-left: 0;
-            }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100% !important;
         }
     </style>
 </head>
 
-<body style=" background-color: #f8f9fa">
-
-    <div class="sidebar shadow col-md-3 col-lg-2">
-        <h1 class="logo">HUBIN</h1>
-        <a href="{{ route('home') }}"><i class="bi bi-house"></i> Dashboard</a>
-
-
-        <a href="#dropdownMenu" class="dropdown-toggle" data-bs-toggle="collapse" role="button" aria-expanded="false"
-            aria-controls="dropdownMenu"><i class="bi bi-journal"></i> PKL</a>
-        <div class="collapse" id="dropdownMenu">
-            <a href="{{ route('homesiswa') }}" class="dropdown-item"><i class="bi bi-person"></i> Siswa</a>
-            <a href="{{ route('homeinstansi') }}" class="dropdown-item"><i class="bi bi-building"></i> Instansi</a>
-            <a href="{{ route('homepembimbing') }}" class="dropdown-item"><i class="bi bi-person-check"></i>
-                Pembimbing</a>
-            <a href="{{ route('homemenempati') }}" class="dropdown-item"><i class="bi bi-geo-alt"></i> Penempatan</a>
-            <a href="{{ route('homemembimbing') }}" class="dropdown-item"><i class="bi bi-people"></i> Membimbing</a>
-            <a href="{{ route('dataPenempatan') }}" class="dropdown-item"><i class="bi bi-file-earmark-text"></i> Data
-                Penempatan</a>
-            <a href="{{ route('homeakunsiswa') }}" class="dropdown-item"><i class="bi bi-file-earmark-text"></i> Akun Siswa</a>
-
+<body>
+    <nav class="sidebar" style="box-shadow: ">
+        <div class="text-center" style="background-color: #080761; height: 60px; padding-top: 15px">
+            <a href="#" class="logo text-white ">SIMAE-2024</a>
         </div>
+        <div class="logofoto text-center">
+            <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" class="imaged mt-4" width="100" height="100" style="border-radius: 50%;">
+            <p class="mt-1 fw-bold">{{ $guru_mapel_pkl->nama }} <br> <span
+                    style="font-weight: normal; font-size: 14px">Guru Mapel PKL</span></p>
+        </div>
+        
+        <div class="menu-content">
+            <ul class="menu-items">
+                <li class="item {{ \Route::is('dashboardguru*') ? 'active1' : '' }}">
+                    <a href="{{ route('dashboardguru') }}"><i class="fas fa-home mx-2"></i> Home</a>
 
-
-    </div>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="#">@yield('title')</a>
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ auth()->user()->username }}
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {{-- <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Profile</a></li> --}}
-                        <li><a class="dropdown-item" href="{{ route('logout') }}"><i class="bi bi-box-arrow-right"></i>
-                                Logout</a></li>
-                    </ul>
                 </li>
-            </ul>
 
+                <li class="item">
+                    <div class="submenu-item">
+                        <span>Absensi Siswa</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+
+                    <ul class="menu-items submenu">
+                        <div class="menu-title">
+                            <i class="fa-solid fa-chevron-left"></i>
+                            Absensi Siswa
+                        </div>
+                        <li class="item {{ \Route::is('dataabsensi') ? 'active1' : '' }}">
+                            <a href="{{ route('dataabsensi') }}"><i class="fas fa-list mx-2"></i>Data Absensi</a>
+
+                        </li>
+                        <li class="item {{ \Route::is('dataabsensi.rekapabsen') ? 'active1' : '' }}">
+                            <a href="{{ route('dataabsensi.rekapabsen') }}"> <i class="fas fa-chart-bar mx-2"></i>
+                                Rekap Absen</a>
+
+                        </li>
+                    </ul>
+
+
+
+                </li>
+
+                <li class="item {{ \Route::is('datajurnal') ? 'active1' : '' }}">
+                    <a href="{{ route('datajurnal') }}"><i class="fas fa-book mx-2"></i> Jurnal</a>
+                </li>
+                <li class="item {{ \Route::is('nilaisiswa') ? 'active1' : '' }}">
+                    <a href="{{ route('nilaisiswa') }}"><i class="fas fa-book mx-2"></i> Nilai siswa</a>
+                </li>
+                <li class="item {{ \Route::is('datasiswa') ? 'active1' : '' }}">
+                    <a href="{{ route('datasiswa') }}"><i class="fas fa-user mx-2"></i>
+                        Siswa</a>
+                </li>
+               
+            </ul>
         </div>
     </nav>
 
-    <div class="content">
+    <nav class="navbar sticky-top">
+        <i class="fa-solid fa-bars" id="sidebar-close"></i>
+        <div class="d-flex justify-content-end">
+            <!-- Tombol Dropdown -->
+            <a href="#" id="dropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" width="40" height="40" class="imaged">
+            </a>
+
+            <div class="dropdown-container text-center">
+                <!-- Gambar -->
+                
+                <!-- Menu Dropdown -->
+                <ul class="dropdown-menu rounded" id="dropdownMenu">
+                    <li>
+                        <a href="{{ route('dashboardguru.editpassword') }}" class="dropdown-item1" style="font-size: 14px;">
+                            <i class="bi bi-lock-fill"></i>
+                            <span>Edit Password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="dropdown-item1" style="font-size: 14px;">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+
+
+    </nav>
+
+    <main class="main">
         @yield('content')
-    </div>
+    </main>
 
-
+    <script src="{{ asset('sidebar1/script.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -166,61 +136,134 @@
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
 
-
-
     <script>
         new DataTable('#example');
     </script>
     <script>
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        var dropdownToggle = document.getElementById('dropdownToggle');
+        var dropdownMenu = document.getElementById('dropdownMenu');
 
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Hapus kelas 'active' dari semua item dropdown
-                dropdownItems.forEach(item => {
-                    item.classList.remove('active');
-                });
+        dropdownToggle.addEventListener('click', function(event) {
+            if (dropdownMenu.style.display === 'block') {
+                dropdownMenu.style.display = 'none';
+            } else {
+                dropdownMenu.style.display = 'block';
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                // Tambahkan kelas 'active' pada item yang diklik
-                this.classList.add('active');
+
+    <script>
+        // Tangkap klik tombol validasi
+        $('.validate-btn').click(function(e) {
+            e.preventDefault(); // Cegah aksi default dari link
+
+            var validateUrl = $(this).attr('href'); // Ambil URL validasi dari atribut href
+            var dataId = $(this).data('id'); // Ambil ID data untuk digunakan dalam SweetAlert
+
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Anda akan menyetujui jurnal ini!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Setujui!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect ke URL validasi jika dikonfirmasi
+                    window.location.href = validateUrl;
+                }
             });
         });
+    </script>
+    <script>
+        // Tangkap klik tombol validasi
+        $('.tolakvalidate-btn').click(function(e) {
+            e.preventDefault(); // Cegah aksi default dari link
 
-        const dropdownToggle = document.getElementById('dropdownToggle');
-        const dropdownMenu = document.getElementById('dropdownMenu');
+            var validateUrl = $(this).attr('href'); // Ambil URL validasi dari atribut href
+            var dataId = $(this).data('id'); // Ambil ID data untuk digunakan dalam SweetAlert
 
-        dropdownMenu.addEventListener('hidden.bs.collapse', function() {
-            dropdownMenu.classList.remove('show');
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Anda akan menolak jurnal ini!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, ditolak!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect ke URL validasi jika dikonfirmasi
+                    window.location.href = validateUrl;
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#toggleFilter').click(function() {
+                $('#filterForm').toggle();
+            });
         });
     </script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
-
     <script>
         $(document).ready(function() {
-            // Inisialisasi Select2 untuk instansi
-            $('#instansi').select2({
 
-                placeholder: "Select an option",
-                allowClear: true
-            });
 
-            // Inisialisasi Select2 untuk siswa
-            $('#siswa').select2({
+            $('#siswas').select2({
 
-                placeholder: "Select an option",
+                placeholder: "Pilih Siswa",
                 allowClear: true,
             });
-            // Inisialisasi Select2 untuk pembimbing
+            $('#siswa').select2({
 
-            $('#pembimbing').select2({
-
-                placeholder: "Select an option",
-                allowClear: true
+                placeholder: "Pilih siswa",
+                allowClear: true,
+            }).on('select2:open', function() {
+                // Mengatur lebar dropdown secara dinamis
+                $('.select2-dropdown').css('width', '100px'); // Atur lebar sesuai kebutuhan
             });
+
         });
     </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk memeriksa nilai dan menampilkan pesan kesalahan
+            function validateInput(id, min, max) {
+                var input = document.getElementById(id);
+                var feedback = document.getElementById(id + '-feedback');
+                input.addEventListener('input', function() {
+                    var value = parseInt(input.value, 10);
+                    if (isNaN(value) || value < min || value > max) {
+                        feedback.textContent = `Nilai harus berada dalam rentang ${min} hingga ${max}.`;
+                        feedback.style.display = 'block';
+                        input.classList.add('is-invalid');
+                    } else {
+                        feedback.textContent = '';
+                        feedback.style.display = 'none';
+                        input.classList.remove('is-invalid');
+                    }
+                });
+            }
+
+            // Terapkan validasi untuk semua input yang relevan
+            validateInput('nilai1', 1, 100);
+            validateInput('nilai2', 1, 100);
+            validateInput('nilai3', 1, 100);
+            validateInput('nilai4', 1, 100);
+        });
+    </script>
+
+
 </body>
 
 </html>

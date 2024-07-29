@@ -533,7 +533,8 @@ button:focus {
   /* padding: 56px 0; */
   margin-bottom: env(safe-area-inset-bottom);
   margin-top: env(safe-area-inset-top);
-  padding-bottom: 700px;
+  padding-bottom: 800px;
+  overflow-y: scroll;
 }
 
 #appCapsule.extra-header-active {
@@ -7969,6 +7970,13 @@ body.dark-mode-active .cart-item .cart-item-footer {
   border-radius: 0 0 10px 10px;
 
 }
+#bgabsen {
+  height: 120px;
+  background-color: #080761;
+  padding: 20px 20px 10px 10px;
+  border-radius: 0 0 10px 10px;
+
+}
 #bgjurnal {
   height: 70px;
   background-color: #080761;
@@ -7981,7 +7989,36 @@ body.dark-mode-active .cart-item .cart-item-footer {
   padding: 20px;
   border-radius: 0 0 40px 40px;
 }
-
+#bgprofile {
+  height: 300px;
+  background-color: #080761;
+  padding: 20px;
+  border-radius: 0 0 40px 40px;
+}
+#bgprofileguru {
+  height: 230px;
+  background-color: #080761;
+  padding: 20px;
+  border-radius: 0 0 40px 40px;
+}
+.dropdown-item1 {
+    padding: 10px 20px;
+    /* Atur padding sesuai kebutuhan */
+    font-size: 16px;
+    /* Atur ukuran font sesuai kebutuhan */
+    color: #333;
+    /* Warna teks */
+    text-decoration: none;
+    /* Hilangkan garis bawah pada tautan */
+    display: block;
+    /* Agar item dropdown tampil sebagai blok */
+}
+.dropdown-item1:hover {
+  background-color: #f8f9fa;
+  /* Warna latar belakang ketika dihover */
+  color: #007bff;
+  /* Warna teks ketika dihover */
+}
 #user-detail {
   margin-top: 20px;
 }

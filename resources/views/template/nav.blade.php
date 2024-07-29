@@ -1,127 +1,117 @@
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>SIMAE-2024</title>
+    <meta name="description" content="Mobilekit HTML Mobile UI Kit">
+    <meta name="keywords" content="bootstrap 4, mobile template, cordova, phonegap, mobile, html" />
+    <link rel="icon" type="image/jpg" href="{{ asset('img/logohubin.jpeg') }}" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/logohubin.jpeg') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="manifest" href="{{ asset('__manifest.json') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap-icon/bootstrap-icons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
+    <style>
+        a {
+            text-decoration: none;
+        }
 
+        .filter-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            justify-items: center;
+            align-items: center;
+            margin-top: 20px;
+        }
 
-    <title>@yield('title')</title>
-   
+        .filter-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #ffffff;
+            color: #080761;
+            border-radius: 10px;
+            box-shadow: none;
+            border: 1px solid rgb(197, 197, 197);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            /* Sesuaikan dengan tinggi yang diinginkan */
+        }
+
+        .filter-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .filter-item i {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 575.98px) {
+            .row-cols-1 {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                /* Untuk dukungan smooth scroll di iOS */
+            }
+
+            .col {
+                flex: 0 0 auto;
+            }
+
+            
+        }
+    </style>
+
 </head>
 
-<body style=" background-color: #f8f9fa">
-    
-    
-    
-    <nav class="navbar navbar-expand sticky-top" style="background-color:#1c2331">
-   
-        @auth
-            @if (auth()->user()->role == 'siswa')
-                <a href="{{route('dashboardsiswa')}}" class="nav-link nav-item text-light" >Siswa</a>
-               
-            @elseif(auth()->user()->role == 'admin')
-                <a href="{{route('homesiswa')}}" class="nav-link nav-item text-light" >Siswa</a>
-                <a href="{{route('homeinstansi')}}" class="nav-link nav-item text-light" >Instansi</a>
-                <a href="{{route('homepembimbing')}}" class="nav-link nav-item text-light" >Pembimbing</a>
-                <a href="{{route('homemenempati')}}" class="nav-link nav-item text-light" >Penempatan</a>
-                <a href="{{route('homemembimbing')}}" class="nav-link nav-item text-light" >Membimbing</a>
-                <a href="{{route('dataPenempatan')}}" class="nav-link nav-item text-light" >Data Penempatan</a>
-               
-    
-    
-            @elseif(auth()->user()->role == 'guru')
-               
-                
-                
-            @endif
-            <a href="{{route('logout')}}" class="nav-link nav-item text-light">Logout</a>
-            <a href="" class="nav-link nav-item text-light" style="margin-left: 10%"><i class="bi bi-person-fill"></i> {{ auth()->user()->username }} </a>
-            
-    
-        @endauth
-       
-        
-    
-    
-    </nav>
-    <div class="content">
+<body style="background-color: white;">
+
+    <!-- loader -->
+    <div id="loader">
+        <div class="spinner-border text-primary" role="status"></div>
+    </div>
+    <!-- * loader -->
+
+    <div>
         @yield('content')
+
     </div>
 
+    <!-- ///////////// Js Files ////////////////////  -->
+    <!-- Jquery -->
+    <script src="{{ asset('assets/js/lib/jquery-3.4.1.min.js') }}"></script>
+    <!-- Bootstrap-->
+    <script src="{{ asset('assets/js/lib/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lib/bootstrap.min.js') }}"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Owl Carousel -->
+    <script src="{{ asset('assets/js/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
+    <!-- jQuery Circle Progress -->
+    <script src="{{ asset('assets/js/plugins/jquery-circle-progress/circle-progress.min.js') }}"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <!-- Base Js File -->
+    <script src="{{ asset('assets/js/base.js') }}"></script>
 
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
-    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
+   
 
-
-    
-    <script>
-        new DataTable('#example');
-    </script>
-    <script>
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
-
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Hapus kelas 'active' dari semua item dropdown
-                dropdownItems.forEach(item => {
-                    item.classList.remove('active');
-                });
-
-                // Tambahkan kelas 'active' pada item yang diklik
-                this.classList.add('active');
-            });
-        });
-
-        const dropdownToggle = document.getElementById('dropdownToggle');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-
-        dropdownMenu.addEventListener('hidden.bs.collapse', function() {
-            dropdownMenu.classList.remove('show');
-        });
-    </script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/select2.min.js') }}"></script>
-
-    <script>
-        $(document).ready(function() {
-            // Inisialisasi Select2 untuk instansi
-            $('#instansi').select2({
-
-                placeholder: "Select an option",
-                allowClear: true
-            });
-
-            // Inisialisasi Select2 untuk siswa
-            $('#siswa').select2({
-
-                placeholder: "Select an option",
-                allowClear: true,
-            });
-            // Inisialisasi Select2 untuk pembimbing
-
-            $('#pembimbing').select2({
-
-                placeholder: "Select an option",
-                allowClear: true
-            });
-        });
-    </script>
 </body>
 
 </html>
+
 

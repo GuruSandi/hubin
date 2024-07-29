@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\absensisiswa;
 use App\Models\instansi;
+use App\Models\membimbing;
 use App\Models\menempati;
 use App\Models\siswa;
 use App\Models\User;
@@ -11,9 +12,64 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class FiturSiswaController extends Controller
 {
+    public function editpassword()
+    {
+        return view('gantipassword.changepassword');
+    }
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:8|different:current_password|confirmed',
+            'new_password_confirmation' => 'required|string|min:8|same:new_password',
+        ]);
+
+        $user = auth()->user();
+        $edituser = User::where('id', $user->id)->first();
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Password yang Anda masukkan tidak sesuai dengan password lama.'])->withInput();
+        }
+        if ($request->new_password !== $request->new_password_confirmation) {
+            return redirect()->back()->withErrors(['new_password_confirmation' => 'Konfirmasi password baru tidak cocok'])->withInput();
+        }
+        $edituser->update([
+            'password' => bcrypt($request->new_password),
+            'encrypted_password' => $request->new_password,
+        ]);
+        $request->session()->regenerate();
+
+        return redirect()->route('editpassword')->with('success', 'Password berhasil diperbarui.');
+    }
+    public function profilesiswa()
+    {
+        $user = User::find(Auth::id());
+        $siswa = siswa::where('user_id', $user->id)->first();
+        $menempati = Menempati::where('siswa_id', $siswa->id)->first();
+        $membimbing = membimbing::where('siswa_id', $siswa->id)->first();
+
+        return view('fiturSiswa.profilesiswa', compact('siswa', 'menempati', 'membimbing'));
+    }
+    public function profilegurumapel()
+    {
+        $user = User::find(Auth::id());
+        $siswa = siswa::where('user_id', $user->id)->first();
+        $membimbing = membimbing::where('siswa_id', $siswa->id)->first();
+
+        return view('fiturSiswa.profilegurumapel', compact('membimbing'));
+    }
+    public function profilepembimbing()
+    {
+        $user = User::find(Auth::id());
+        $siswa = siswa::where('user_id', $user->id)->first();
+        $membimbing = membimbing::where('siswa_id', $siswa->id)->first();
+
+        return view('fiturSiswa.profilepembimbing', compact('membimbing'));
+    }
     public function dashboardsiswa()
     {
 
@@ -22,20 +78,7 @@ class FiturSiswaController extends Controller
         $siswa = siswa::where('user_id', $user->id)->first();
 
         $user = Auth::user();
-        $bulanIndonesia = [
-            '01' => 'Januari',
-            '02' => 'Februari',
-            '03' => 'Maret',
-            '04' => 'April',
-            '05' => 'Mei',
-            '06' => 'Juni',
-            '07' => 'Juli',
-            '08' => 'Agustus',
-            '09' => 'September',
-            '10' => 'Oktober',
-            '11' => 'November',
-            '12' => 'Desember'
-        ];
+
         $siswa = siswa::where('user_id', $user->id)->first();
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
@@ -46,44 +89,42 @@ class FiturSiswaController extends Controller
                 $join->on('absensisiswas.user_id', '=', 'jurnals.user_id')
                     ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
             })
-            ->orderBy('absensisiswas.tanggal', 'desc')  // Mengurutkan berdasarkan tanggal descending
+            ->orderBy('absensisiswas.tanggal', 'desc')
             ->limit(5)
             ->get();
-        //  $absensisiswa = AbsensiSiswa::where('user_id', $user->id)->get();
         foreach ($absensisiswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
-        
-            // Periksa jika jam_pulang tidak kosong sebelum memformatnya
+
+            // Format jam_masuk jika ada
+            if ($item->jam_masuk) {
+                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
+            } else {
+                $item->jam_masuk = 'Belum Absen Datang';
+            }
+
+            // Format jam_pulang jika ada
             if ($item->jam_pulang) {
                 $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
             } else {
-                $item->jam_pulang = 'Belum Absen Pulang'; 
+                $item->jam_pulang = 'Belum Absen Pulang';
             }
         }
 
-        $tanggal = date('d');
-        $bulan = $bulanIndonesia[date('m')];
-        $tahun = date('Y');
-        $siswa = siswa::where('user_id', $user->id)->first();
-        // Mendapatkan data absensi berdasarkan user_id siswa yang sedang login
-        // $absensisiswa = AbsensiSiswa::where('user_id', $user->id)->get();
 
-        $hadir = $absensisiswa->where('keterangan', 'hadir')->count();
-        $libur = $absensisiswa->where('keterangan', 'libur')->count();
-        $absen = $absensisiswa->where('keterangan', 'absen')->count();
-        // Dapatkan data siswa berdasarkan ID
-        return view('fitursiswa.homesiswa', compact('siswa','jamSekarang', 'absensisiswa', 'hadir', 'libur', 'absen', 'tanggal', 'bulan', 'tahun'));
+
+        return view('fitursiswa.homesiswa', compact('siswa', 'jamSekarang', 'absensisiswa'));
     }
     public function tambahlokasi()
     {
         $user = Auth::user();
-
-
         $user = User::find(auth()->id());
-
-        // Ambil siswa terkait dari user
         $siswa = $user->siswa;
+        $menempati = $user->siswa->menempati->first();
+        $instansi = $menempati->instansi->latitude;
+        if ($instansi) {
+            toastr()->error('Lokasi Instansi Sudah Ada!');
+            return redirect()->route('dashboardsiswa');
+        }
         return view('fitursiswa.tambahlokasi', compact('siswa'));
     }
     public function simpanlokasi(Request $request)
@@ -98,14 +139,18 @@ class FiturSiswaController extends Controller
 
         // Periksa apakah siswa sudah memiliki lokasi instansi
         if (!$user->siswa) {
-            return redirect()->route('dashboardsiswa')->with('error', 'Lokasi instansi anda belum ditentukan hubungi admin!.');
+            toastr()->error('Lokasi instansi anda belum ditentukan hubungi admin!.');
+
+            return redirect()->route('dashboardsiswa');
         }
 
         // Ambil data instansi yang terkait dengan siswa melalui relasi menempati
         $menempati = $user->siswa->menempati->first();
 
         if (!$menempati) {
-            return redirect()->route('dashboardsiswa')->with('error', 'Anda belum ditentukan sebagai bagian dari suatu instansi. Hubungi admin!');
+            toastr()->error('Instansi yang Anda tempati belum ditentukan. Hubungi admin!');
+
+            return redirect()->route('dashboardsiswa');
         }
 
         // Ambil instansi terkait dari relasi menempati
