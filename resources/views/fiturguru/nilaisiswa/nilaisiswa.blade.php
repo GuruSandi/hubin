@@ -11,10 +11,13 @@
                 <div class="card-body">
                     <p class="fw-bold mb-4">Nilai Siswa</p>
                     <div class="row mb-3">
-                        <div class="col-md-12 col-lg-3">
+                        <div class="col-md-12 col-lg-12">
                             <button class="btn btn-sm btn-primary text-white" onclick="openAddModal()">
                                 <i class="bi bi-plus-circle"></i> Tambah Nilai
                             </button>
+                            <a href="{{ route('exportnilaisiswa') }}" class="btn btn-sm btn-success"> <i
+                                class="bi bi-file-excel"></i> Export Excel</a>
+
                         </div>
                     </div>
                     <div class="table-responsive">

@@ -151,9 +151,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profile/siswa', 'FiturSiswaController@profilesiswa')->name('profilesiswa');
         Route::get('/profile/guruMapelPkl', 'FiturSiswaController@profilegurumapel')->name('profilegurumapel');
         Route::get('/profile/pembimbing', 'FiturSiswaController@profilepembimbing')->name('profilepembimbing');
-        Route::post('/change-password','FiturSiswaController@changePassword')
+        Route::post('/change-passwordsiswa','FiturSiswaController@changePassword')
         ->name('change.password');
-        Route::get('/edit-password','FiturSiswaController@editpassword')
+        Route::get('/edit-passwordsiswa','FiturSiswaController@editpassword')
         ->name('editpassword');
 
 
@@ -177,8 +177,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/validasiditolak/{id}', 'FiturGuruController@validasiditolak')->name('validasiditolak');
         Route::post('/validasi/{id}', 'FiturGuruController@validasi')->name('validasi');
         Route::get('/nilaisiswa', 'NilaiSiswaController@nilaisiswa')->name('nilaisiswa');
+        Route::get('/exportnilaisiswa', 'NilaiSiswaController@exportnilaisiswa')->name('exportnilaisiswa');
         Route::post('/tambahnilaisiswa', 'NilaiSiswaController@posttambahnilaisiswa')->name('nilaisiswa.tambahnilaisiswa');
         Route::post('/editnilaisiswa/{id}', 'NilaiSiswaController@editnilaisiswa')->name('nilaisiswa.editnilaisiswa');
+        Route::post('/change-password','FiturGuruController@changePassword')
+        ->name('dashboardguru.changepassword');
+        Route::post('/editfoto','FiturGuruController@editfoto')
+        ->name('dashboardguru.editfoto');
+        Route::get('/edit-password','FiturGuruController@editpassword')
+        ->name('dashboardguru.editpassword');
     });
     
     

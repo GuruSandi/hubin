@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\NilaiSiswaExport;
 use App\Models\guru_mapel_pkl;
 use App\Models\membimbing;
 use App\Models\nilai_pkl;
 use App\Models\siswa;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +67,10 @@ class NilaiSiswaController extends Controller
         toastr()->success('Data berhasil disimpan!');
         return redirect()->route('nilaisiswa');
 
+    }
+    public function exportnilaisiswa()
+    {
+        return Excel::download(new NilaiSiswaExport, 'nilai_siswa.xlsx');
     }
 
 }

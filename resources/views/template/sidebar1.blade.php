@@ -38,10 +38,11 @@
             <a href="#" class="logo text-white ">SIMAE-2024</a>
         </div>
         <div class="logofoto text-center">
-            <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" class="imaged mt-4 w-50 rounded">
+            <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" class="imaged mt-4" width="100" height="100" style="border-radius: 50%;">
             <p class="mt-1 fw-bold">{{ $guru_mapel_pkl->nama }} <br> <span
                     style="font-weight: normal; font-size: 14px">Guru Mapel PKL</span></p>
         </div>
+        
         <div class="menu-content">
             <ul class="menu-items">
                 <li class="item {{ \Route::is('dashboardguru*') ? 'active1' : '' }}">
@@ -95,24 +96,29 @@
         <div class="d-flex justify-content-end">
             <!-- Tombol Dropdown -->
             <a href="#" id="dropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" class="imaged w64 rounded">
+                <img src="{{ asset($guru_mapel_pkl->foto) }}" alt="avatar" width="40" height="40" class="imaged">
             </a>
 
-            <!-- Menu Dropdown -->
-            <ul class="dropdown-menu dropdown-menu-profile rounded" style="margin-top: 40px" id="dropdownMenu">
-                <li>
-                    <a href="" class="dropdown-item1" style="font-size: 14px;">
-                        <i class="bi bi-lock-fill"></i>
-                        <span>Edit Password</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('logout') }}" class="dropdown-item1" style="font-size: 14px;">
-                        <i class="bi bi-box-arrow-right"></i>
-                        <span>Logout</span>
-                    </a>
-                </li>
-            </ul>
+            <div class="dropdown-container text-center">
+                <!-- Gambar -->
+                
+                <!-- Menu Dropdown -->
+                <ul class="dropdown-menu rounded" id="dropdownMenu">
+                    <li>
+                        <a href="{{ route('dashboardguru.editpassword') }}" class="dropdown-item1" style="font-size: 14px;">
+                            <i class="bi bi-lock-fill"></i>
+                            <span>Edit Password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="dropdown-item1" style="font-size: 14px;">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
         </div>
 
 

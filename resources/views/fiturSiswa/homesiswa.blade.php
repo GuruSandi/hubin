@@ -65,7 +65,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <h1 class="fw-bold text-center mt-1 mb-3" style="color: #7bcba7; font-size: 40px">
+                            <h1 class="fw-bold text-center mt-1 mb-3" style="color: #080761; font-size: 40px">
                                 {{ $jamSekarang }}
                             </h1>
 
@@ -75,14 +75,14 @@
 
                         <div class="col-6">
                             <a href="{{ route('absensi') }}" class="btn btnn w-100 "
-                                style="background-color: #7bcba7; color: #ffff; border-radius: 20px; transition: background-color 0.3s ease;">
+                                style="background-color: #080761; color: #ffff; border-radius: 20px; transition: background-color 0.3s ease;">
                                 Absen Masuk
 
                             </a>
                         </div>
                         <div class="col-6">
                             <a href="{{ route('absensipulang') }}" class="btn btnn w-100 "
-                                style="background-color: #7bcba7; color: #ffff; border-radius: 20px; transition: background-color 0.3s ease;">
+                                style="background-color: #080761; color: #ffff; border-radius: 20px; transition: background-color 0.3s ease;">
                                 Absen Pulang
 
                             </a>

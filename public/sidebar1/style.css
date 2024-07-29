@@ -172,13 +172,10 @@
 }
 
 .imaged {
-  height: auto;
-  border-radius: 6px;
+  border-radius: 50%;
 }
 
-.imaged.w64 {
-  width: 35px !important;
-}
+
 
 a {
   text-decoration: none;
@@ -447,3 +444,24 @@ a {
   flex-grow: 1;
   /* Membuat judul modal mengisi ruang tersisa */
 }
+/* Pastikan container memiliki posisi relatif */
+.dropdown-container {
+  position: relative; /* Menjadikan container sebagai referensi posisi */
+  display: inline-block; /* Agar dropdown tidak memanjang ke seluruh lebar container */
+}
+
+/* Dropdown menu yang harus muncul di bawah gambar */
+#dropdownMenu {
+  display: none; /* Sembunyikan dropdown secara default */
+  position: absolute; /* Posisi absolut terhadap container */
+  top: 80%; /* Tempatkan tepat di bawah gambar */
+  right: 0; /* Aligment kiri sesuai dengan gambar */
+  margin-top: 10px; /* Jarak antara gambar dan dropdown menu */
+  z-index: 1000; /* Pastikan dropdown muncul di atas elemen lain */
+}
+
+/* Tampilkan dropdown ketika aktif */
+.dropdown-container:hover #dropdownMenu {
+  display: block; /* Tampilkan dropdown saat hover pada container */
+}
+

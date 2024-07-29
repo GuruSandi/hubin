@@ -1,5 +1,5 @@
 @extends('template.sidebar1')
-@section('title', 'Dashboard')
+@section('title', 'Jurnal Siswa')
 
 @section('content')
 
@@ -11,29 +11,29 @@
                 <div class="card-body">
                     <p class="fw-bold mb-4">Jurnal Siswa</p>
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-md-6 col-lg-3">
                             <div id="toggleFilter" class="btn btn-warning text-white" style="font-size: 12px">
                                 <i class="bi bi-funnel"></i> Filter Tanggal
                             </div>
                         </div>
                     </div>
-                    <div class="row col-8 mt-3">
+                    <div class="row col-md-6 col-lg-8 mt-3">
                         <div id="filterForm" style="display: none; font-size: 12px">
                             <form action="{{ route('datajurnal.search') }}" method="GET">
                                 <div class="row">
-                                    <div class="col-5">
+                                    <div class="col-md-6 col-lg-5">
                                         <label for="start_date">Tanggal Mulai:</label>
                                         <input type="date" required class="form-control form-control-sm mb-3" id="start_date"
                                             name="start_date">
 
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-md-6 col-lg-5">
                                         <label for="end_date">Tanggal Selesai:</label>
                                         <input type="date" required class="form-control form-control-sm mb-3 " id="end_date"
                                             name="end_date">
 
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-md-6 col-lg-2">
                                         <button type="submit" class="btn mb-3 mt-3 btn-sm btn-primary">Filter</button>
                                     </div>
                                 </div>

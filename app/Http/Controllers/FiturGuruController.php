@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class FiturGuruController extends Controller
 {
@@ -187,9 +188,9 @@ class FiturGuruController extends Controller
                 return $query->whereBetween('absensisiswas.tanggal', [$tanggalMulai, $tanggalAkhir]);
             })
             ->get();
-            foreach ($detailAbsensi as $item) {
-                $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            }
+        foreach ($detailAbsensi as $item) {
+            $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+        }
         // dd($rekapabsen);
 
         return view('fiturguru.detailabsensi', compact('rekapabsen', 'guru_mapel_pkl', 'detailAbsensi'));
@@ -698,5 +699,55 @@ class FiturGuruController extends Controller
             }
         }
         return view('fiturguru.jurnalhariini', compact('jurnalsiswa', 'guru_mapel_pkl'));
+    }
+    public function editpassword()
+    {
+        $user = User::find(Auth::id());
+        $guru_mapel_pkl = guru_mapel_pkl::where('user_id', $user->id)->first();
+
+        return view('fiturguru.editpassword',compact('guru_mapel_pkl'));
+    }
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:8|different:current_password|confirmed',
+            'new_password_confirmation' => 'required|string|min:8|same:new_password',
+        ]);
+
+        $user = auth()->user();
+        $edituser = User::where('id', $user->id)->first();
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Password yang Anda masukkan tidak sesuai dengan password lama.'])->withInput();
+        }
+        if ($request->new_password !== $request->new_password_confirmation) {
+            return redirect()->back()->withErrors(['new_password_confirmation' => 'Konfirmasi password baru tidak cocok'])->withInput();
+        }
+        $edituser->update([
+            'password' => bcrypt($request->new_password),
+            'encrypted_password' => $request->new_password,
+        ]);
+        $request->session()->regenerate();
+
+        return redirect()->route('dashboardguru.editpassword')->with('success', 'Password berhasil diperbarui.');
+    }
+    public function editfoto(Request $request)
+    {
+        $data = $request->validate([
+            'foto' => 'file',
+        ]);
+        if ($request->hasFile('foto')) {
+            $data['foto'] = $request->foto->store('img/fotoguru');
+        } else {
+            unset($data['foto']);
+        }
+        $user = User::find(Auth::id());
+        $guru_mapel_pkl = guru_mapel_pkl::where('user_id', $user->id)->first();
+        $guru_mapel_pkl->update($data);
+
+        return redirect()->route('dashboardguru.editpassword')->with('status', 'berhasil mengubah foto profile');
+        
+
+
     }
 }
