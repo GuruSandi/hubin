@@ -201,7 +201,7 @@
         </div>
 
         @if ($absensisiswa->isEmpty())
-            <div id="absensi-section">
+            <div style="margin-top: -80px">
                 <div class="card" style="border-radius: 10px">
                     <div class="container">
                         <div class="card-body">

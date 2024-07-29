@@ -30,13 +30,16 @@ class AbsenController extends Controller
         if (!empty($absensiHariIni->jam_pulang)) {
             // Jika sudah ada jam pulang, redirect ke route 'tambahabsensipulang' dengan parameter $absensiHariIni->id
             return redirect()->route('editabsensipulang', $absensiHariIni->id);
-        } else {
-            // Jika belum ada jam pulang, tampilkan pesan kesalahan atau lakukan hal lainnya
-            // Misalnya, tampilkan pesan kesalahan
+        } elseif(!empty($absensiHariIni->jam_masuk)) {
             return redirect()->route('tambahabsensipulang', $absensiHariIni->id);
+            
+        } else{
+            toastr()->warning('Anda belum Melakukan Absensi Datang');
+            return redirect()->route('dashboardsiswa');
         }
         toastr()->warning('Anda belum Melakukan Absensi Datang');
-        return redirect()->back();
+        return redirect()->route('dashboardsiswa');
+
     }
 
     public function tambahabsensipulang($id)
