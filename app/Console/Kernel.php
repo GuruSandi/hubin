@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('backup:clear')->daily();
         // $schedule->command('db:backup')->daily();
-       
+        $schedule->command('absensi:harian')->dailyAt('01:00');
         $schedule->call(function () {
             // Periksa absensi siswa pada hari itu
             $absensi = absensisiswa::whereDate('created_at', today())->get();
@@ -46,6 +46,7 @@ class Kernel extends ConsoleKernel
                 if (!$absensiSiswa) {
                     absensisiswa::create([
                         'user_id' => $userId,
+                        'siswa_id' => $userId,
                         'latitude' => 0, // Atau nilai default lainnya
                         'longitude' => 0, // Atau nilai default lainnya
                         'keterangan' => 'absen'

@@ -63,5 +63,5 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 sebelum itu di env tambahkan
 FILESYSTEM_DRIVER=public
 
-dan juga untuk toatr erorr jalankan di terminal
+dan juga untuk toastr erorr jalankan di terminal
 composer require yoeunes/toastr  
