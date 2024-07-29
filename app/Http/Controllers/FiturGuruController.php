@@ -50,9 +50,15 @@ class FiturGuruController extends Controller
             ->get();
         foreach ($absensiterbaru as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
 
-            // Periksa jika jam_pulang tidak kosong sebelum memformatnya
+            // Format jam_masuk jika ada
+            if ($item->jam_masuk) {
+                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
+            } else {
+                $item->jam_masuk = 'Belum Absen Datang';
+            }
+
+            // Format jam_pulang jika ada
             if ($item->jam_pulang) {
                 $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
             } else {
@@ -466,9 +472,15 @@ class FiturGuruController extends Controller
             ->get();
         foreach ($siswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
 
-            // Periksa jika jam_pulang tidak kosong sebelum memformatnya
+            // Format jam_masuk jika ada
+            if ($item->jam_masuk) {
+                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
+            } else {
+                $item->jam_masuk = 'Belum Absen Datang';
+            }
+
+            // Format jam_pulang jika ada
             if ($item->jam_pulang) {
                 $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
             } else {
@@ -508,9 +520,15 @@ class FiturGuruController extends Controller
         $siswa = $siswa->get();
         foreach ($siswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
 
-            // Periksa jika jam_pulang tidak kosong sebelum memformatnya
+            // Format jam_masuk jika ada
+            if ($item->jam_masuk) {
+                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
+            } else {
+                $item->jam_masuk = 'Belum Absen Datang';
+            }
+
+            // Format jam_pulang jika ada
             if ($item->jam_pulang) {
                 $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
             } else {
@@ -528,20 +546,15 @@ class FiturGuruController extends Controller
         $user = User::find(Auth::id());
         $guru_mapel_pkl = guru_mapel_pkl::where('user_id', $user->id)->first();
         $siswa = DB::table('membimbings')
-            ->select('membimbings.*', 'instansis.instansi', 'siswas.nama as nama_siswa', 'siswas.kelas as kelas_siswa', 'jurnals.deskripsi_jurnal', 'jurnals.tanggal',  'jurnals.id', 'jurnals.validasi', 'absensisiswas.jarak', 'pembimbings.nama as nama_pembimbing')
+            ->select('membimbings.*', 'instansis.instansi', 'siswas.nama as nama_siswa', 'siswas.kelas as kelas_siswa', 'jurnals.deskripsi_jurnal', 'jurnals.tanggal',  'jurnals.id', 'jurnals.validasi', 'pembimbings.nama as nama_pembimbing')
             ->join('siswas', 'membimbings.siswa_id', '=', 'siswas.id')
             ->join('menempatis', 'membimbings.siswa_id', '=', 'menempatis.siswa_id',)
             ->join('instansis', 'menempatis.siswa_id', '=', 'instansis.id',)
-            ->join('absensisiswas', 'membimbings.siswa_id', '=', 'absensisiswas.siswa_id')
-            ->leftJoin('jurnals', function ($join) {
-                $join->on('absensisiswas.user_id', '=', 'jurnals.user_id')
-                    ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
-            })
+            ->join('jurnals', 'membimbings.siswa_id', '=', 'jurnals.siswa_id')
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
             ->orderBy('jurnals.created_at', 'desc')
             ->get();
-
         foreach ($siswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
         }
@@ -568,12 +581,9 @@ class FiturGuruController extends Controller
             ->join('siswas', 'membimbings.siswa_id', '=', 'siswas.id')
             ->join('menempatis', 'membimbings.siswa_id', '=', 'menempatis.siswa_id')
             ->join('instansis', 'menempatis.siswa_id', '=', 'instansis.id')
-            ->join('absensisiswas', 'membimbings.siswa_id', '=', 'absensisiswas.siswa_id')
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
-            ->leftJoin('jurnals', function ($join) {
-                $join->on('absensisiswas.user_id', '=', 'jurnals.user_id')
-                    ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
-            })
+            ->join('jurnals', 'membimbings.siswa_id', '=', 'jurnals.siswa_id')
+
             ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id);
 
         if ($start_date && $end_date) {
@@ -631,9 +641,15 @@ class FiturGuruController extends Controller
             ->get();
         foreach ($sudahabsen as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
 
-            // Periksa jika jam_pulang tidak kosong sebelum memformatnya
+            // Format jam_masuk jika ada
+            if ($item->jam_masuk) {
+                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
+            } else {
+                $item->jam_masuk = 'Belum Absen Datang';
+            }
+
+            // Format jam_pulang jika ada
             if ($item->jam_pulang) {
                 $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
             } else {
@@ -672,16 +688,12 @@ class FiturGuruController extends Controller
         $guru_mapel_pkl = guru_mapel_pkl::where('user_id', $user->id)->first();
 
         $jurnalsiswa = DB::table('membimbings')
-            ->select('membimbings.*', 'instansis.instansi', 'siswas.nama as nama_siswa', 'siswas.kelas as kelas_siswa', 'absensisiswas.tanggal', 'absensisiswas.created_at', 'absensisiswas.jam_masuk', 'absensisiswas.jam_pulang', 'jurnals.deskripsi_jurnal',  'jurnals.id', 'jurnals.validasi', 'absensisiswas.jarak', 'pembimbings.nama as nama_pembimbing')
+            ->select('membimbings.*', 'instansis.instansi', 'siswas.nama as nama_siswa', 'siswas.kelas as kelas_siswa', 'jurnals.deskripsi_jurnal', 'jurnals.tanggal',  'jurnals.id', 'jurnals.validasi', 'pembimbings.nama as nama_pembimbing')
 
             ->join('siswas', 'membimbings.siswa_id', '=', 'siswas.id')
             ->join('menempatis', 'membimbings.siswa_id', '=', 'menempatis.siswa_id',)
             ->join('instansis', 'menempatis.siswa_id', '=', 'instansis.id',)
-            ->join('absensisiswas', 'membimbings.siswa_id', '=', 'absensisiswas.siswa_id')
-            ->leftJoin('jurnals', function ($join) {
-                $join->on('absensisiswas.user_id', '=', 'jurnals.user_id')
-                    ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
-            })
+            ->join('jurnals', 'membimbings.siswa_id', '=', 'jurnals.siswa_id')
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
             ->whereDate('jurnals.created_at', Carbon::now()->toDateString())
@@ -689,14 +701,6 @@ class FiturGuruController extends Controller
             ->get();
         foreach ($jurnalsiswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
-
-            // Periksa jika jam_pulang tidak kosong sebelum memformatnya
-            if ($item->jam_pulang) {
-                $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
-            } else {
-                $item->jam_pulang = 'Belum Absen Pulang';
-            }
         }
         return view('fiturguru.jurnalhariini', compact('jurnalsiswa', 'guru_mapel_pkl'));
     }
@@ -705,7 +709,7 @@ class FiturGuruController extends Controller
         $user = User::find(Auth::id());
         $guru_mapel_pkl = guru_mapel_pkl::where('user_id', $user->id)->first();
 
-        return view('fiturguru.editpassword',compact('guru_mapel_pkl'));
+        return view('fiturguru.editpassword', compact('guru_mapel_pkl'));
     }
     public function changePassword(Request $request)
     {
@@ -746,8 +750,5 @@ class FiturGuruController extends Controller
         $guru_mapel_pkl->update($data);
 
         return redirect()->route('dashboardguru.editpassword')->with('status', 'berhasil mengubah foto profile');
-        
-
-
     }
 }

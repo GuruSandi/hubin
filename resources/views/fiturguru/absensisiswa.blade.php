@@ -79,7 +79,7 @@
                                                 @elseif ($item->keterangan == 'tidak_masuk_pkl')
                                                     Tidak Masuk PKL
                                                 @elseif ($item->keterangan == 'absen')
-                                                    Alpha
+                                                    Alpa
                                                 @endif
                                             </td>
                                             <td>{{ $item->nama_pembimbing }}</td>
@@ -143,7 +143,7 @@
                             @elseif ($item->keterangan == 'tidak_masuk_pkl')
                                 Tidak Masuk PKL
                             @elseif ($item->keterangan == 'absen')
-                                Alpha
+                                Alpa
                             @endif
                         </dd>
                         <dt class="col-sm-4">Pembimbing</dt>

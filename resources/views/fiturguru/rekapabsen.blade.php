@@ -53,7 +53,7 @@
                                         <th>Instansi</th>
                                         <th>Hadir</th>
                                         <th>Libur</th>
-                                        <th>Alpha</th>
+                                        <th>Alpa</th>
                                         <th>Tidak Masuk PKL</th>
                                         <th>Aksi</th>
                                     </tr>

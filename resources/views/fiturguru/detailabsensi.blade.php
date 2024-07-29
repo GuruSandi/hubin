@@ -22,7 +22,7 @@
                                 <dd class="col-sm-8">{{ $item->total_hadir }}</dd>
                                 <dt class="col-sm-4">Libur</dt>
                                 <dd class="col-sm-8">{{ $item->total_libur }}</dd>
-                                <dt class="col-sm-4">Alpha</dt>
+                                <dt class="col-sm-4">Alpa</dt>
                                 <dd class="col-sm-8">{{ $item->total_absen }}</dd>
                                 <dt class="col-sm-4">Tidak Hadir PKL</dt>
                                 <dd class="col-sm-8">{{ $item->total_tidak_hadir_pkl }}</dd>
@@ -52,7 +52,7 @@
                                                     @elseif ($item->keterangan == 'tidak_masuk_pkl')
                                                         Tidak Masuk PKL
                                                     @elseif ($item->keterangan == 'absen')
-                                                        Alpha
+                                                        Alpa
                                                     @endif
                                                 </td>
                                             </tr>

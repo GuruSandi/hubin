@@ -43,18 +43,24 @@
         <div class="row mt-3">
             <div id="filterForm" style="display: none;">
                 <form action="{{ route('jurnal.search') }}" method="GET">
-                    <div class="form-group">
-                        <label for="start_date">Tanggal Mulai:</label>
-                        <input type="date" id="start_date" name="start_date" class="form-control" required>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4">
+                            <label for="start_date">Tanggal Mulai:</label>
+                            <input type="date" id="start_date" name="start_date" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <label for="end_date">Tanggal Akhir:</label>
+                            <input type="date" id="end_date" name="end_date" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <button type="submit" name="action" class="btn btn-primary" style="margin-top: 30px" value="search"><i
+                                class="bi bi-search"></i> Cari</button>
+    
+                            <button type="submit" name="action" class="btn btn-success" style="margin-top: 30px" value="download_excel"><i
+                                class="bi bi-file-excel"></i> Export Excel</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="end_date">Tanggal Akhir:</label>
-                        <input type="date" id="end_date" name="end_date" class="form-control" required>
-                    </div>
-                    <div class="">
-                        <button type="submit" class="btn btn-primary"> Cari</button>
-
-                    </div>
+                    
                 </form>
             </div>
         </div>

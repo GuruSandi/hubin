@@ -115,113 +115,112 @@
 
 
     </div>
-    <div class="" style="margin-bottom: 800px">
-        <div class=" mt-5" id="absensi-section">
-            <div class="container" style="margin-bottom: 90px">
-                @foreach ($absensisiswa as $item)
-                    <div class="card mt-3" style="border-radius: 10px; background-color: #e0fcef">
-                        <div class="card-body ">
-    
+    <div class=" mt-5" id="absensi-section">
+        <div class="container" style="margin-bottom: 90px">
+            @foreach ($absensisiswa as $item)
+                <div class="card mt-3" style="border-radius: 10px;">
+                    <div class="card-body ">
+
+                        <div class="row">
+
                             <div class="row">
-    
-                                <div class="row">
-                                    <div class="col-12">
-                                        {{-- <p class="fw-bold">{{ substr($item->deskripsi_jurnal, 0, strpos($item->deskripsi_jurnal, ' ', strpos($item->deskripsi_jurnal, ' ') + 1)) }}</p> --}}
-                                        <h5 class="fw-bold">{{ $item->tanggal }}</h5>
-                                    </div>
+                                <div class="col-12">
+                                    {{-- <p class="fw-bold">{{ substr($item->deskripsi_jurnal, 0, strpos($item->deskripsi_jurnal, ' ', strpos($item->deskripsi_jurnal, ' ') + 1)) }}</p> --}}
+                                    <h5 class="fw-bold">{{ $item->tanggal }}</h5>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-6">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>
-    
-                                            </div>
-                                            <div class="col-8">
-                                                <h4 class="text-muted"> Jam Masuk</h4>
-                                                <p class="text-primary fw-bold">{{ $item->jam_masuk }}</p>
-                                            </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>
+
                                         </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>
-    
-                                            </div>
-                                            <div class="col-8">
-                                                <h4 class="text-muted"> Jam Pulang</h4>
-                                                <p class="text-primary fw-bold">{{ $item->jam_pulang }}</p>
-                                            </div>
+                                        <div class="col-8">
+                                            <h4 class="text-muted"> Jam Masuk</h4>
+                                            <p class="text-primary fw-bold">{{ $item->jam_masuk }}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <hr style="width: 90%">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <p class="text-muted">Jurnal</p>
-                                        <p>{{ $item->deskripsi_jurnal }}</p>
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <p class="text-muted">Status</p>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>
+
+                                        </div>
+                                        <div class="col-8">
+                                            <h4 class="text-muted"> Jam Pulang</h4>
+                                            <p class="text-primary fw-bold">{{ $item->jam_pulang }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="width: 90%">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="text-muted">Jurnal</p>
+                                    <p>{{ $item->deskripsi_jurnal }}</p>
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <p class="text-muted">Status</p>
+                                            @if ($item->validasi == 'belum_tervalidasi')
+                                                <p class="text-danger" style="font-size: 12px">Belum divalidasi Guru
+                                                    Mapel
+                                                    PKL
+                                                </p>
+                                            @elseif ($item->validasi == 'ditolak')
+                                                <p class="text-danger">Di Tolak</p>
+                                            @endif
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="d-flex justify-content-end">
                                                 @if ($item->validasi == 'belum_tervalidasi')
-                                                    <p class="text-danger" style="font-size: 12px">Belum divalidasi Guru
-                                                        Mapel
-                                                        PKL
-                                                    </p>
+                                                    <a href="{{ route('jurnal.edit', $item->id) }}"
+                                                        class="btn btn-primary">Ubah
+                                                        Jurnal</a>
                                                 @elseif ($item->validasi == 'ditolak')
-                                                    <p class="text-danger">Di Tolak</p>
+                                                    <a href="{{ route('jurnal.edit', $item->id) }}"
+                                                        class="btn btn-primary">Ubah
+                                                        Jurnal</a>
+                                                @elseif ($item->validasi == 'tervalidasi')
+                                                    <ion-icon class="green" name="checkmark-circle"
+                                                        style="font-size: 30px"></ion-icon>
                                                 @endif
                                             </div>
-                                            <div class="col-5">
-                                                <div class="d-flex justify-content-end">
-                                                    @if ($item->validasi == 'belum_tervalidasi')
-                                                        <a href="{{ route('jurnal.edit', $item->id) }}"
-                                                            class="btn btn-primary">Ubah
-                                                            Jurnal</a>
-                                                    @elseif ($item->validasi == 'ditolak')
-                                                        <a href="{{ route('jurnal.edit', $item->id) }}"
-                                                            class="btn btn-primary">Ubah
-                                                            Jurnal</a>
-                                                    @elseif ($item->validasi == 'tervalidasi')
-                                                        <ion-icon class="green" name="checkmark-circle"
-                                                            style="font-size: 30px"></ion-icon>
-                                                    @endif
-                                                </div>
-    
-                                            </div>
+
                                         </div>
-    
                                     </div>
+
                                 </div>
                             </div>
-    
                         </div>
+
                     </div>
-                @endforeach
-            </div>
-    
-            @if ($absensisiswa->isEmpty())
-                <div class="card" style="border-radius: 10px">
-                    <div class="container">
-                        <div class="card-body mt-3">
-                            <div class="row">
-                                <h6 class="text-muted text-center">Hi {{ $siswa->nama }}! Selamat datang di SIMAE-2024,
-                                    aplikasi absensi PKL
-                                    untuk memudahkan Anda dalam mengelola presensi harian. Kami siap mendukung kegiatan Anda selama
-                                    PKL dengan teknologi terkini untuk pengalaman yang lebih baik!</h6>
-                            </div>
-                        </div>
-                    </div>
-                    
                 </div>
-            @endif
-    
-    
-    
+            @endforeach
         </div>
+
+        @if ($absensisiswa->isEmpty())
+            <div class="card" style="border-radius: 10px">
+                <div class="container">
+                    <div class="card-body mt-3">
+                        <div class="row">
+                            <h6 class="text-muted text-center">Hi {{ $siswa->nama }}! Selamat datang di SIMAE-2024,
+                                aplikasi absensi PKL
+                                untuk memudahkan Anda dalam mengelola presensi harian. Kami siap mendukung kegiatan Anda
+                                selama
+                                PKL dengan teknologi terkini untuk pengalaman yang lebih baik!</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        @endif
+
+
+
     </div>
-    
+
 
 
 

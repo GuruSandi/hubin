@@ -15,8 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-    //    "\App\Console\Commands\DbBackup",
-    //    "\App\Console\Commands\ClearOldBackups"
+        
     ];
 
     /**
@@ -27,33 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('backup:clear')->daily();
-        // $schedule->command('db:backup')->daily();
         $schedule->command('absensi:harian')->dailyAt('01:00');
-        $schedule->call(function () {
-            // Periksa absensi siswa pada hari itu
-            $absensi = absensisiswa::whereDate('created_at', today())->get();
-
-            // Ambil semua siswa
-            $siswaIds = siswa::pluck('user_id');
-
-            // Loop melalui setiap siswa
-            foreach ($siswaIds as $userId) {
-                // Periksa apakah siswa telah melakukan absensi pada hari itu
-                $absensiSiswa = $absensi->where('user_id', $userId)->first();
-
-                // Jika tidak ada entri absensi untuk siswa pada hari itu, ubah keterangan absensi menjadi "tidak hadir"
-                if (!$absensiSiswa) {
-                    absensisiswa::create([
-                        'user_id' => $userId,
-                        'siswa_id' => $userId,
-                        'latitude' => 0, // Atau nilai default lainnya
-                        'longitude' => 0, // Atau nilai default lainnya
-                        'keterangan' => 'absen'
-                    ]);
-                }
-            }
-        })->daily(); // Jalankan skrip ini setiap hari
+        
     }
 
     /**

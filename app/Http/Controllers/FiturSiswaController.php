@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+
 class FiturSiswaController extends Controller
 {
     public function editpassword()
@@ -29,7 +30,7 @@ class FiturSiswaController extends Controller
         ]);
 
         $user = auth()->user();
-        $edituser= User::where('id',$user->id)->first();
+        $edituser = User::where('id', $user->id)->first();
         if (!Hash::check($request->current_password, $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'Password yang Anda masukkan tidak sesuai dengan password lama.'])->withInput();
         }
@@ -38,7 +39,7 @@ class FiturSiswaController extends Controller
         }
         $edituser->update([
             'password' => bcrypt($request->new_password),
-            'encrypted_password' =>$request->new_password,
+            'encrypted_password' => $request->new_password,
         ]);
         $request->session()->regenerate();
 
@@ -51,7 +52,7 @@ class FiturSiswaController extends Controller
         $menempati = Menempati::where('siswa_id', $siswa->id)->first();
         $membimbing = membimbing::where('siswa_id', $siswa->id)->first();
 
-        return view('fiturSiswa.profilesiswa', compact('siswa','menempati','membimbing'));
+        return view('fiturSiswa.profilesiswa', compact('siswa', 'menempati', 'membimbing'));
     }
     public function profilegurumapel()
     {
@@ -77,7 +78,7 @@ class FiturSiswaController extends Controller
         $siswa = siswa::where('user_id', $user->id)->first();
 
         $user = Auth::user();
-       
+
         $siswa = siswa::where('user_id', $user->id)->first();
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
@@ -88,23 +89,30 @@ class FiturSiswaController extends Controller
                 $join->on('absensisiswas.user_id', '=', 'jurnals.user_id')
                     ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
             })
-            ->orderBy('absensisiswas.tanggal', 'desc') 
+            ->orderBy('absensisiswas.tanggal', 'desc')
             ->limit(5)
             ->get();
         foreach ($absensisiswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
-        
-            // Periksa jika jam_pulang tidak kosong sebelum memformatnya
+
+            // Format jam_masuk jika ada
+            if ($item->jam_masuk) {
+                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
+            } else {
+                $item->jam_masuk = 'Belum Absen Datang';
+            }
+
+            // Format jam_pulang jika ada
             if ($item->jam_pulang) {
                 $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
             } else {
-                $item->jam_pulang = 'Belum Absen Pulang'; 
+                $item->jam_pulang = 'Belum Absen Pulang';
             }
         }
 
-      
-        return view('fitursiswa.homesiswa', compact('siswa','jamSekarang', 'absensisiswa'));
+
+
+        return view('fitursiswa.homesiswa', compact('siswa', 'jamSekarang', 'absensisiswa'));
     }
     public function tambahlokasi()
     {

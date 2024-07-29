@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AbsensiSiswaExport;
+use App\Exports\JurnalSiswaExport;
 use App\Models\absensisiswa;
 use App\Models\jurnal;
 use App\Models\membimbing;
@@ -12,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AbsenController extends Controller
 {
@@ -162,7 +165,11 @@ class AbsenController extends Controller
             ->whereDate('tanggal', '<=', Carbon::parse($end_date))
             ->orderBy('tanggal', 'desc')
             ->get();
-
+        if ($request->input('action') == 'download_excel') {
+            $startDate = Carbon::parse($request->input('start_date'));
+            $endDate = Carbon::parse($request->input('end_date'));
+            return Excel::download(new JurnalSiswaExport($startDate, $endDate), 'Jurnal_Siswa.xlsx');
+        }
         foreach ($jurnal as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
         }
@@ -182,11 +189,28 @@ class AbsenController extends Controller
             ->whereDate('tanggal', '>=', Carbon::parse($start_date))
             ->whereDate('tanggal', '<=', Carbon::parse($end_date))
             ->orderBy('tanggal', 'desc')
-
             ->get();
-
+        if ($request->input('action') == 'download_excel') {
+            $startDate = Carbon::parse($request->input('start_date'));
+            $endDate = Carbon::parse($request->input('end_date'));
+            return Excel::download(new AbsensiSiswaExport($startDate, $endDate), 'Absensi_Siswa.xlsx');
+        }
         foreach ($absensisiswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+
+            // Format jam_masuk jika ada
+            if ($item->jam_masuk) {
+                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
+            } else {
+                $item->jam_masuk = 'Belum Absen Datang';
+            }
+
+            // Format jam_pulang jika ada
+            if ($item->jam_pulang) {
+                $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
+            } else {
+                $item->jam_pulang = 'Belum Absen Pulang';
+            }
         }
 
         // Tampilkan hasil pencarian ke view
@@ -295,8 +319,15 @@ class AbsenController extends Controller
             ->get();
         foreach ($absensisiswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
-            // Periksa jika jam_pulang tidak kosong sebelum memformatnya
+
+            // Format jam_masuk jika ada
+            if ($item->jam_masuk) {
+                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
+            } else {
+                $item->jam_masuk = 'Belum Absen Datang';
+            }
+
+            // Format jam_pulang jika ada
             if ($item->jam_pulang) {
                 $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
             } else {
@@ -424,7 +455,7 @@ class AbsenController extends Controller
         $a = sin($dLat / 2) * sin($dLat / 2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon / 2) * sin($dLon / 2);
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        $distance = $earthRadius * $c *1000;
+        $distance = $earthRadius * $c * 1000;
 
         return $distance;
     }
