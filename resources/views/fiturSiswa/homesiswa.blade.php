@@ -65,7 +65,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <h1 class="fw-bold text-center mt-1 mb-3" style="color: #080761; font-size: 40px">
+                            <h1 class="fw-bold text-center mt-1 mb-3" style="color: #003366; font-size: 40px">
                                 {{ $jamSekarang }}
                             </h1>
 
@@ -75,14 +75,14 @@
 
                         <div class="col-6">
                             <a href="{{ route('absensi') }}" class="btn btnn w-100 "
-                                style="background-color: #080761; color: #ffff; border-radius: 20px; transition: background-color 0.3s ease;">
+                                style="background-color: #003366; color: #ffff; border-radius: 20px; transition: background-color 0.3s ease;">
                                 Absen Masuk
 
                             </a>
                         </div>
                         <div class="col-6">
                             <a href="{{ route('absensipulang') }}" class="btn btnn w-100 "
-                                style="background-color: #080761; color: #ffff; border-radius: 20px; transition: background-color 0.3s ease;">
+                                style="background-color: #003366; color: #ffff; border-radius: 20px; transition: background-color 0.3s ease;">
                                 Absen Pulang
 
                             </a>
@@ -201,20 +201,23 @@
         </div>
 
         @if ($absensisiswa->isEmpty())
-            <div class="card" style="border-radius: 10px">
-                <div class="container">
-                    <div class="card-body mt-3">
-                        <div class="row">
-                            <h6 class="text-muted text-center">Hi {{ $siswa->nama }}! Selamat datang di SIMAE-2024,
-                                aplikasi absensi PKL
-                                untuk memudahkan Anda dalam mengelola presensi harian. Kami siap mendukung kegiatan Anda
-                                selama
-                                PKL dengan teknologi terkini untuk pengalaman yang lebih baik!</h6>
+            <div id="absensi-section">
+                <div class="card" style="border-radius: 10px">
+                    <div class="container">
+                        <div class="card-body">
+                            <div class="row">
+                                <h6 class="text-muted text-center">Hi {{ $siswa->nama }}! Selamat datang di SIMAE-2024,
+                                    aplikasi absensi PKL
+                                    untuk memudahkan Anda dalam mengelola presensi harian. Kami siap mendukung kegiatan Anda
+                                    selama
+                                    PKL dengan teknologi terkini untuk pengalaman yang lebih baik!</h6>
+                            </div>
                         </div>
                     </div>
+    
                 </div>
-
             </div>
+           
         @endif
 
 
