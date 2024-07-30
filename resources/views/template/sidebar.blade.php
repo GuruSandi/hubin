@@ -17,8 +17,6 @@
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 
     <style>
-       
-
         /* Optional: Additional custom styling for Select2 */
         .select2-container .select2-selection--single {
             height: 100% !important;
@@ -88,9 +86,36 @@
 
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('homesiswa') }}" class="sidebar-link"><i class="bi bi-person"></i>
-                        Siswa</a>
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#siswaid" aria-expanded="false" aria-controls="siswaid">
+                        <i class="bi bi-person"></i>
+                        <span>Siswa</span>
+                    </a>
+                    <ul id="siswaid" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="{{ route('homesiswa') }}" class="sidebar-link"><i class="bi bi-person"></i>
+                                Data Siswa</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('dataabsensisiswa') }}" class="sidebar-link">
+                                <i class="bi bi-calendar-check"></i>
+                                <span>Data Absensi Siswa</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('datajurnalsiswa') }}" class="sidebar-link">
+                                <i class="bi bi-book"></i>
+                                <span>Data Jurnal Siswa</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('datanilaisiswa') }}" class="sidebar-link">
+                                <i class="bi bi-bar-chart"></i>
+                                <span>Data Nilai Siswa</span>
+                            </a>
+                        </li>
 
+                    </ul>
                 </li>
                 <li class="sidebar-item">
                     <a href="{{ route('homeinstansi') }}" class="sidebar-link"><i class="bi bi-building"></i>
@@ -152,6 +177,7 @@
 
                     </ul>
                 </li>
+                
 
 
                 {{-- <li class="sidebar-item">
@@ -183,24 +209,7 @@
                         <span>Notification</span>
                     </a>
                 </li> --}}
-                <li class="sidebar-item">
-                    <a href="{{ route('dataabsensisiswa') }}" class="sidebar-link">
-                        <i class="bi bi-calendar-check"></i>
-                        <span>Data Absensi Siswa</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('datajurnalsiswa') }}" class="sidebar-link">
-                        <i class="bi bi-book"></i>
-                        <span>Data Jurnal Siswa</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('datanilaisiswa') }}" class="sidebar-link">
-                        <i class="bi bi-book"></i>
-                        <span>Data Nilai Siswa</span>
-                    </a>
-                </li>
+
                 <li class="sidebar-item">
                     <a href="{{ route('setting') }}" class="sidebar-link">
                         <i class="lni lni-cog"></i>
