@@ -47,7 +47,7 @@
                                 <option value="libur" @if ($item->keterangan == 'libur') selected @endif>Libur</option>
                                 <option value="tidak_hadir_pkl" @if ($item->keterangan == 'tidak_hadir_pkl') selected @endif>Tidak
                                     Hadir PKL</option>
-                                <option value="absen" @if ($item->keterangan == 'absen') selected @endif>Alpha</option>
+                                <option value="absen" @if ($item->keterangan == 'absen') selected @endif>Alpa</option>
                             </select>
                         </div>
                     </div>

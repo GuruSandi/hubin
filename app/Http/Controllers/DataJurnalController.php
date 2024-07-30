@@ -18,7 +18,7 @@ class DataJurnalController extends Controller
             ->select('membimbings.*', 'instansis.instansi', 'siswas.nama as nama_siswa', 'siswas.kelas as kelas_siswa', 'jurnals.deskripsi_jurnal', 'jurnals.tanggal',  'jurnals.id', 'jurnals.validasi', 'pembimbings.nama as nama_pembimbing', 'guru_mapel_pkls.nama as nama_gurumapel')
             ->join('siswas', 'membimbings.siswa_id', '=', 'siswas.id')
             ->join('menempatis', 'membimbings.siswa_id', '=', 'menempatis.siswa_id',)
-            ->join('instansis', 'menempatis.siswa_id', '=', 'instansis.id',)
+            ->join('instansis', 'menempatis.instansi_id', '=', 'instansis.id',)
             ->join('jurnals', 'membimbings.siswa_id', '=', 'jurnals.siswa_id')
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->join('guru_mapel_pkls', 'membimbings.guru_mapel_pkl_id', '=', 'guru_mapel_pkls.id')

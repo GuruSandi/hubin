@@ -17,7 +17,7 @@ class DataAbsensiController extends Controller
             ->select('membimbings.*', 'guru_mapel_pkls.nama as nama_gurumapel', 'instansis.instansi', 'siswas.nama as nama_siswa', 'siswas.kelas as kelas_siswa', 'absensisiswas.tanggal', 'absensisiswas.latitude', 'absensisiswas.longitude', 'absensisiswas.created_at', 'absensisiswas.keterangan', 'absensisiswas.jam_masuk', 'absensisiswas.jam_pulang', 'absensisiswas.id',  'absensisiswas.jarak', 'pembimbings.nama as nama_pembimbing')
             ->join('siswas', 'membimbings.siswa_id', '=', 'siswas.id')
             ->join('menempatis', 'membimbings.siswa_id', '=', 'menempatis.siswa_id',)
-            ->join('instansis', 'menempatis.siswa_id', '=', 'instansis.id',)
+            ->join('instansis', 'menempatis.instansi_id', '=', 'instansis.id',)
             ->join('absensisiswas', 'membimbings.siswa_id', '=', 'absensisiswas.siswa_id')
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->join('guru_mapel_pkls', 'membimbings.guru_mapel_pkl_id', '=', 'guru_mapel_pkls.id')

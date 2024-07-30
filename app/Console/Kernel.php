@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('absensi:harian')->dailyAt('01:00');
+        $schedule->command('absensi:harian')->dailyAt('23:50');
         
     }
 
