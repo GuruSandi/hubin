@@ -118,6 +118,22 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posteditakunadmin/{user}', 'AuthController@posteditakunadmin')->name('posteditakunadmin');
         Route::get('/hapusakunadmin/{user}', 'AuthController@hapusakunadmin')->name('hapusakunadmin');
         Route::get('/unduhakunadmin', 'AuthController@unduhakunadmin')->name('unduhakunadmin');
+
+        //dataabsensi
+        Route::get('/dataabsensisiswa', 'DataAbsensiController@dataabsensisiswa')->name('dataabsensisiswa');
+        Route::post('/posteditdataabsensisiswa/{absensisiswa}', 'DataAbsensiController@posteditdataabsensisiswa')->name('posteditdataabsensisiswa');
+        Route::get('/hapusdataabsensisiswa/{absensisiswa}', 'DataAbsensiController@hapusdataabsensisiswa')->name('hapusdataabsensisiswa');
+        //datajurnal
+        Route::get('/datajurnalsiswa', 'DataJurnalController@datajurnalsiswa')->name('datajurnalsiswa');
+        Route::post('/posteditdatajurnalsiswa/{jurnal}', 'DataJurnalController@posteditdatajurnalsiswa')->name('posteditdatajurnalsiswa');
+        Route::get('/hapusdatajurnalsiswa/{jurnal}', 'DataJurnalController@hapusdatajurnalsiswa')->name('hapusdatajurnalsiswa');
+        //datanilaisiswa
+        Route::get('/datanilaisiswa', 'DataNilaiController@datanilaisiswa')->name('datanilaisiswa');
+        Route::post('/posteditdatanilaisiswa/{nilai_pkl}', 'DataNilaiController@posteditdatanilaisiswa')->name('posteditdatanilaisiswa');
+        Route::get('/hapusdatanilaisiswa/{nilai_pkl}', 'DataNilaiController@hapusdatanilaisiswa')->name('hapusdatanilaisiswa');
+
+
+
     });
 
     Route::group(['middleware' => ['role:siswa']], function () {

@@ -28,8 +28,8 @@ class AbsenController extends Controller
             ->whereDate('created_at', Carbon::now()->toDateString())
             ->first();
         if (!empty($absensiHariIni->jam_pulang)) {
-            // Jika sudah ada jam pulang, redirect ke route 'tambahabsensipulang' dengan parameter $absensiHariIni->id
             return redirect()->route('editabsensipulang', $absensiHariIni->id);
+            
         } elseif(!empty($absensiHariIni->jam_masuk)) {
             return redirect()->route('tambahabsensipulang', $absensiHariIni->id);
             

@@ -150,35 +150,7 @@
         </div>
        
     </div>
-    <div class="row mt-3">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title mb-3 fw-bold" style="color: #080761">Penempatan Terbaru</h6>
-                    <table class="table  " style="font-size: 13px">
-                        <thead style="background-color: #eae9fb;">
-                            <tr>
-                                <th scope="col" style="color: #837bef">#</th>
-                                <th scope="col" style="color: #837bef">Nama Siswa</th>
-                                <th scope="col" style="color: #837bef">Instansi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($dataterbaru as $placement)
-                                <tr>
-                                    <th scope="row" class="text-muted">{{ $loop->iteration }}</th>
-                                    <td style="color: #080761">{{ $placement->siswa->nama }}</td>
-                                    <td style="color: #080761">{{ $placement->instansi->instansi }}</td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>

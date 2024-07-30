@@ -206,7 +206,7 @@
                     <div class="container">
                         <div class="card-body">
                             <div class="row">
-                                <h6 class="text-muted text-center">Hi {{ $siswa->nama }}! Selamat datang di SIMAE-2024,
+                                <h6 class="text-muted text-center">Hi {{ $siswa->nama }}! Selamat datang di SIPAPIH-2024  (Sistem Informasi Pengelolaan Administrasi PraktIk kerja lapangan Hubin),
                                     aplikasi absensi PKL
                                     untuk memudahkan Anda dalam mengelola presensi harian. Kami siap mendukung kegiatan Anda
                                     selama
