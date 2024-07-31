@@ -16,7 +16,7 @@ class CreateNilaiPklsTable extends Migration
         Schema::create('nilai_pkls', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('guru_mapel_pkl_id')->constrained();
+            $table->foreignId('guru_mapel_pkl_id')->constrained()->onDelete('cascade');
             $table->foreignId('siswa_id')->constrained()->onDelete('cascade');
             $table->integer('nilai1');
             $table->integer('nilai2');

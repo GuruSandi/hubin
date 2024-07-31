@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Crypt;
 use App\Exports\SiswaExport;
 use App\Models\siswa;
@@ -38,11 +39,11 @@ class SiswaController extends Controller
     {
         $chars = '0123456789';
         $password = '';
-        
+
         for ($i = 0; $i < $length; $i++) {
             $password .= $chars[rand(0, strlen($chars) - 1)];
         }
-        
+
         return $password;
     }
     public function posttambahsiswa(Request $request)
@@ -56,7 +57,7 @@ class SiswaController extends Controller
         ]);
         $password = $this->generateNumericPassword(8);
 
-       
+
         DB::transaction(function () use ($request,  $password) {
             // Membuat data pengguna (user) terkait
             $user = User::create([
@@ -65,7 +66,7 @@ class SiswaController extends Controller
                 'encrypted_password' => $password,
                 'role' => 'siswa',
             ]);
-    
+
             // Membuat data siswa dengan menetapkan user_id yang baru dibuat
             Siswa::create([
                 'user_id' => $user->id,
@@ -77,7 +78,7 @@ class SiswaController extends Controller
             ]);
         });
         toastr()->success('Data berhasil ditambahkan!');
-    
+
         return redirect()->route('homesiswa');
     }
     public function editsiswa(siswa $siswa)
@@ -100,11 +101,43 @@ class SiswaController extends Controller
     }
     public function hapussiswa(siswa $siswa)
     {
+        $user = User::find($siswa->user_id);
+        if ($user) {
+            $user->delete();
+        }
         $siswa->delete();
         toastr()->success('Data berhasil dihapus');
 
         return redirect()->route('homesiswa');
     }
+    public function siswadelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (!is_array($ids) || count($ids) == 0) {
+            return response()->json(['success' => false, 'message' => 'No IDs provided.']);
+        }
+
+        try {
+            // Mengambil semua siswa yang akan dihapus
+            $siswaRecords = Siswa::whereIn('id', $ids)->get();
+
+            // Menghapus data user yang terkait
+            foreach ($siswaRecords as $siswa) {
+                if ($siswa->user) {
+                    $siswa->user->delete();
+                }
+            }
+
+            // Menghapus data siswa
+            Siswa::whereIn('id', $ids)->delete();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
     public function exportDataSiswa()
     {
         return Excel::download(new SiswaExport, 'data_siswa.xlsx');

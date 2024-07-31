@@ -73,6 +73,21 @@ class menempatiController extends Controller
         
         return redirect()->route('homemenempati');
     }
+    public function menempatidelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (!is_array($ids) || count($ids) == 0) {
+            return response()->json(['success' => false, 'message' => 'No IDs provided.']);
+        }
+
+        try {
+            menempati::whereIn('id', $ids)->delete();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
     public function exportDataMenempati()
     {
             return Excel::download(new MenempatiExport, 'data_menempati.xlsx');

@@ -65,4 +65,19 @@ class DataAbsensiController extends Controller
         return redirect()->route('dataabsensisiswa');
 
     }
+    public function dataabsensidelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (!is_array($ids) || count($ids) == 0) {
+            return response()->json(['success' => false, 'message' => 'No IDs provided.']);
+        }
+
+        try {
+            absensisiswa::whereIn('id', $ids)->delete();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
 }

@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/editsiswa/{siswa}', 'SiswaController@editsiswa')->name('editsiswa');
         Route::post('/posteditsiswa/{siswa}', 'SiswaController@posteditsiswa')->name('posteditsiswa');
         Route::get('/hapussiswa/{siswa}', 'SiswaController@hapussiswa')->name('hapussiswa');
+        Route::delete('/siswadelete', 'SiswaController@siswadelete')->name('siswa.delete');
 
         //instansi
         Route::get('/homeinstansi', 'InstansiController@homeinstansi')->name('homeinstansi');
@@ -46,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/editinstansi/{instansi}', 'InstansiController@editinstansi')->name('editinstansi');
         Route::post('/posteditinstansi/{instansi}', 'InstansiController@posteditinstansi')->name('posteditinstansi');
         Route::get('/hapusinstansi/{instansi}', 'InstansiController@hapusinstansi')->name('hapusinstansi');
+        Route::delete('/intansidelete', 'InstansiController@intansidelete')->name('intansi.delete');
 
         //pembimbing
         Route::get('/homepembimbing', 'PembimbingController@homepembimbing')->name('homepembimbing');
@@ -54,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/editpembimbing/{pembimbing}', 'PembimbingController@editpembimbing')->name('editpembimbing');
         Route::post('/posteditpembimbing/{pembimbing}', 'PembimbingController@posteditpembimbing')->name('posteditpembimbing');
         Route::get('/hapuspembimbing/{pembimbing}', 'PembimbingController@hapuspembimbing')->name('hapuspembimbing');
+        Route::delete('/pembimbingdelete', 'PembimbingController@pembimbingdelete')->name('pembimbing.delete');
 
         //GuruMapelPKL
         Route::get('/homegurumapel', 'GuruMapelController@homegurumapel')->name('homegurumapel');
@@ -62,6 +65,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/editgurumapel/{gurumapel}', 'GuruMapelController@editgurumapel')->name('editgurumapel');
         Route::post('/posteditgurumapel/{gurumapel}', 'GuruMapelController@posteditgurumapel')->name('posteditgurumapel');
         Route::get('/hapusgurumapel/{gurumapel}', 'GuruMapelController@hapusgurumapel')->name('hapusgurumapel');
+        Route::delete('/gurumapeldelete', 'GuruMapelController@gurumapeldelete')->name('gurumapel.delete');
 
         //menempati
         Route::get('/search-instansi', 'MenempatiController@search')->name('search');
@@ -72,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/editmenempati/{menempati}', 'MenempatiController@editmenempati')->name('editmenempati');
         Route::post('/posteditmenempati/{menempati}', 'MenempatiController@posteditmenempati')->name('posteditmenempati');
         Route::get('/hapusmenempati/{menempati}', 'MenempatiController@hapusmenempati')->name('hapusmenempati');
+        Route::delete('/menempatidelete', 'MenempatiController@menempatidelete')->name('menempati.delete');
 
         //membimbing
         Route::get('/homemembimbing', 'MembimbingController@homemembimbing')->name('homemembimbing');
@@ -80,6 +85,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/editmembimbing/{membimbing}', 'MembimbingController@editmembimbing')->name('editmembimbing');
         Route::post('/posteditmembimbing/{membimbing}', 'MembimbingController@posteditmembimbing')->name('posteditmembimbing');
         Route::get('/hapusmembimbing/{membimbing}', 'MembimbingController@hapusmembimbing')->name('hapusmembimbing');
+        Route::delete('/membimbingdelete', 'MembimbingController@membimbingdelete')->name('membimbing.delete');
 
         //data penempatan
         Route::get('/dataPenempatan', 'DataPenempatanController@dataPenempatan')->name('dataPenempatan');
@@ -123,15 +129,19 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dataabsensisiswa', 'DataAbsensiController@dataabsensisiswa')->name('dataabsensisiswa');
         Route::post('/posteditdataabsensisiswa/{absensisiswa}', 'DataAbsensiController@posteditdataabsensisiswa')->name('posteditdataabsensisiswa');
         Route::get('/hapusdataabsensisiswa/{absensisiswa}', 'DataAbsensiController@hapusdataabsensisiswa')->name('hapusdataabsensisiswa');
+        Route::delete('/dataabsensidelete', 'DataAbsensiController@dataabsensidelete')->name('dataabsensi.delete');
+
         //datajurnal
         Route::get('/datajurnalsiswa', 'DataJurnalController@datajurnalsiswa')->name('datajurnalsiswa');
         Route::post('/posteditdatajurnalsiswa/{jurnal}', 'DataJurnalController@posteditdatajurnalsiswa')->name('posteditdatajurnalsiswa');
         Route::get('/hapusdatajurnalsiswa/{jurnal}', 'DataJurnalController@hapusdatajurnalsiswa')->name('hapusdatajurnalsiswa');
+        Route::delete('/datajurnaldelete', 'DataJurnalController@datajurnaldelete')->name('datajurnal.delete');
+
         //datanilaisiswa
         Route::get('/datanilaisiswa', 'DataNilaiController@datanilaisiswa')->name('datanilaisiswa');
         Route::post('/posteditdatanilaisiswa/{nilai_pkl}', 'DataNilaiController@posteditdatanilaisiswa')->name('posteditdatanilaisiswa');
         Route::get('/hapusdatanilaisiswa/{nilai_pkl}', 'DataNilaiController@hapusdatanilaisiswa')->name('hapusdatanilaisiswa');
-
+        Route::delete('/datanilaidelete', 'DataNilaiController@datanilaidelete')->name('datanilai.delete');
 
 
     });

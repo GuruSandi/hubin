@@ -36,7 +36,11 @@
                 </form>
 
             </div>
-           
+            <div class="row mt-3 mb-3">
+                <div class="col-12">
+                    <a href="#" class="btn btn-danger" id="deleteAllSelectedRecord">Hapus Semua Select</a>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-12 col-md-12 col-sm-8">
@@ -44,7 +48,10 @@
                         <table class="table table-bordered" id="example" style="font-size: 12px">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th>
+                                        <input type="checkbox" id="select_all_ids">
+                                    </th>
+                                    <th>ID</th>
                                     <th>Foto</th>
                                     <th>Nama Guru</th>
                                     <th>No HP</th>
@@ -54,7 +61,10 @@
                             <tbody>
                                 @foreach ($pembimbing as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <input type="checkbox" name="ids" class="checkbox_ids" value="{{ $item->id }}">
+                                        </td>
+                                        <td>{{ $item->id }}</td>
                                         <td>
                                             <img src="{{ asset($item->foto) }}" alt="" width="100"
                                                 height="100">
@@ -96,5 +106,51 @@
     </div>
     @include('pembimbing.tambahpembimbing')
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Select/Deselect All Checkboxes
+            $("#select_all_ids").click(function() {
+                $('.checkbox_ids').prop('checked', $(this).prop('checked'));
+            });
 
+            // Delete All Selected Records
+            $('#deleteAllSelectedRecord').click(function(e) {
+                e.preventDefault();
+                var all_ids = [];
+                $('input:checkbox[name=ids]:checked').each(function() {
+                    all_ids.push($(this).val());
+                });
+
+                if (all_ids.length === 0) {
+                    alert('Please select at least one record.');
+                    return;
+                }
+
+                $.ajax({
+                    url: "{{ route('pembimbing.delete') }}",
+                    type: "DELETE",
+                    data: {
+                        ids: all_ids,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('input:checkbox[name=ids]:checked').each(function() {
+                                $(this).closest('tr').remove();
+                            });
+                            location.reload();
+
+                        } else {
+                            alert('Failed to delete records.');
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Failed to delete records. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

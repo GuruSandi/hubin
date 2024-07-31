@@ -24,7 +24,7 @@ class InstansiController extends Controller
             'instansi' => 'required',
             'alamat' => 'required',
             'domisili' => 'required',
-           
+
         ]);
         instansi::create([
             'instansi' => $request->instansi,
@@ -32,7 +32,7 @@ class InstansiController extends Controller
             'domisili' => $request->domisili,
         ]);
         toastr()->success('Data berhasil ditambahkan!');
-        
+
         return redirect()->route('homeinstansi');
     }
     public function editinstansi(instansi $instansi)
@@ -48,10 +48,10 @@ class InstansiController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ]);
-       
+
         $instansi->update($data);
         toastr()->success('Data berhasil di update!');
-        
+
         return redirect()->route('homeinstansi');
     }
     public function hapusinstansi(instansi $instansi)
@@ -60,8 +60,25 @@ class InstansiController extends Controller
         toastr()->success('Data berhasil dihapus');
         return redirect()->route('homeinstansi');
     }
+    public function intansidelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (!is_array($ids) || count($ids) == 0) {
+            return response()->json(['success' => false, 'message' => 'No IDs provided.']);
+        }
+
+        try {
+            Instansi::whereIn('id', $ids)->delete();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
     public function exportDataInstansi()
     {
-            return Excel::download(new InstansiExport, 'data_instansi.xlsx');
+        return Excel::download(new InstansiExport, 'data_instansi.xlsx');
     }
 }

@@ -79,6 +79,21 @@ class MembimbingController extends Controller
         
         return redirect()->route('homemembimbing');
     }
+    public function membimbingdelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (!is_array($ids) || count($ids) == 0) {
+            return response()->json(['success' => false, 'message' => 'No IDs provided.']);
+        }
+
+        try {
+            membimbing::whereIn('id', $ids)->delete();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
     public function exportDataMembimbing()
     {
             return Excel::download(new MembimbingExport, 'data_membimbing.xlsx');

@@ -25,14 +25,14 @@ class GuruMapelController extends Controller
     {
         $chars = '0123456789';
         $password = '';
-        
+
         for ($i = 0; $i < $length; $i++) {
             $password .= $chars[rand(0, strlen($chars) - 1)];
         }
-        
+
         return $password;
     }
-   
+
     public function posttambahgurumapel(Request $request)
     {
         $request->validate([
@@ -42,7 +42,7 @@ class GuruMapelController extends Controller
         ]);
         $username = substr($request->nama, 0, 3) . mt_rand(10, 99); // Generate username
         $password = $this->generateNumericPassword(8);
-        DB::transaction(function () use ($request, $username, $password,  ) {
+        DB::transaction(function () use ($request, $username, $password,) {
             // Membuat data pengguna (user) terkait
             $user = User::create([
                 'username' => $username, // Atau gunakan informasi lain yang sesuai
@@ -67,13 +67,13 @@ class GuruMapelController extends Controller
             'no_hp' => $request->no_hp,
             'foto' => $request->foto->store('img/fotoguru'),
         ]);
-       
+
 
         toastr()->success('Data berhasil ditambahkan!');
 
         return redirect()->route('homegurumapel');
     }
-    
+
     public function posteditgurumapel(Request $request, guru_mapel_pkl $gurumapel)
     {
         $data =  $request->validate([
@@ -102,23 +102,56 @@ class GuruMapelController extends Controller
         DB::transaction(function () use ($gurumapel) {
             // Mengambil data guru_mapel_pkl yang akan dihapus
             $gurumapel = guru_mapel_pkl::where('no_hp', $gurumapel->no_hp)->first();
-    
+
             if ($gurumapel) {
                 // Menghapus guru_mapel_pkl
                 $gurumapel->delete();
-    
+
                 // Jika ada, maka hapus juga user yang sesuai
                 $user = User::find($gurumapel->user_id);
                 if ($user) {
                     $user->delete();
                 }
             }
-           
         });
-        
+
         toastr()->success('Data berhasil dihapus');
         return redirect()->route('homegurumapel');
     }
+    public function gurumapeldelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (!is_array($ids) || count($ids) == 0) {
+            return response()->json(['success' => false, 'message' => 'No IDs provided.']);
+        }
+
+        try {
+            // Mengambil semua guru_mapel_pkl yang akan dihapus
+            $guruMapelRecords = guru_mapel_pkl::whereIn('id', $ids)->get();
+
+            // Menghapus data pembimbing dan user yang terkait berdasarkan no_hp
+            foreach ($guruMapelRecords as $guruMapel) {
+                // Menghapus data pembimbing
+                if ($guruMapel->no_hp) {
+                    Pembimbing::where('no_hp', $guruMapel->no_hp)->delete();
+                }
+
+                // Menghapus data user
+                if ($guruMapel->user_id) {
+                    User::where('id', $guruMapel->user_id)->delete();
+                }
+            }
+
+            // Menghapus data guru_mapel_pkl
+            guru_mapel_pkl::whereIn('id', $ids)->delete();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
     public function exportDataGuruMapelPkl()
     {
         $sheet = new Worksheet();

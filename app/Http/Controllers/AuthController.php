@@ -45,7 +45,7 @@ class AuthController extends Controller
 
         return redirect()->route('homeakunsiswa');
     }
-    public function hapusakunsiswa(Request $request, User $user)
+    public function hapusakunsiswa(User $user)
     {
         $user->delete();
         toastr()->success('Data berhasil dihapus');
