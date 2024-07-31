@@ -1,5 +1,5 @@
 @extends('template.sidebar')
-@section('title', 'Home Absensi Siswa')
+@section('title', 'Home Nilai Siswa')
 
 @section('content')
 <div class=" mt-5 mb-5">

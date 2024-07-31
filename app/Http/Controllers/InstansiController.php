@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\InstansiExport;
+use App\Exports\InstansiTemplateExport;
 use App\Models\instansi;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -80,5 +81,10 @@ class InstansiController extends Controller
     public function exportDataInstansi()
     {
         return Excel::download(new InstansiExport, 'data_instansi.xlsx');
+    }
+    public function unduhformatinstansi()
+    {
+        return Excel::download(new InstansiTemplateExport, 'template_import_instansi.xlsx');
+        
     }
 }

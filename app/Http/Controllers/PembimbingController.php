@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GuruTemplateExport;
 use Illuminate\Support\Facades\Crypt;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use App\Exports\PembimbingExport;
@@ -163,5 +164,10 @@ class PembimbingController extends Controller
         $sheet = new Worksheet();
         $export = new PembimbingExport($sheet);
         return Excel::download($export, 'Data_Pembimbing.xlsx');
+    }
+    public function unduhformatguru()
+    {
+        return Excel::download(new GuruTemplateExport, 'template_import_guru.xlsx');
+        
     }
 }

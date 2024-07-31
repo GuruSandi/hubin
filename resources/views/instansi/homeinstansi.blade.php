@@ -5,33 +5,49 @@
     <div class="mt-5 mb-5">
         <div class="card col-12 shadow mx-auto p-4">
             <h5 class="fw-bold mb-4">Data Instansi</h5>
-
-            <!-- Import and Export Section -->
-            <div class="row mb-2">
-                <form action="{{ route('importinstansi') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row">
-                        <div class="col-12 col-md-6 mb-3">
-                            <input type="file" name="file" class="form-control" required>
-                        </div>
-                        <div class="col-4 col-md-2">
-                            <button type="submit" class="btn btn-warning text-white w-100">
-                                <i class="bi bi-cloud-download-fill"></i> Import
-                            </button>
-                        </div>
-                        <div class="col-4 col-md-2">
-                            <a href="{{ route('exportDataInstansi') }}" class="btn btn-success w-100">
-                                <i class="bi bi-file-earmark-excel"></i> Export
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div id="toggleImport" class="btn btn-warning text-white">
+                        <i class="bi-cloud-download-fill"></i> Import
+                    </div>
+                    <a href="{{ route('exportDataInstansi') }}" class="btn btn-success">
+                        <i class="bi bi-file-earmark-excel"></i> Export
+                    </a>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#tambahInstansiModal">
+                        <i class="bi bi-plus-circle"></i> Tambah
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div id="importtoggle" style="display: none;">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <p class="text-muted">Note: Untuk format import header atau judul jangan diganti!</p>
+                            <a href="{{ route('unduhformatinstansi') }}" class="btn btn-success">
+                                <i class="bi bi-download"></i> Unduh Format
                             </a>
                         </div>
-                        <div class="col-4 col-md-2">
-                            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#tambahInstansiModal">
-                                <i class="bi bi-plus-circle"></i> Tambah
-                            </button>
-                        </div>
                     </div>
-                </form>
+                    <form action="{{ route('importinstansi') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-4">
+                                <input type="file" name="file" class="form-control" required>
+                            </div>
+                            <div class="col-4 ">
+                                <button type="submit" class="btn btn-warning text-white">
+                                    <i class="bi bi-cloud-download-fill"></i> Import
+                                </button>
+                               
+
+                            </div>
+    
+                        </div>
+                    </form>
+                </div>
             </div>
+            
 
             <!-- Delete All Selected Records -->
             <div class="row mt-3 mb-3">
@@ -63,7 +79,8 @@
                                 @foreach ($instansi as $item)
                                     <tr>
                                         <td>
-                                            <input type="checkbox" name="ids" class="checkbox_ids" value="{{ $item->id }}">
+                                            <input type="checkbox" name="ids" class="checkbox_ids"
+                                                value="{{ $item->id }}">
                                         </td>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->instansi }}</td>
@@ -73,13 +90,16 @@
                                         <td>{{ $item->longitude }}</td>
                                         <td>
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-info mx-1" data-bs-toggle="modal" data-bs-target="#detailModal{{ $item->id }}">
+                                                <button type="button" class="btn btn-info mx-1" data-bs-toggle="modal"
+                                                    data-bs-target="#detailModal{{ $item->id }}">
                                                     <i class="bi bi-book" style="color: white"></i>
                                                 </button>
-                                                <button type="button" style="background-color: #080761" class="btn mx-1" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">
+                                                <button type="button" style="background-color: #080761" class="btn mx-1"
+                                                    data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">
                                                     <i class="bi bi-pencil" style="color: white"></i>
                                                 </button>
-                                                <a href="{{ route('hapusinstansi', $item->id) }}" class="btn btn-danger mx-1 delete-btn" data-id="{{ $item->id }}">
+                                                <a href="{{ route('hapusinstansi', $item->id) }}"
+                                                    class="btn btn-danger mx-1 delete-btn" data-id="{{ $item->id }}">
                                                     <i class="bi bi-trash"></i>
                                                 </a>
                                             </div>

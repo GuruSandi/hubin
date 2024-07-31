@@ -86,6 +86,7 @@
                         Dashboard</a>
 
                 </li>
+                
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#siswaid" aria-expanded="false" aria-controls="siswaid">
@@ -103,6 +104,24 @@
                                 <span>Data Absensi Siswa</span>
                             </a>
                         </li>
+                       
+                        <li class="sidebar-item">
+                            <a href="{{ route('datanilaisiswa') }}" class="sidebar-link">
+                                <i class="bi bi-bar-chart"></i>
+                                <span>Data Nilai Siswa</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#jurnalid" aria-expanded="false" aria-controls="jurnalid">
+                        <i class="bi bi-book"></i>
+                        <span>Jurnal Siswa</span>
+                    </a>
+                    <ul id="jurnalid" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                       
                         <li class="sidebar-item">
                             <a href="{{ route('datajurnalsiswa') }}" class="sidebar-link">
                                 <i class="bi bi-book"></i>
@@ -110,9 +129,9 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="{{ route('datanilaisiswa') }}" class="sidebar-link">
-                                <i class="bi bi-bar-chart"></i>
-                                <span>Data Nilai Siswa</span>
+                            <a href="{{ route('datajurnalbelumdivalidasi') }}" class="sidebar-link">
+                                <i class="bi bi-book"></i>
+                                <span>Jurnal Belum di validasi</span>
                             </a>
                         </li>
 
@@ -125,7 +144,7 @@
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#guru" aria-expanded="false" aria-controls="guru">
-                        <i class="bi bi-journal"></i>
+                        <i class="bi bi-person"></i>
                         <span>Guru</span>
                     </a>
                     <ul id="guru" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
@@ -360,7 +379,13 @@
             });
         });
     </script>
-
+    <script>
+        $(document).ready(function() {
+            $('#toggleImport').click(function() {
+                $('#importtoggle').toggle();
+            });
+        });
+    </script>
 </body>
 
 </html>

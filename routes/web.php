@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', 'AuthController@login')->name('login');
-    Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
+Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 Route::middleware(['guest'])->group(function () {
     
 });
@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posteditsiswa/{siswa}', 'SiswaController@posteditsiswa')->name('posteditsiswa');
         Route::get('/hapussiswa/{siswa}', 'SiswaController@hapussiswa')->name('hapussiswa');
         Route::delete('/siswadelete', 'SiswaController@siswadelete')->name('siswa.delete');
+        Route::get('/unduhformatsiswa', 'SiswaController@unduhformatsiswa')->name('unduhformatsiswa');
+
 
         //instansi
         Route::get('/homeinstansi', 'InstansiController@homeinstansi')->name('homeinstansi');
@@ -48,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posteditinstansi/{instansi}', 'InstansiController@posteditinstansi')->name('posteditinstansi');
         Route::get('/hapusinstansi/{instansi}', 'InstansiController@hapusinstansi')->name('hapusinstansi');
         Route::delete('/intansidelete', 'InstansiController@intansidelete')->name('intansi.delete');
+        Route::get('/unduhformatinstansi', 'InstansiController@unduhformatinstansi')->name('unduhformatinstansi');
 
         //pembimbing
         Route::get('/homepembimbing', 'PembimbingController@homepembimbing')->name('homepembimbing');
@@ -57,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posteditpembimbing/{pembimbing}', 'PembimbingController@posteditpembimbing')->name('posteditpembimbing');
         Route::get('/hapuspembimbing/{pembimbing}', 'PembimbingController@hapuspembimbing')->name('hapuspembimbing');
         Route::delete('/pembimbingdelete', 'PembimbingController@pembimbingdelete')->name('pembimbing.delete');
+        Route::get('/unduhformatguru', 'PembimbingController@unduhformatguru')->name('unduhformatguru');
 
         //GuruMapelPKL
         Route::get('/homegurumapel', 'GuruMapelController@homegurumapel')->name('homegurumapel');
@@ -77,6 +81,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posteditmenempati/{menempati}', 'MenempatiController@posteditmenempati')->name('posteditmenempati');
         Route::get('/hapusmenempati/{menempati}', 'MenempatiController@hapusmenempati')->name('hapusmenempati');
         Route::delete('/menempatidelete', 'MenempatiController@menempatidelete')->name('menempati.delete');
+        Route::get('/unduhformatmenempati', 'MenempatiController@unduhformatmenempati')->name('unduhformatmenempati');
 
         //membimbing
         Route::get('/homemembimbing', 'MembimbingController@homemembimbing')->name('homemembimbing');
@@ -86,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posteditmembimbing/{membimbing}', 'MembimbingController@posteditmembimbing')->name('posteditmembimbing');
         Route::get('/hapusmembimbing/{membimbing}', 'MembimbingController@hapusmembimbing')->name('hapusmembimbing');
         Route::delete('/membimbingdelete', 'MembimbingController@membimbingdelete')->name('membimbing.delete');
+        Route::get('/unduhformatmembimbing', 'MembimbingController@unduhformatmembimbing')->name('unduhformatmembimbing');
 
         //data penempatan
         Route::get('/dataPenempatan', 'DataPenempatanController@dataPenempatan')->name('dataPenempatan');
@@ -136,6 +142,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posteditdatajurnalsiswa/{jurnal}', 'DataJurnalController@posteditdatajurnalsiswa')->name('posteditdatajurnalsiswa');
         Route::get('/hapusdatajurnalsiswa/{jurnal}', 'DataJurnalController@hapusdatajurnalsiswa')->name('hapusdatajurnalsiswa');
         Route::delete('/datajurnaldelete', 'DataJurnalController@datajurnaldelete')->name('datajurnal.delete');
+        Route::get('/datajurnalbelumdivalidasi', 'DataJurnalController@datajurnalbelumdivalidasi')->name('datajurnalbelumdivalidasi');
+        Route::post('/validasijurnal', 'DataJurnalController@jurnalvalidasisiswa')->name('datajurnal.validasi');
 
         //datanilaisiswa
         Route::get('/datanilaisiswa', 'DataNilaiController@datanilaisiswa')->name('datanilaisiswa');

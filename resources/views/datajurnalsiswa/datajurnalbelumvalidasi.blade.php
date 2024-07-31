@@ -5,10 +5,10 @@
     <div class=" mt-5 mb-5">
 
         <div class="card col-12 shadow mx-auto p-4">
-            <h5 class="fw-bold mb-4">Data Jurnal Siswa</h5>
+            <h5 class="fw-bold mb-4">Data Jurnal Siswa Belum divalidasi </h5>
             <div class="row mt-3 mb-3">
                 <div class="col-12">
-                    <a href="#" class="btn btn-danger" id="deleteAllSelectedRecord">Hapus Semua Select</a>
+                    <a href="#" class="btn btn-success" id="validasiAllSelectedRecord">Validasi Semua Select</a>
                 </div>
             </div>
             <div class="row">
@@ -52,14 +52,6 @@
                                                 <p class="text-white bg-warning px-1"
                                                     style="font-size: 11px ; border-radius: 10px">
                                                     Belum divalidasi</p>
-                                            @elseif ($item->validasi == 'ditolak')
-                                                <p class="text-white bg-danger px-1"
-                                                    style="font-size: 11px ; border-radius: 10px">
-                                                    Ditolak</p>
-                                            @elseif ($item->validasi == 'tervalidasi')
-                                                <p class="text-white bg-success px-1"
-                                                    style="font-size: 11px ; border-radius: 10px">
-                                                    Sudah divalidasi</p>
                                             @endif
                                         </td>
                                         <td>
@@ -100,23 +92,23 @@
             $("#select_all_ids").click(function() {
                 $('.checkbox_ids').prop('checked', $(this).prop('checked'));
             });
-
-            // Delete All Selected Records
-            $('#deleteAllSelectedRecord').click(function(e) {
+    
+            // Validate All Selected Records
+            $('#validasiAllSelectedRecord').click(function(e) {
                 e.preventDefault();
                 var all_ids = [];
                 $('input:checkbox[name=ids]:checked').each(function() {
                     all_ids.push($(this).val());
                 });
-
+    
                 if (all_ids.length === 0) {
                     alert('Please select at least one record.');
                     return;
                 }
-
+    
                 $.ajax({
-                    url: "{{ route('datajurnal.delete') }}",
-                    type: "DELETE",
+                    url: "{{ route('datajurnal.validasi') }}",  // Make sure this route is correct
+                    type: "POST", // Use POST to update records
                     data: {
                         ids: all_ids,
                         _token: '{{ csrf_token() }}'
@@ -124,18 +116,21 @@
                     success: function(response) {
                         if (response.success) {
                             $('input:checkbox[name=ids]:checked').each(function() {
-                                $(this).closest('tr').remove();
+                                $(this).closest('tr').find('td:eq(9)').html('<p class="text-white bg-success px-1" style="font-size: 11px; border-radius: 10px">Tervalidasi</p>');
                             });
                             location.reload();
+
                         } else {
-                            alert('Failed to delete records.');
+                            alert('Failed to validate records.');
                         }
                     },
                     error: function(xhr) {
-                        alert('Failed to delete records. Please try again.');
+                        alert('Failed to validate records. Please try again.');
                     }
                 });
             });
         });
     </script>
+    
+    
 @endsection

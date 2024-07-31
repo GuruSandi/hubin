@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\MembimbingExport;
+use App\Exports\MembimbingTemplateExport;
 use App\Models\instansi;
 use App\Models\guru_mapel_pkl;
 use App\Models\membimbing;
@@ -96,6 +97,11 @@ class MembimbingController extends Controller
     }
     public function exportDataMembimbing()
     {
-            return Excel::download(new MembimbingExport, 'data_membimbing.xlsx');
+        return Excel::download(new MembimbingExport, 'data_membimbing.xlsx');
+    }
+    public function unduhformatmembimbing()
+    {
+        return Excel::download(new MembimbingTemplateExport, 'template_import_membimbing.xlsx');
+        
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\MenempatiExport;
+use App\Exports\MenempatiTemplateExport;
 use App\Models\datapenempatan;
 use App\Models\instansi;
 use App\Models\menempati;
@@ -91,5 +92,10 @@ class menempatiController extends Controller
     public function exportDataMenempati()
     {
             return Excel::download(new MenempatiExport, 'data_menempati.xlsx');
+    }
+    public function unduhformatmenempati()
+    {
+        return Excel::download(new MenempatiTemplateExport, 'template_import_penempatan.xlsx');
+        
     }
 }

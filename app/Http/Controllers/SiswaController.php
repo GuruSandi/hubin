@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Crypt;
 use App\Exports\SiswaExport;
+use App\Exports\SiswaTemplateExport;
 use App\Models\siswa;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Symfony\Component\HttpFoundation\StreamedResponse;
 class SiswaController extends Controller
 {
 
@@ -141,5 +142,10 @@ class SiswaController extends Controller
     public function exportDataSiswa()
     {
         return Excel::download(new SiswaExport, 'data_siswa.xlsx');
+    }
+    public function unduhformatsiswa()
+    {
+        return Excel::download(new SiswaTemplateExport, 'template_import_siswa.xlsx');
+        
     }
 }
