@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\absensisiswa;
+use App\Models\jurnal;
+use App\Models\nilai_pkl;
+use App\Policies\AbsensiSiswaPolicy;
+use App\Policies\JurnalPolicy;
+use App\Policies\NilaiPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +19,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        absensisiswa::class => AbsensiSiswaPolicy::class,
+        jurnal::class => JurnalPolicy::class,
+        nilai_pkl::class => NilaiPolicy::class,
     ];
 
     /**

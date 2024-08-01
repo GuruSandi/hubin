@@ -45,6 +45,7 @@ class AbsenController extends Controller
     public function tambahabsensipulang($id)
     {
         $absensisiswa = absensisiswa::findOrFail($id);
+        $this->authorize('update', $absensisiswa);
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $jam = Carbon::now();
@@ -55,6 +56,8 @@ class AbsenController extends Controller
 
     public function postabsensipulang(Request $request, $id)
     {
+        $absensisiswa = absensisiswa::findOrFail($id);
+        $this->authorize('update', $absensisiswa);
         $request->validate([
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
@@ -107,6 +110,7 @@ class AbsenController extends Controller
     public function editabsensipulang($id)
     {
         $absensisiswa = absensisiswa::findOrFail($id);
+        $this->authorize('update', $absensisiswa);
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $tanggal = Carbon::parse($absensisiswa->tanggal)->translatedFormat('l, j F Y');
@@ -116,6 +120,8 @@ class AbsenController extends Controller
 
     public function posteditabsensipulang(Request $request, $id)
     {
+        $absensisiswa = absensisiswa::findOrFail($id);
+        $this->authorize('update', $absensisiswa);
         $request->validate([
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
@@ -260,6 +266,7 @@ class AbsenController extends Controller
     }
     public function jurnal()
     {
+        
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $user = Auth::user();
@@ -274,6 +281,7 @@ class AbsenController extends Controller
     public function editjurnal($id)
     {
         $jurnal = Jurnal::findOrFail($id);
+        $this->authorize('update', $jurnal);
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $tanggal = Carbon::parse($jurnal->tanggal)->translatedFormat('l, j F Y');
@@ -285,6 +293,8 @@ class AbsenController extends Controller
     }
     public function updatejurnal(Request $request, $id)
     {
+        $jurnal = Jurnal::findOrFail($id);
+        $this->authorize('update', $jurnal);
         $request->validate([
             'deskripsi_jurnal' => 'required',
         ]);
@@ -311,7 +321,6 @@ class AbsenController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
 
-        $absensiSiswa = AbsensiSiswa::where('user_id', $user->id)->get();
         $absensisiswa = AbsensiSiswa::where('absensisiswas.user_id', $user->id)
             ->select('absensisiswas.tanggal', 'absensisiswas.keterangan', 'absensisiswas.jam_masuk', 'absensisiswas.jam_pulang', 'jurnals.deskripsi_jurnal',  'jurnals.validasi', 'jurnals.id')
             ->leftJoin('jurnals', function ($join) {
@@ -344,6 +353,7 @@ class AbsenController extends Controller
 
     public function absensi()
     {
+        
         $siswa = Siswa::where('user_id', auth()->id())->first();
 
         if (!$siswa) {
@@ -468,6 +478,7 @@ class AbsenController extends Controller
     public function editabsensi($id)
     {
         $absensisiswa = absensisiswa::findOrFail($id);
+        $this->authorize('update', $absensisiswa);
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $tanggal = Carbon::parse($absensisiswa->tanggal)->translatedFormat('l, j F Y');
@@ -478,6 +489,8 @@ class AbsenController extends Controller
 
     public function updateabsensi(Request $request, $id)
     {
+        $absensisiswa = absensisiswa::findOrFail($id);
+        $this->authorize('update', $absensisiswa);
         $request->validate([
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',

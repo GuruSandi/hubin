@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'AuthController@login')->name('login');
-Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
+
 Route::middleware(['guest'])->group(function () {
-    
+    Route::get('/', 'AuthController@login')->name('login');
+    Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 });
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', 'AuthController@logout')->name('logout');
@@ -150,8 +150,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posteditdatanilaisiswa/{nilai_pkl}', 'DataNilaiController@posteditdatanilaisiswa')->name('posteditdatanilaisiswa');
         Route::get('/hapusdatanilaisiswa/{nilai_pkl}', 'DataNilaiController@hapusdatanilaisiswa')->name('hapusdatanilaisiswa');
         Route::delete('/datanilaidelete', 'DataNilaiController@datanilaidelete')->name('datanilai.delete');
-
-
     });
 
     Route::group(['middleware' => ['role:siswa']], function () {
@@ -185,12 +183,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profile/siswa', 'FiturSiswaController@profilesiswa')->name('profilesiswa');
         Route::get('/profile/guruMapelPkl', 'FiturSiswaController@profilegurumapel')->name('profilegurumapel');
         Route::get('/profile/pembimbing', 'FiturSiswaController@profilepembimbing')->name('profilepembimbing');
-        Route::post('/change-passwordsiswa','FiturSiswaController@changePassword')
-        ->name('change.password');
-        Route::get('/edit-passwordsiswa','FiturSiswaController@editpassword')
-        ->name('editpassword');
-
-
+        Route::post('/change-passwordsiswa', 'FiturSiswaController@changePassword')
+            ->name('change.password');
+        Route::get('/edit-passwordsiswa', 'FiturSiswaController@editpassword')
+            ->name('editpassword');
     });
 
     Route::group(['middleware' => ['auth', 'role:guru']], function () {
@@ -214,15 +210,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/exportnilaisiswa', 'NilaiSiswaController@exportnilaisiswa')->name('exportnilaisiswa');
         Route::post('/tambahnilaisiswa', 'NilaiSiswaController@posttambahnilaisiswa')->name('nilaisiswa.tambahnilaisiswa');
         Route::post('/editnilaisiswa/{id}', 'NilaiSiswaController@editnilaisiswa')->name('nilaisiswa.editnilaisiswa');
-        Route::post('/change-password','FiturGuruController@changePassword')
-        ->name('dashboardguru.changepassword');
-        Route::post('/editfoto','FiturGuruController@editfoto')
-        ->name('dashboardguru.editfoto');
-        Route::get('/edit-password','FiturGuruController@editpassword')
-        ->name('dashboardguru.editpassword');
+        Route::post('/change-password', 'FiturGuruController@changePassword')
+            ->name('dashboardguru.changepassword');
+        Route::post('/editfoto', 'FiturGuruController@editfoto')
+            ->name('dashboardguru.editfoto');
+        Route::get('/edit-password', 'FiturGuruController@editpassword')
+            ->name('dashboardguru.editpassword');
     });
-    
-    
-
-    
 });

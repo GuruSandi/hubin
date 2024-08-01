@@ -22,17 +22,5 @@ class DatabaseSeeder extends Seeder
             'encrypted_password'=>'123',
             'role'=>'admin',
         ]);
-        User::create([
-            'username'=>'guru',
-            'password'=>bcrypt('123'),
-            'encrypted_password'=>'123',
-            'role'=>'guru',
-        ]);
-        User::create([
-            'username'=>'siswa',
-            'password'=>bcrypt('123'),
-            'encrypted_password'=>'123',
-            'role'=>'siswa',
-        ]);
     }
 }

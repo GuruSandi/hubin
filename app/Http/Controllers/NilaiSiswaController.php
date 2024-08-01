@@ -55,6 +55,7 @@ class NilaiSiswaController extends Controller
     public function editnilaisiswa(Request $request, $id)
     {
         $nilai_pkl = nilai_pkl::findOrFail($id);
+        $this->authorize('update', $nilai_pkl);
         $data =$request->validate([
             'siswa_id' => 'required',
             'nilai1' => 'required|numeric|between:1,100',
