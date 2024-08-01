@@ -31,6 +31,7 @@ class SiswaImport implements ToModel, WithHeadingRow
             'jenkel' => $row['jenkel'],
             'kelas' => $row['kelas'],
             'tahun_ajar' => $row['tahun_ajar'],
+            'status' => 'aktif',
         ]);
         $password = $this->generateNumericPassword(8);
         $user = new User();

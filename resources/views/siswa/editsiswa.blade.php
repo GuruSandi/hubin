@@ -20,11 +20,16 @@
                         <option value="L" @if ($item->jenkel == 'L') selected @endif>Laki-laki</option>
                         <option value="P" @if ($item->jenkel == 'P') selected @endif>Perempuan</option>
                     </select>
+                    
                     <label for="">Kelas</label>
                     <input type="text" class="form-control" required name="kelas" value="{{ $item->kelas }}">
                     <label for="">Tahun Ajar</label>
                     <input type="text" class="form-control" required name="tahun_ajar" value="{{ $item->tahun_ajar }}">
-    
+                    <label for="">Status</label>
+                    <select name="status" required id="" class="form-control">
+                        <option value="aktif" @if ($item->status == 'aktif') selected @endif>Aktif</option>
+                        <option value="tidak_aktif" @if ($item->status == 'tidak_aktif') selected @endif>Tidak Aktif</option>
+                    </select>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>

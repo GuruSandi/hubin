@@ -84,7 +84,7 @@ class dailyAbsen extends Command
     public function handle()
     {
         $tanggal = Carbon::today()->format('Y-m-d');
-        $siswas = Siswa::all();
+        $siswas = Siswa::where('status','aktif')->get();
     
         foreach ($siswas as $siswa) {
             // Cek apakah siswa sudah ditempatkan di instansi

@@ -25,6 +25,9 @@ Route::middleware(['auth'])->group(function () {
         //DashboardAdmin
         Route::get('/DashboardAdmin', 'DashboardController@DashboardAdmin')->name('DashboardAdmin');
         Route::get('/setting', 'DashboardController@setting')->name('setting');
+        Route::post('/nonaktif', 'DashboardController@nonaktif')->name('setting.nonaktif');
+        Route::post('/aktifkan', 'DashboardController@aktifkan')->name('setting.aktifkan');
+
         Route::post('/posteditprofile/{user}', 'DashboardController@posteditprofile')->name('posteditprofile');
         Route::get('/pklluarkota', 'DashboardController@pklluarkota')->name('pklluarkota');
         Route::get('/pkldalamkota', 'DashboardController@pkldalamkota')->name('pkldalamkota');

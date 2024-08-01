@@ -316,6 +316,9 @@
     <script>
         new DataTable('#example');
     </script>
+    <script>
+        new DataTable('#examplee');
+    </script>
 
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>

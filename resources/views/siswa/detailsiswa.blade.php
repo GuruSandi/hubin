@@ -13,6 +13,13 @@
                 <p><strong>Jenis Kelamin:</strong> {{ $item->jenkel }}</p>
                 <p><strong>Kelas :</strong> {{ $item->kelas }}</p>
                 <p><strong>Tahun Ajar :</strong> {{ $item->tahun_ajar }}</p>
+                <p><strong>Status :</strong> 
+                    @if ($item->status == 'aktif')
+                        Aktif
+                    @elseif($item->status == 'tidak_aktif')
+                        Tidak Aktif
+                    @endif
+                </p>
 
 
             </div>

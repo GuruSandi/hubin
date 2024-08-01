@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+
 class SiswaController extends Controller
 {
 
@@ -76,6 +77,8 @@ class SiswaController extends Controller
                 'jenkel' => $request->jenkel,
                 'kelas' => $request->kelas,
                 'tahun_ajar' => $request->tahun_ajar,
+                'status' => 'aktif',
+
             ]);
         });
         toastr()->success('Data berhasil ditambahkan!');
@@ -94,6 +97,8 @@ class SiswaController extends Controller
             'jenkel' => 'required',
             'kelas' => 'required',
             'tahun_ajar' => 'required',
+            'status' => 'required',
+
         ]);
 
         $siswa->update($data);
@@ -146,6 +151,5 @@ class SiswaController extends Controller
     public function unduhformatsiswa()
     {
         return Excel::download(new SiswaTemplateExport, 'template_import_siswa.xlsx');
-        
     }
 }

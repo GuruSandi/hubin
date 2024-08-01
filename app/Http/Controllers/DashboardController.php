@@ -76,8 +76,9 @@ class DashboardController extends Controller
     {
         
         $user = Auth::user();
-
-        return view('DashboardAdmin.setting', compact('user'));
+        $siswaaktif = siswa::where('status','aktif')->get();
+        $siswanonaktif = siswa::where('status','tidak_aktif')->get();
+        return view('DashboardAdmin.setting', compact('user','siswaaktif','siswanonaktif'));
     }
     public function posteditprofile(Request $request, User $user)
     {
@@ -95,5 +96,39 @@ class DashboardController extends Controller
         toastr()->success('Data berhasil di update!');
 
         return redirect()->route('setting');
+    }
+    public function nonaktif(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (empty($ids)) {
+            return response()->json(['success' => false], 400);
+        }
+
+        try {
+            // Update status to 'tervalidasi'
+            siswa::whereIn('id', $ids)->update(['status' => 'tidak_aktif']);
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+    public function aktifkan(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (empty($ids)) {
+            return response()->json(['success' => false], 400);
+        }
+
+        try {
+            // Update status to 'tervalidasi'
+            siswa::whereIn('id', $ids)->update(['status' => 'aktif']);
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 }

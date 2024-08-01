@@ -21,7 +21,7 @@ class CreateSiswasTable extends Migration
             $table->enum('jenkel',['L','P']);
             $table->string('kelas');
             $table->string('tahun_ajar');
-            // $table->enum('status',['aktif','alumni']);
+            $table->enum('status',['aktif','tidak_aktif']);
             // $table->text('catatan')->nullable();
             $table->timestamps();
         });

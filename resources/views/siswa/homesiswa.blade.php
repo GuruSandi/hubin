@@ -43,7 +43,7 @@
                                 <button type="submit" class="btn btn-warning text-white"><i
                                         class="bi bi-cloud-download-fill"></i>
                                     Import</button>
-                               
+
 
                             </div>
 
@@ -72,6 +72,7 @@
                                     <th>P/L</th>
                                     <th>Kelas</th>
                                     <th>Tahun Ajar</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -88,6 +89,17 @@
                                         <td>{{ $item->jenkel }}</td>
                                         <td>{{ $item->kelas }}</td>
                                         <td>{{ $item->tahun_ajar }}</td>
+                                        <td>
+                                            @if ($item->status == 'aktif')
+                                                <p class="text-white bg-success px-1 text-center"
+                                                    style="font-size: 11px ; border-radius: 10px">
+                                                    Aktif</p>
+                                            @elseif($item->status == 'tidak_aktif')
+                                                <p class="text-white bg-danger px-1 text-center"
+                                                    style="font-size: 11px ; border-radius: 10px">
+                                                    Tidak Aktif</p>
+                                            @endif
+                                        </td>
 
                                         <td>
                                             <div class="btn-group">
