@@ -87,7 +87,7 @@
                             <label for="password">Password</label>
                             <input type="password" class="form-control form-control-lg mb-3" required name="password">
                             @if (Session::has('status'))
-                                <div class="alert mt-3 mb-3 alert-primary">{{ Session::get('status') }}</div>
+                                <div class="mt-3 mb-3 text-danger">{{ Session::get('status') }}</div>
                             @endif
                             <button class="btn btn-lg form-control form-control-lg mb-3 text-white"
                                 style="background-color: #080761;">Sign In</button>

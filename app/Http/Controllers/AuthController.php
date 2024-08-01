@@ -63,7 +63,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
  
         $request->session()->regenerateToken();
-        return redirect()->route('login')->with('status','Berhasil Logout');
+        return redirect()->route('login');
     }
    
 
@@ -87,7 +87,7 @@ class AuthController extends Controller
                 return redirect()->route('dashboardsiswa')->with('status','Welcome ' .$user->username);
             }
         }
-        return back()->with('status','Username atau Password salah');
+        return back()->with('status','Username atau Password salah!');
     }
     public function unduhAkunsiswa()
     {
