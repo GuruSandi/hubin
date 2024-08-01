@@ -275,7 +275,7 @@
                     <div class="row text-body-secondary">
                         <div class="col-6 text-start ">
                             <a class="text-body-secondary" href=" #">
-                                <strong>Hubin</strong>
+                                <strong>SIPAPIH-2024</strong>
                             </a>
                         </div>
                         <div class="col-6 text-end text-body-secondary d-none d-md-block">
