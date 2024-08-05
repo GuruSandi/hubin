@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>SIPAPII</title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <style>
         /* Custom CSS for login page */
@@ -79,7 +79,7 @@
                 </div>
                 <div class="right-column col-md-6">
                     <div class="form-container mx-auto" >
-                        <h2 class="fw-bold mt-5" style="color: #080761">SIPAPIH-2024<br>SMK Negeri 2 Sukabumi</h2>
+                        <h2 class="fw-bold mt-5" style="color: #080761">SIPAPII<br>SMK Negeri 2 Sukabumi</h2>
                         <form action="{{ route('postlogin') }}" class="form-group mt-5" method="POST" enctype="multipart/form-data">
                             @csrf
                             <label for="username">Username</label>
