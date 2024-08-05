@@ -161,7 +161,8 @@ class FiturSiswaController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
         ]);
+        toastr()->success('Lokasi Intansi berhasil disimpan!');
 
-        return redirect()->route('dashboardsiswa')->with('status', 'Lokasi instansi berhasil disimpan.');
+        return redirect()->route('dashboardsiswa');
     }
 }

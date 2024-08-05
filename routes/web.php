@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('/', 'AuthController@login')->name('login');
-    Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 });
+Route::get('/', 'AuthController@login')->name('login');
+Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', 'AuthController@logout')->name('logout');
 
