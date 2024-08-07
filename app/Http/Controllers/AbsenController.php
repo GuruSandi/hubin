@@ -71,13 +71,10 @@ class AbsenController extends Controller
         $instansi = $menempati->instansi;
 
         $jarak_meter = $this->haversineDistance($request->latitude, $request->longitude, $instansi->latitude, $instansi->longitude);
-        $jarak_formatted = '';
+        $jarak_formatted = round($jarak_meter);
 
-        if ($jarak_meter < 1000) {
-            $jarak_formatted = round($jarak_meter) . ' Meter';
-        } else {
-            $jarak_formatted = round($jarak_meter / 1000, 2) . ' KM';
-        }
+
+       
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $jamSekarang = Carbon::now();
@@ -134,13 +131,10 @@ class AbsenController extends Controller
         $instansi = $menempati->instansi;
 
         $jarak_meter = $this->haversineDistance($request->latitude, $request->longitude, $instansi->latitude, $instansi->longitude);
-        $jarak_formatted = '';
+        $jarak_formatted = round($jarak_meter);
+        
 
-        if ($jarak_meter < 1000) {
-            $jarak_formatted = round($jarak_meter) . ' Meter';
-        } else {
-            $jarak_formatted = round($jarak_meter / 1000, 2) . ' KM';
-        }
+       
 
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
@@ -430,13 +424,10 @@ class AbsenController extends Controller
         $instansi = $menempati->instansi;
 
         $jarak_meter = $this->haversineDistance($request->latitude, $request->longitude, $instansi->latitude, $instansi->longitude);
-        $jarak_formatted = '';
+        $jarak_formatted = round($jarak_meter);
 
-        if ($jarak_meter < 1000) {
-            $jarak_formatted = round($jarak_meter) . ' Meter';
-        } else {
-            $jarak_formatted = round($jarak_meter / 1000, 2) . ' KM';
-        }
+
+       
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $jamSekarang = Carbon::now();
@@ -460,7 +451,7 @@ class AbsenController extends Controller
 
     private function haversineDistance($lat1, $lon1, $lat2, $lon2)
     {
-        $earthRadius = 6371; // Radius bumi dalam kilometer
+        $earthRadius = 6371000; // Radius bumi dalam kilometer
 
         $dLat = deg2rad($lat2 - $lat1);
         $dLon = deg2rad($lon2 - $lon1);
@@ -468,7 +459,7 @@ class AbsenController extends Controller
         $a = sin($dLat / 2) * sin($dLat / 2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon / 2) * sin($dLon / 2);
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        $distance = $earthRadius * $c * 1000;
+        $distance = $earthRadius * $c;
 
         return $distance;
     }
@@ -505,13 +496,10 @@ class AbsenController extends Controller
         $instansi = $menempati->instansi;
 
         $jarak_meter = $this->haversineDistance($request->latitude, $request->longitude, $instansi->latitude, $instansi->longitude);
-        $jarak_formatted = '';
+        $jarak_formatted = round($jarak_meter);
+        
 
-        if ($jarak_meter < 1000) {
-            $jarak_formatted = round($jarak_meter) . ' Meter';
-        } else {
-            $jarak_formatted = round($jarak_meter / 1000, 2) . ' KM';
-        }
+       
         // dd($jarak_formatted);
         $absensisiswa = absensisiswa::findOrFail($id);
 

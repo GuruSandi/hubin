@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    
+
                     <h5 class="fw-bold mt-2">Data Siswa Aktif</h5>
                 </div>
                 <div class="row mt-3 mb-3">
@@ -83,7 +83,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <input type="checkbox" id="select_all_ids">
+                                            <input type="checkbox" id="select_all_id">
                                         </th>
                                         <th>ID</th>
                                         <th>NIS</th>
@@ -98,7 +98,7 @@
                                     @foreach ($siswanonaktif as $item)
                                         <tr>
                                             <td>
-                                                <input type="checkbox" name="ids" class="checkbox_ids"
+                                                <input type="checkbox" name="id" class="checkbox_id"
                                                     value="{{ $item->id }}">
                                             </td>
                                             <td>{{ $item->id }}</td>
@@ -177,6 +177,8 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+
+
     <script>
         $(document).ready(function() {
             // Select/Deselect All Checkboxes
@@ -187,88 +189,136 @@
             // Validate All Selected Records
             $('#nonaktifAllSelectedRecord').click(function(e) {
                 e.preventDefault();
-                var all_ids = [];
-                $('input:checkbox[name=ids]:checked').each(function() {
-                    all_ids.push($(this).val());
-                });
 
-                if (all_ids.length === 0) {
-                    alert('Please select at least one record.');
-                    return;
-                }
+                // Show SweetAlert confirmation dialog
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Apakah Anda yakin ingin Menonaktifkan semua siswa yang dipilih?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, lakukan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var all_ids = [];
+                        $('input:checkbox[name=ids]:checked').each(function() {
+                            all_ids.push($(this).val());
+                        });
 
-                $.ajax({
-                    url: "{{ route('setting.nonaktif') }}", // Make sure this route is correct
-                    type: "POST", // Use POST to update records
-                    data: {
-                        ids: all_ids,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('input:checkbox[name=ids]:checked').each(function() {
-                                $(this).closest('tr').find('td:eq(9)').html(
-                                    '<p class="text-white bg-success px-1" style="font-size: 11px; border-radius: 10px">Tervalidasi</p>'
-                                );
-                            });
-                            location.reload();
-
-                        } else {
-                            alert('Failed to validate records.');
+                        if (all_ids.length === 0) {
+                            Swal.fire('Peringatan', 'Silakan pilih setidaknya satu siswa.',
+                                'warning');
+                            return;
                         }
-                    },
-                    error: function(xhr) {
-                        alert('Failed to validate records. Please try again.');
+
+                        $.ajax({
+                            url: "{{ route('setting.nonaktif') }}", // Make sure this route is correct
+                            type: "POST", // Use POST to update records
+                            data: {
+                                ids: all_ids,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    $('input:checkbox[name=ids]:checked').each(
+                                    function() {
+                                        $(this).closest('tr').find('td:eq(9)')
+                                            .html(
+                                                '<p class="text-white bg-success px-1" style="font-size: 11px; border-radius: 10px">Tervalidasi</p>'
+                                            );
+                                    });
+                                    Swal.fire('Sukses', 'Data berhasil divalidasi.',
+                                        'success').then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire('Gagal', 'Gagal memvalidasi data.',
+                                        'error');
+                                }
+                            },
+                            error: function(xhr) {
+                                Swal.fire('Gagal',
+                                    'Gagal memvalidasi data. Silakan coba lagi.',
+                                    'error');
+                            }
+                        });
                     }
                 });
             });
         });
     </script>
+
     <script>
         $(document).ready(function() {
             // Select/Deselect All Checkboxes
-            $("#select_all_ids").click(function() {
-                $('.checkbox_ids').prop('checked', $(this).prop('checked'));
+            $("#select_all_id").click(function() {
+                $('.checkbox_id').prop('checked', $(this).prop('checked'));
             });
 
             // Validate All Selected Records
             $('#aktifAllSelectedRecord').click(function(e) {
                 e.preventDefault();
-                var all_ids = [];
-                $('input:checkbox[name=ids]:checked').each(function() {
-                    all_ids.push($(this).val());
-                });
 
-                if (all_ids.length === 0) {
-                    alert('Please select at least one record.');
-                    return;
-                }
+                // Show SweetAlert confirmation dialog
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Apakah Anda yakin ingin Mengaktifkan semua siswa yang dipilih?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, lakukan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var all_ids = [];
+                        $('input:checkbox[name=id]:checked').each(function() {
+                            all_ids.push($(this).val());
+                        });
 
-                $.ajax({
-                    url: "{{ route('setting.aktifkan') }}", // Make sure this route is correct
-                    type: "POST", // Use POST to update records
-                    data: {
-                        ids: all_ids,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('input:checkbox[name=ids]:checked').each(function() {
-                                $(this).closest('tr').find('td:eq(9)').html(
-                                    '<p class="text-white bg-success px-1" style="font-size: 11px; border-radius: 10px">Tervalidasi</p>'
-                                );
-                            });
-                            location.reload();
-
-                        } else {
-                            alert('Failed to validate records.');
+                        if (all_ids.length === 0) {
+                            Swal.fire('Peringatan', 'Silakan pilih setidaknya satu siswa.',
+                                'warning');
+                            return;
                         }
-                    },
-                    error: function(xhr) {
-                        alert('Failed to validate records. Please try again.');
+
+                        $.ajax({
+                            url: "{{ route('setting.aktifkan') }}", // Make sure this route is correct
+                            type: "POST", // Use POST to update records
+                            data: {
+                                ids: all_ids,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    $('input:checkbox[name=id]:checked').each(
+                                function() {
+                                        $(this).closest('tr').find('td:eq(9)')
+                                            .html(
+                                                '<p class="text-white bg-success px-1" style="font-size: 11px; border-radius: 10px">Tervalidasi</p>'
+                                            );
+                                    });
+                                    Swal.fire('Sukses', 'Data berhasil divalidasi.',
+                                        'success').then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire('Gagal', 'Gagal memvalidasi data.',
+                                        'error');
+                                }
+                            },
+                            error: function(xhr) {
+                                Swal.fire('Gagal',
+                                    'Gagal memvalidasi data. Silakan coba lagi.',
+                                    'error');
+                            }
+                        });
                     }
                 });
             });
         });
     </script>
+
 @endsection

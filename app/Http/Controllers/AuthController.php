@@ -116,14 +116,14 @@ class AuthController extends Controller
             
         ]);
         toastr()->success('Data berhasil di update!');
-        return redirect()->route('homeakunGuruMapelPkl');
+        return redirect()->route('homeGuruMapelPkl');
     }
     public function hapusakunGuruMapelPkl(User $user)
     {
         $user->delete();
         toastr()->success('Data berhasil dihapus');
 
-        return redirect()->route('homeakunGuruMapelPkl');
+        return redirect()->route('homeGuruMapelPkl');
     }
     public function unduhGuruMapelPkl()
     {

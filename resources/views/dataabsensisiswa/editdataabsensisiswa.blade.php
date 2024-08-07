@@ -32,7 +32,7 @@
                                 value="{{ $item->jam_masuk }}">
                             <label for="">Jarak Absen</label>
                             <input type="text" class="form-control" required name="jarak"
-                                value="{{ $item->jarak }}">
+                                value="{{ number_format($item->jarak, 0, ',', '.') }} Meter">
                         </div>
                         <div class="col-6">
                             <label for="">Longitude</label>

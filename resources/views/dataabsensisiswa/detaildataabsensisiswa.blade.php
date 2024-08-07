@@ -12,7 +12,7 @@
                 <p><strong>Tanggal :</strong> {{ $item->tanggal }}</p>
                 <p><strong>Jam Masuk :</strong> {{ $item->jam_masuk }}</p>
                 <p><strong>Jam Pulang :</strong> {{ $item->jam_pulang }}</p>
-                <p><strong>Jarak :</strong> {{ $item->jarak }}</p>
+                <p><strong>Jarak :</strong> {{ number_format($item->jarak, 0, ',', '.') }} Meter</p>
                 <p><strong>Instansi :</strong> {{ $item->instansi }}</p>
                 <p><strong>Keterangan :</strong>
                     @if ($item->keterangan == 'hadir')

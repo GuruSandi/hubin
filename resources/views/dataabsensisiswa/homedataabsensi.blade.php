@@ -79,7 +79,7 @@
                                         <td>{{ $item->tanggal }}</td>
                                         <td>{{ $item->jam_masuk }}</td>
                                         <td>{{ $item->jam_pulang }}</td>
-                                        <td>{{ $item->jarak }}</td>
+                                        <td>{{ number_format($item->jarak, 0, ',', '.') }} Meter</td>
                                         <td>{{ $item->instansi }}</td>
                                         <td>
                                             @if ($item->keterangan == 'hadir')

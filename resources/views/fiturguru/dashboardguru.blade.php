@@ -142,7 +142,7 @@
                                             <td>{{ $item->tanggal }}</td>
                                             <td>{{ $item->jam_masuk }}</td>
                                             <td>{{ $item->jam_pulang }}</td>
-                                            <td>{{ $item->jarak }}</td>
+                                            <td>{{ number_format($item->jarak, 0, ',', '.') }} Meter</td>
                                             <td>{{ $item->instansi }}</td>
                                             <td>
                                                 @if ($item->keterangan == 'hadir')
@@ -201,7 +201,7 @@
                         <dt class="col-sm-4">Jam Pulang</dt>
                         <dd class="col-sm-8">{{ $item->jam_pulang }}</dd>
                         <dt class="col-sm-4">Jarak Absen</dt>
-                        <dd class="col-sm-8">{{ $item->jarak }}</dd>
+                        <dd class="col-sm-8">{{ number_format($item->jarak, 0, ',', '.') }} Meter</dd>
                         <dt class="col-sm-4">Instansi</dt>
                         <dd class="col-sm-8">{{ $item->instansi }}</dd>
                         <dt class="col-sm-4">Keterangan</dt>
@@ -348,7 +348,7 @@
                         <td>{{ $item->jam_masuk }}</td>
                         <td>{{ $item->jam_pulang }}</td>
                         <td>{{ $item->deskripsi_jurnal }}</td>
-                        <td>{{ $item->jarak }}</td>
+                        <td>{{ number_format($item->jarak, 0, ',', '.') }}</td>
                         <td>{{ $item->instansi }}</td>
                         <td>{{ $item->nama_pembimbing }}</td>
                         <td>
