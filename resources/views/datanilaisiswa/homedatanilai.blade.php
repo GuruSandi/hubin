@@ -97,6 +97,73 @@
                 return;
             }
 
+            // SweetAlert2 confirmation
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Data ini akan dihapus secara permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('datanilai.delete') }}",
+                        type: "DELETE",
+                        data: {
+                            ids: all_ids,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $('input:checkbox[name=ids]:checked').each(
+                                function() {
+                                    $(this).closest('tr').remove();
+                                });
+                                location.reload();
+                            } else {
+                                Swal.fire(
+                                    'Failed!',
+                                    'Failed to delete records.',
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function(xhr) {
+                            Swal.fire(
+                                'Failed!',
+                                'Failed to delete records. Please try again.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+{{-- <script>
+    $(document).ready(function() {
+        // Select/Deselect All Checkboxes
+        $("#select_all_ids").click(function() {
+            $('.checkbox_ids').prop('checked', $(this).prop('checked'));
+        });
+
+        // Delete All Selected Records
+        $('#deleteAllSelectedRecord').click(function(e) {
+            e.preventDefault();
+            var all_ids = [];
+            $('input:checkbox[name=ids]:checked').each(function() {
+                all_ids.push($(this).val());
+            });
+
+            if (all_ids.length === 0) {
+                alert('Please select at least one record.');
+                return;
+            }
+
             $.ajax({
                 url: "{{ route('datanilai.delete') }}",
                 type: "DELETE",
@@ -120,5 +187,5 @@
             });
         });
     });
-</script>
+</script> --}}
 @endsection

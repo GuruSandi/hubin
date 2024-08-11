@@ -146,28 +146,52 @@
                     return;
                 }
 
-                $.ajax({
-                    url: "{{ route('dataabsensi.delete') }}",
-                    type: "DELETE",
-                    data: {
-                        ids: all_ids,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('input:checkbox[name=ids]:checked').each(function() {
-                                $(this).closest('tr').remove();
-                            });
-                            location.reload();
-                        } else {
-                            alert('Failed to delete records.');
-                        }
-                    },
-                    error: function(xhr) {
-                        alert('Failed to delete records. Please try again.');
+                // SweetAlert2 confirmation
+                Swal.fire({
+                    title: 'Anda yakin?',
+                    text: "Data ini akan dihapus secara permanen!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{ route('dataabsensi.delete') }}",
+                            type: "DELETE",
+                            data: {
+                                ids: all_ids,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    $('input:checkbox[name=ids]:checked').each(
+                                    function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                    location.reload();
+                                } else {
+                                    Swal.fire(
+                                        'Failed!',
+                                        'Failed to delete records.',
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr) {
+                                Swal.fire(
+                                    'Failed!',
+                                    'Failed to delete records. Please try again.',
+                                    'error'
+                                );
+                            }
+                        });
                     }
                 });
             });
         });
     </script>
+    
 @endsection

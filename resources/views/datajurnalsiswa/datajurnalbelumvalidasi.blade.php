@@ -92,6 +92,76 @@
             $("#select_all_ids").click(function() {
                 $('.checkbox_ids').prop('checked', $(this).prop('checked'));
             });
+
+            // Validate All Selected Records
+            $('#validasiAllSelectedRecord').click(function(e) {
+                e.preventDefault();
+
+                // Show SweetAlert confirmation dialog
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Apakah Anda yakin ingin memvalidasi semua jurnal yang dipilih?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, lakukan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var all_ids = [];
+                        $('input:checkbox[name=ids]:checked').each(function() {
+                            all_ids.push($(this).val());
+                        });
+
+                        if (all_ids.length === 0) {
+                            Swal.fire('Peringatan', 'Silakan pilih setidaknya satu siswa.',
+                                'warning');
+                            return;
+                        }
+
+                        $.ajax({
+                            url: "{{ route('datajurnal.validasi') }}", // Make sure this route is correct
+                            type: "POST", // Use POST to update records
+                            data: {
+                                ids: all_ids,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    $('input:checkbox[name=ids]:checked').each(
+                                    function() {
+                                        $(this).closest('tr').find('td:eq(9)')
+                                            .html(
+                                                '<p class="text-white bg-success px-1" style="font-size: 11px; border-radius: 10px">Tervalidasi</p>'
+                                            );
+                                    });
+                                    Swal.fire('Sukses', 'Data berhasil divalidasi.',
+                                        'success').then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire('Gagal', 'Gagal memvalidasi data.',
+                                        'error');
+                                }
+                            },
+                            error: function(xhr) {
+                                Swal.fire('Gagal',
+                                    'Gagal memvalidasi data. Silakan coba lagi.',
+                                    'error');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    {{-- <script>
+        $(document).ready(function() {
+            // Select/Deselect All Checkboxes
+            $("#select_all_ids").click(function() {
+                $('.checkbox_ids').prop('checked', $(this).prop('checked'));
+            });
     
             // Validate All Selected Records
             $('#validasiAllSelectedRecord').click(function(e) {
@@ -130,7 +200,7 @@
                 });
             });
         });
-    </script>
+    </script> --}}
     
     
 @endsection

@@ -15,7 +15,7 @@ class CreateJurnalsTable extends Migration
     {
         Schema::create('jurnals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('guru_mapel_pkl_id')->constrained()->onDelete('cascade');
             $table->foreignId('siswa_id')->constrained()->onDelete('cascade');
             $table->date('tanggal');
