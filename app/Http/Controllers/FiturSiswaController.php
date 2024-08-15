@@ -52,7 +52,7 @@ class FiturSiswaController extends Controller
         $menempati = Menempati::where('siswa_id', $siswa->id)->first();
         $membimbing = membimbing::where('siswa_id', $siswa->id)->first();
 
-        return view('fiturSiswa.profilesiswa', compact('siswa', 'menempati', 'membimbing'));
+        return view('fitursiswa.profilesiswa', compact('siswa', 'menempati', 'membimbing'));
     }
     public function profilegurumapel()
     {
@@ -60,7 +60,7 @@ class FiturSiswaController extends Controller
         $siswa = siswa::where('user_id', $user->id)->first();
         $membimbing = membimbing::where('siswa_id', $siswa->id)->first();
 
-        return view('fiturSiswa.profilegurumapel', compact('membimbing'));
+        return view('fitursiswa.profilegurumapel', compact('membimbing'));
     }
     public function profilepembimbing()
     {
@@ -68,7 +68,7 @@ class FiturSiswaController extends Controller
         $siswa = siswa::where('user_id', $user->id)->first();
         $membimbing = membimbing::where('siswa_id', $siswa->id)->first();
 
-        return view('fiturSiswa.profilepembimbing', compact('membimbing'));
+        return view('fitursiswa.profilepembimbing', compact('membimbing'));
     }
     public function dashboardsiswa()
     {
