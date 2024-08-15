@@ -10,7 +10,7 @@
                     <h4 class="text-white text-center mt-3">Profile Guru Mapel PKL</h4>
                     <div class="d-flex justify-content-center mt-4">
                         <div class="avatar">
-                            <img src="{{ asset($membimbing->guru_mapel_pkl->foto) }}" alt="avatar" class="imaged w100 rounded">
+                            <img src="{{ asset($membimbing->guru_mapel_pkl->foto ?? 'img/account.jpg') }}" alt="avatar" class="imaged w100 rounded">
                         </div>
                     </div>
                     
@@ -28,7 +28,7 @@
             </div>
             <div class="col-10">
                 <label for="" class="text-muted fw-bold" style="font-size: 12px">Nama Guru Mapel PKL</label>
-                <p>{{ $membimbing->guru_mapel_pkl->nama }}</p>
+                <p>{{ $membimbing->guru_mapel_pkl->nama ?? 'Belum Ditempatkan'  }}</p>
             </div>
         </div>
         <hr>
@@ -41,7 +41,7 @@
             </div>
             <div class="col-10">
                 <label for="" class="text-muted fw-bold" style="font-size: 12px">No HandPhone</label>
-                <p>{{ $membimbing->guru_mapel_pkl->no_hp }}</p>
+                <p>{{ $membimbing->guru_mapel_pkl->no_hp?? 'Belum Ditempatkan'  }}</p>
             </div>
         </div>
         <hr>

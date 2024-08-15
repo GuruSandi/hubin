@@ -48,7 +48,8 @@
             </div>
             <div class="col-10">
                 <label for="" class="text-muted fw-bold" style="font-size: 12px">Nama Instansi</label>
-                <p>{{ $menempati->instansi->instansi }}</p>
+                <p>{{ $menempati->instansi->instansi ?? 'Belum Ditempatkan' }}</p>
+
             </div>
         </div>
         <hr>
@@ -62,7 +63,7 @@
             <div class="col-10">
                 <label for="" class="text-muted fw-bold" style="font-size: 12px">Nama Pembimbing</label>
                 <a href="{{ route('profilepembimbing') }}">
-                    <p>{{ $membimbing->pembimbing->nama }}</p>
+                    <p>{{ $membimbing->pembimbing->nama ?? 'Belum Ditempatkan'  }}</p>
                 </a>
             </div>
         </div>
@@ -77,7 +78,7 @@
             <div class="col-10">
                 <label for="" class="text-muted fw-bold" style="font-size: 12px">Nama Guru Mapel PKL</label>
                 <a href="{{ route('profilegurumapel') }}">
-                    <p>{{ $membimbing->guru_mapel_pkl->nama }} </p>
+                    <p>{{ $membimbing->guru_mapel_pkl->nama ?? 'Belum Ditempatkan'  }} </p>
                 </a>
             </div>
         </div>
