@@ -122,7 +122,7 @@ class FiturSiswaController extends Controller
         $menempati = $user->siswa->menempati->first();
         $instansi = $menempati->instansi->latitude;
         if ($instansi) {
-            toastr()->error('Lokasi Instansi Sudah Ada!');
+            toastr()->warning('Lokasi Instansi Sudah Ada!');
             return redirect()->route('dashboardsiswa');
         }
         return view('fitursiswa.tambahlokasi', compact('siswa'));
