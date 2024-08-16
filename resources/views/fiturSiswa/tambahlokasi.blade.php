@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Tombol izin lokasi
             var getLocationBtn = document.getElementById('getLocationBtn');
@@ -65,8 +65,8 @@
                 });
             });
         });
-    </script>
-    {{-- <script>
+    </script> --}}
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var latitude = position.coords.latitude;
@@ -75,7 +75,7 @@
                 document.getElementById('longitude').value = longitude;
             });
         });
-    </script> --}}
+    </script>
 
 
 
