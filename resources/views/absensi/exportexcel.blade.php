@@ -65,7 +65,6 @@
                 <th>Tanggal</th>
                 <th>Jam Masuk</th>
                 <th>Jam Pulang</th>
-                <th>Jarak Absen</th>
                 <th>Keterangan</th>
             </tr>
         </thead>
@@ -76,17 +75,17 @@
                     <td>{{ $item->tanggal }}</td>
                     <td>{{ $item->jam_masuk }}</td>
                     <td>{{ $item->jam_pulang }}</td>
-                    <td>{{ $item->jarak }}</td>
                     <td>
-                        @if ($item->keterangan == 'hadir')
+                        {{ $item->keterangan }}
+                        {{-- @if ($item->keterangan == 'hadir')
                             Hadir
                         @elseif ($item->keterangan == 'libur')
                             Libur
                         @elseif ($item->keterangan == 'tidak_masuk_pkl')
                             Tidak Masuk PKL
                         @elseif ($item->keterangan == 'absen')
-                            Alpha
-                        @endif
+                            Alpa
+                        @endif --}}
                     </td>
 
 

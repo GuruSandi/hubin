@@ -62,10 +62,9 @@ class AbsensiSiswaExport implements FromView
              // Set keterangan untuk tampilan
              $item->keterangan = match ($item->keterangan) {
                 'hadir' => 'Hadir',
-                'alpha' => 'Alpha',
+                'absen' => 'Alpa',
                 'libur' => 'Libur',
                 'tidak_masuk_pkl' => 'Tidak Masuk PKL',
-                default => 'Tidak Diketahui',
             };
         }
         return view('absensi.exportexcel', [
