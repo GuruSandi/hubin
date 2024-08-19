@@ -13,7 +13,7 @@ class InstansiTemplateExport implements FromArray, WithHeadings
     public function array(): array
     {
         return [
-            ['ATR BPN Kabupaten Sukabumi', 'Jl. Suryakencana No. 2 Sukabumi', 'Sukabumi'],
+            ['ATR BPN Kabupaten Sukabumi','-6.93544480','106.92443490', 'Jl. Suryakencana No. 2 Sukabumi', 'Sukabumi'],
         ];
     }
 
@@ -23,7 +23,7 @@ class InstansiTemplateExport implements FromArray, WithHeadings
     public function headings(): array
     {
         return [
-            'instansi', 'alamat', 'domisili'
+            'instansi','latitude','longitude', 'alamat', 'domisili'
         ];
     }
 }

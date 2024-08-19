@@ -12,6 +12,8 @@ class InstansiImport implements ToModel, WithHeadingRow
     {
         return new instansi([
             'instansi' => $row['instansi'],
+            'latitude' => $row['latitude'],
+            'longitude' => $row['longitude'],
             'alamat' => $row['alamat'],
             'domisili' => $row['domisili'],
         ]);
