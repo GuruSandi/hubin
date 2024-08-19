@@ -116,10 +116,16 @@ class FiturSiswaController extends Controller
     }
     public function tambahlokasi()
     {
-        $user = Auth::user();
-        $user = User::find(auth()->id());
-        $siswa = $user->siswa;
-        $menempati = $user->siswa->menempati->first();
+        $siswa = Siswa::where('user_id', auth()->id())->first();
+
+        $menempati = Menempati::where('siswa_id', $siswa->id)->first();
+
+        if (!$menempati) {
+
+            toastr()->error('Anda belum di tempatkan di Instansi manapun. Silahkan hubungi admin!.');
+            return redirect()->back();
+        }
+        
         $instansi = $menempati->instansi->latitude;
         if ($instansi) {
             toastr()->warning('Lokasi Instansi Sudah Ada!');
