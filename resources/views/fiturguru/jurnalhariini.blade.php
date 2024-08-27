@@ -19,6 +19,7 @@
                                         <th>Kelas</th>
                                         <th>Tanggal</th>
                                         <th>Jurnal</th>
+                                        <th>Ket.</th>
                                         <th>Instansi</th>
                                         <th>Pembimbing</th>
                                         <th>Aksi</th>
@@ -32,6 +33,15 @@
                                             <td>{{ $item->kelas_siswa }}</td>
                                             <td>{{ $item->tanggal }}</td>
                                             <td style="width: 400px">{{ $item->deskripsi_jurnal }}</td>
+                                            <td>
+                                                @if ($item->validasi == 'tervalidasi')
+                                                    <p class="text-success">Sudah divalidasi</p>
+                                                @elseif($item->validasi == 'ditolak')
+                                                    <p class="text-danger">Ditolak</p>
+                                                @else
+                                                    <p class="text-warning">Belum di validasi</p>
+                                                @endif
+                                            </td>
                                             <td>{{ $item->instansi }}</td>
                                             <td>{{ $item->nama_pembimbing }}</td>
                                             <td style="width: 130px" class="text-center">
