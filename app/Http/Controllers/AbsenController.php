@@ -50,7 +50,7 @@ class AbsenController extends Controller
         Carbon::setLocale('id_ID');
         $jam = Carbon::now();
         $tanggal = Carbon::parse($absensisiswa->tanggal)->translatedFormat('l, j F Y');
-        $jamsekarang = Carbon::parse($jam)->format('H.i');
+        $jamsekarang = Carbon::parse($jam)->format('H:i');
         return view('absensi.absensipulang', compact('absensisiswa', 'tanggal', 'jamsekarang'));
     }
 
@@ -62,6 +62,7 @@ class AbsenController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'keterangan' => 'required',
+            'jam_pulang' => 'required',
             'deskripsi_jurnal' => 'required',
         ]);
         $siswa = Siswa::where('user_id', auth()->id())->first();
@@ -95,7 +96,7 @@ class AbsenController extends Controller
             'longitude' => $request->longitude,
             'keterangan' => $request->keterangan,
             'jarak' => $jarak_formatted,
-            'jam_pulang' => $jamSekarang,
+            'jam_pulang' => $request->jam_pulang,
             'tanggal' => $tanggalSekarang,
 
         ]);
@@ -111,7 +112,8 @@ class AbsenController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $tanggal = Carbon::parse($absensisiswa->tanggal)->translatedFormat('l, j F Y');
-        $jam_pulang = Carbon::parse($absensisiswa->jam_pulang)->format('H.i');
+        $jam = Carbon::now();
+        $jam_pulang = Carbon::parse($jam)->format('H:i');
         return view('absensi.editabsensipulang', compact('absensisiswa', 'tanggal', 'jam_pulang'));
     }
 
@@ -123,6 +125,7 @@ class AbsenController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'keterangan' => 'required',
+            'jam_pulang' => 'required',
         ]);
         $siswa = Siswa::where('user_id', auth()->id())->first();
         $menempati = menempati::where('siswa_id', $siswa->id)->first();
@@ -146,7 +149,7 @@ class AbsenController extends Controller
             'longitude' => $request->longitude,
             'keterangan' => $request->keterangan,
             'jarak' => $jarak_formatted,
-            'jam_pulang' => $jamSekarang,
+            'jam_pulang' => $request->jam_pulang,
             'tanggal' => $tanggalSekarang,
 
         ]);
@@ -380,7 +383,7 @@ class AbsenController extends Controller
         $tanggal = Carbon::now();
         $jam = Carbon::now();
         $tanggalsekarang = Carbon::parse($tanggal)->translatedFormat('l, j F Y');
-        $jamsekarang = Carbon::parse($jam)->format('H.i');
+        $jamsekarang = Carbon::parse($jam)->format('H:i');
         $absensiHariIni = AbsensiSiswa::where('user_id', $siswa->user_id)
             ->whereDate('created_at', Carbon::today())
             ->first();
@@ -397,6 +400,7 @@ class AbsenController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'keterangan' => 'required',
+            'jam_masuk' => 'required',
         ]);
 
         $user = User::find(auth()->id());
@@ -439,7 +443,7 @@ class AbsenController extends Controller
             'longitude' => $request->longitude,
             'keterangan' => $request->keterangan,
             'jarak' => $jarak_formatted,
-            'jam_masuk' => $jamSekarang,
+            'jam_masuk' => $request->jam_masuk,
             'tanggal' => $tanggalSekarang,
         ]);
 
@@ -472,8 +476,9 @@ class AbsenController extends Controller
         // $this->authorize('update', $absensisiswa);
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
+        $jam = Carbon::now();
         $tanggal = Carbon::parse($absensisiswa->tanggal)->translatedFormat('l, j F Y');
-        $jam_masuk = Carbon::parse($absensisiswa->jam_masuk)->format('H.i');
+        $jam_masuk = Carbon::parse($jam)->format('H:i');
 
         return view('absensi.editabsensi', compact('absensisiswa', 'tanggal', 'jam_masuk'));
     }
@@ -486,6 +491,7 @@ class AbsenController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'keterangan' => 'required',
+            'jam_masuk' => 'required',
         ]);
         $siswa = Siswa::where('user_id', auth()->id())->first();
 
@@ -508,6 +514,8 @@ class AbsenController extends Controller
             'longitude' => $request->longitude,
             'keterangan' => $request->keterangan,
             'jarak' => $jarak_formatted,
+            'jam_masuk' => $request->jam_masuk,
+
         ]);
 
         toastr()->success('Data berhasil disimpan!');

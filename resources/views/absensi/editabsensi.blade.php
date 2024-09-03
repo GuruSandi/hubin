@@ -25,7 +25,9 @@
                         <label for="">Tanggal:</label>
                         <p>{{ $tanggal }}</p>
                         <label for="">Jam:</label>
-                        <p>{{ $jam_masuk }}</p>
+                        <p>
+                        <input type="time" name="jam_masuk" required value="{{ $jam_masuk }}" readonly style="border: none; outline: none; ">
+                        </p>
                         
                         <label for="">Keterangan:</label>
                         <select name="keterangan" class="form-control" required>

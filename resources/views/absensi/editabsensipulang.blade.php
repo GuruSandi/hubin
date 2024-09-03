@@ -26,7 +26,10 @@
                     <label for="">Tanggal:</label>
                     <p>{{ $tanggal }}</p>
                     <label for="">Jam:</label>
-                    <p>{{ $jam_pulang }}</p>
+                    <p>
+                        <input type="time" name="jam_pulang" required value="{{ $jam_pulang }}" readonly
+                            style="border: none; outline: none; ">
+                    </p>
                     <label for="">Keterangan:</label>
                     <select name="keterangan" class="form-control" required>
                         <option value="hadir" @if ($absensisiswa->keterangan == 'hadir') selected @endif>Hadir</option>
