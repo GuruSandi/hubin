@@ -351,51 +351,58 @@ class AbsenController extends Controller
     public function absensi()
     {
         
-        $siswa = Siswa::where('user_id', auth()->id())->first();
+        // $siswa = Siswa::where('user_id', auth()->id())->first();
 
-        if (!$siswa) {
+        // if (!$siswa) {
 
-            toastr()->error('Anda tidak memiliki izin untuk melakukan absensi.');
-            return redirect()->back();
-        }
+        //     toastr()->error('Anda tidak memiliki izin untuk melakukan absensi.');
+        //     return redirect()->back();
+        // }
 
-        // Find the placement of the student
-        $menempati = Menempati::where('siswa_id', $siswa->id)->first();
+        // // Find the placement of the student
+        // $menempati = Menempati::where('siswa_id', $siswa->id)->first();
 
-        if (!$menempati) {
+        // if (!$menempati) {
 
-            toastr()->error('Anda belum di tempatkan di Instansi manapun. Silahkan hubungi admin!.');
-            return redirect()->back();
-        }
+        //     toastr()->error('Anda belum di tempatkan di Instansi manapun. Silahkan hubungi admin!.');
+        //     return redirect()->back();
+        // }
 
-        // Ensure institution's location is set and valid
-        if (!$siswa->menempati()->exists() || !$siswa->menempati()->first()->instansi || is_null($siswa->menempati()->first()->instansi->latitude) || is_null($siswa->menempati()->first()->instansi->longitude)) {
-            toastr()->warning('Anda belum menambahkan lokasi instansi. Silakan tambahkan lokasi instansi terlebih dahulu.');
+        // // Ensure institution's location is set and valid
+        // if (!$siswa->menempati()->exists() || !$siswa->menempati()->first()->instansi || is_null($siswa->menempati()->first()->instansi->latitude) || is_null($siswa->menempati()->first()->instansi->longitude)) {
+        //     toastr()->warning('Anda belum menambahkan lokasi instansi. Silakan tambahkan lokasi instansi terlebih dahulu.');
 
-            return redirect()->route('tambahlokasi');
-        }
+        //     return redirect()->route('tambahlokasi');
+        // }
 
         // Get institution details
 
         $siswa = Siswa::where('user_id', auth()->id())->first();
+        $absensiHariIni = AbsensiSiswa::where('user_id', $siswa->user_id)
+            ->whereDate('tanggal', Carbon::today())
+            ->first();
+        if ($absensiHariIni) {
+            // Jika sudah, tampilkan pesan kesalahan
+            return redirect()->route('editabsensi', $absensiHariIni->id);
+        }
         date_default_timezone_set('Asia/Jakarta');
         Carbon::setLocale('id_ID');
         $tanggal = Carbon::now();
         $jam = Carbon::now();
         $tanggalsekarang = Carbon::parse($tanggal)->translatedFormat('l, j F Y');
         $jamsekarang = Carbon::parse($jam)->format('H:i');
-        $absensiHariIni = AbsensiSiswa::where('user_id', $siswa->user_id)
-            ->whereDate('created_at', Carbon::today())
-            ->first();
-
-        if ($absensiHariIni) {
-            // Jika sudah, tampilkan pesan kesalahan
-            return redirect()->route('editabsensi', $absensiHariIni->id);
-        }
+        
         return view('absensi.absensiswa', compact('tanggalsekarang', 'jamsekarang'));
     }
     public function postabsensi(Request $request)
     {
+        $siswaa = Siswa::where('user_id', auth()->id())->first();
+        $absensiHariIni = AbsensiSiswa::where('user_id', $siswaa->user_id)
+            ->whereDate('tanggal', Carbon::today())
+            ->first();
+        if ($absensiHariIni) {
+            return redirect()->route('editabsensi', $absensiHariIni->id);
+        }
         $request->validate([
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
@@ -403,7 +410,6 @@ class AbsenController extends Controller
             'jam_masuk' => 'required',
         ]);
 
-        $user = User::find(auth()->id());
 
         // Find the student based on user_id
         $siswa = Siswa::where('user_id', auth()->id())->first();
