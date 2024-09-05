@@ -50,10 +50,32 @@
             </div>
         </div>
     </div>
-
-
-
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                // Mengambil latitude dan longitude dari objek position
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+    
+                // Mengisi nilai latitude dan longitude ke dalam input hidden
+                document.getElementById('latitude').value = latitude;
+                document.getElementById('longitude').value = longitude;
+    
+                // Menampilkan notifikasi menggunakan toastr
+                toastr.success('Lokasi Anda sudah terdeteksi.');
+            }, function(error) {
+                // Menampilkan notifikasi jika terjadi kesalahan dalam mendapatkan lokasi
+                toastr.error('Gagal mendeteksi lokasi. Silakan refresh halaman dan coba lagi.');
+            });
+        } else {
+            // Menampilkan notifikasi jika geolocation tidak didukung
+            toastr.warning('Geolocation tidak didukung di browser ini.');
+        }
+    </script>
+    {{-- <script>
         // Cek apakah browser mendukung geolocation
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -68,7 +90,7 @@
         } else {
             console.log('Geolocation tidak didukung di browser ini.');
         }
-    </script>
+    </script> --}}
     <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/latest/locale/id.js"></script>
 

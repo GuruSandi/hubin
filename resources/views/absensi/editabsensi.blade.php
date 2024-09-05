@@ -12,7 +12,8 @@
                 </a>
             </div>
             <h4 class="text-white mt-3">Absensi Datang</h4>
-            <p style="font-size: 12px" class="text-white">Mohon lengkapi absensi datang Anda dengan memilih salah satu keterangan berikut: hadir, libur, atau tidak masuk PKL.</p>
+            <p style="font-size: 12px" class="text-white">Mohon lengkapi absensi datang Anda dengan memilih salah satu
+                keterangan berikut: hadir, libur, atau tidak masuk PKL.</p>
         </div>
     </div>
     <div class="" id="menu-form">
@@ -26,14 +27,16 @@
                         <p>{{ $tanggal }}</p>
                         <label for="">Jam:</label>
                         <p>
-                        <input type="time" name="jam_masuk" required value="{{ $jam_masuk }}" readonly style="border: none; outline: none; ">
+                            <input type="time" name="jam_masuk" required value="{{ $jam_masuk }}" readonly
+                                style="border: none; outline: none; ">
                         </p>
-                        
+
                         <label for="">Keterangan:</label>
                         <select name="keterangan" class="form-control" required>
                             <option value="hadir" @if ($absensisiswa->keterangan == 'hadir') selected @endif>Hadir</option>
                             <option value="libur" @if ($absensisiswa->keterangan == 'libur') selected @endif>Libur</option>
-                            <option value="tidak_hadir_pkl" @if ($absensisiswa->keterangan == 'tidak_hadir_pkl') selected @endif>Tidak Hadir PKL</option>
+                            <option value="tidak_hadir_pkl" @if ($absensisiswa->keterangan == 'tidak_hadir_pkl') selected @endif>Tidak Hadir
+                                PKL</option>
 
                         </select><br>
 
@@ -41,30 +44,39 @@
                         <input type="hidden" name="latitude" required id="latitude">
                         <input type="hidden" name="longitude" required id="longitude">
 
-                        <button type="submit" class="btn w-100 text-white" style="border-radius: 20px; background-color: #080761">Simpan</button>
+                        <button type="submit" class="btn w-100 text-white"
+                            style="border-radius: 20px; background-color: #080761">Simpan</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
-        // Cek apakah browser mendukung geolocation
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 // Mengambil latitude dan longitude dari objek position
                 var latitude = position.coords.latitude;
                 var longitude = position.coords.longitude;
-    
+
                 // Mengisi nilai latitude dan longitude ke dalam input hidden
                 document.getElementById('latitude').value = latitude;
                 document.getElementById('longitude').value = longitude;
+
+                // Menampilkan notifikasi menggunakan toastr
+                toastr.success('Lokasi Anda sudah terdeteksi.');
+            }, function(error) {
+                // Menampilkan notifikasi jika terjadi kesalahan dalam mendapatkan lokasi
+                toastr.error('Gagal mendeteksi lokasi. Silakan refresh halaman dan coba lagi.');
             });
         } else {
-            console.log('Geolocation tidak didukung di browser ini.');
+            // Menampilkan notifikasi jika geolocation tidak didukung
+            toastr.warning('Geolocation tidak didukung di browser ini.');
         }
     </script>
-    
+
     {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             navigator.geolocation.getCurrentPosition(function(position) {
