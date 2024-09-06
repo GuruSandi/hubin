@@ -378,15 +378,16 @@ class AbsenController extends Controller
         // Get institution details
 
         $siswa = Siswa::where('user_id', auth()->id())->first();
+        
+        date_default_timezone_set('Asia/Jakarta');
+        Carbon::setLocale('id_ID');
         $absensiHariIni = AbsensiSiswa::where('user_id', $siswa->user_id)
-            ->whereDate('tanggal', Carbon::today())
+            ->whereDate('created_at', Carbon::now()->toDateString())
             ->first();
         if ($absensiHariIni) {
             // Jika sudah, tampilkan pesan kesalahan
             return redirect()->route('editabsensi', $absensiHariIni->id);
         }
-        date_default_timezone_set('Asia/Jakarta');
-        Carbon::setLocale('id_ID');
         $tanggal = Carbon::now();
         $jam = Carbon::now();
         $tanggalsekarang = Carbon::parse($tanggal)->translatedFormat('l, j F Y');
@@ -397,10 +398,13 @@ class AbsenController extends Controller
     public function postabsensi(Request $request)
     {
         $siswaa = Siswa::where('user_id', auth()->id())->first();
+        date_default_timezone_set('Asia/Jakarta');
+        Carbon::setLocale('id_ID');
         $absensiHariIni = AbsensiSiswa::where('user_id', $siswaa->user_id)
-            ->whereDate('tanggal', Carbon::today())
+            ->whereDate('created_at', Carbon::now()->toDateString())
             ->first();
         if ($absensiHariIni) {
+            // Jika sudah, tampilkan pesan kesalahan
             return redirect()->route('editabsensi', $absensiHariIni->id);
         }
         $request->validate([
