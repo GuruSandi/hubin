@@ -135,6 +135,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/unduhakunadmin', 'AuthController@unduhakunadmin')->name('unduhakunadmin');
 
         //dataabsensi
+        Route::get('/dataabsensisiswaperhari', 'DataAbsensiController@dataabsensisiswaperhari')->name('dataabsensisiswaperhari');
+        Route::post('/posteditdataabsensisiswaperhari/{absensisiswa}', 'DataAbsensiController@posteditdataabsensisiswaperhari')->name('posteditdataabsensisiswaperhari');
+        Route::get('/hapusdataabsensisiswaperhari/{absensisiswa}', 'DataAbsensiController@hapusdataabsensisiswaperhari')->name('hapusdataabsensisiswaperhari');
         Route::get('/dataabsensisiswa', 'DataAbsensiController@dataabsensisiswa')->name('dataabsensisiswa');
         Route::post('/posteditdataabsensisiswa/{absensisiswa}', 'DataAbsensiController@posteditdataabsensisiswa')->name('posteditdataabsensisiswa');
         Route::get('/hapusdataabsensisiswa/{absensisiswa}', 'DataAbsensiController@hapusdataabsensisiswa')->name('hapusdataabsensisiswa');

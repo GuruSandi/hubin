@@ -99,6 +99,12 @@
                                 Data Siswa</a>
                         </li>
                         <li class="sidebar-item">
+                            <a href="{{ route('dataabsensisiswaperhari') }}" class="sidebar-link">
+                                <i class="bi bi-calendar-check"></i>
+                                <span>Data Absensi Siswa Hari Ini</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a href="{{ route('dataabsensisiswa') }}" class="sidebar-link">
                                 <i class="bi bi-calendar-check"></i>
                                 <span>Data Absensi Siswa</span>
