@@ -111,7 +111,7 @@
                                                 Hadir
                                             @elseif ($item->keterangan == 'libur')
                                                 Libur
-                                            @elseif ($item->keterangan == 'tidak_masuk_pkl')
+                                            @elseif ($item->keterangan == 'tidak_hadir_pkl')
                                                 Tidak Masuk PKL
                                             @elseif ($item->keterangan == 'absen')
                                                 Alpha
