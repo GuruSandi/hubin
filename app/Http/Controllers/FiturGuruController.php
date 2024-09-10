@@ -323,7 +323,7 @@ class FiturGuruController extends Controller
             })
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
-            ->whereIn('absensisiswas.keterangan', ['hadir', 'libur', 'absen', 'tidak_masuk_pkl'])
+            ->whereIn('absensisiswas.keterangan', ['hadir', 'libur', 'absen', 'tidak_hadir_pkl'])
             ->orderBy('siswas.nama')
             ->orderBy('absensisiswas.tanggal')
             ->get();
@@ -356,7 +356,7 @@ class FiturGuruController extends Controller
                 DB::raw('(SELECT COUNT(*) FROM absensisiswas WHERE absensisiswas.siswa_id = siswas.id AND absensisiswas.keterangan = "hadir") as total_hadir'),
                 DB::raw('(SELECT COUNT(*) FROM absensisiswas WHERE absensisiswas.siswa_id = siswas.id AND absensisiswas.keterangan = "libur") as total_libur'),
                 DB::raw('(SELECT COUNT(*) FROM absensisiswas WHERE absensisiswas.siswa_id = siswas.id AND absensisiswas.keterangan = "absen") as total_absen'),
-                DB::raw('(SELECT COUNT(*) FROM absensisiswas WHERE absensisiswas.siswa_id = siswas.id AND absensisiswas.keterangan = "tidak_masuk_pkl") as total_tidak_hadir_pkl')
+                DB::raw('(SELECT COUNT(*) FROM absensisiswas WHERE absensisiswas.siswa_id = siswas.id AND absensisiswas.keterangan = "tidak_hadir_pkl") as total_tidak_hadir_pkl')
             )
             ->leftJoin('absensisiswas', 'siswas.id', '=', 'absensisiswas.siswa_id')
             ->whereIn('siswas.id', function ($query) use ($guru_mapel_pkl) {
