@@ -8,14 +8,9 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
-class GuruMapelPklExport implements FromView,  WithDrawings, WithColumnWidths
+class GuruMapelPklExport implements FromView, WithColumnWidths
 {
-    protected $gurumapelpkl;
-
-    public function __construct($gurumapelpkl)
-    {
-        $this->gurumapelpkl = $gurumapelpkl;
-    }
+    
     public function view(): View
     {
         return view('exports.dataGuruMapelPkl', [
@@ -23,25 +18,7 @@ class GuruMapelPklExport implements FromView,  WithDrawings, WithColumnWidths
             
         ]);
     }
-    public function drawings()
-    {
-        $drawings = [];
-
-        // Logika untuk menambahkan gambar ke dalam ekspor
-        foreach ($this->gurumapelpkl as $index => $item) {
-            $drawings[] = $this->drawingsForItem($item->foto, 'E' . ($index + 2));
-        }
-
-        return $drawings;
-    }
-    protected function drawingsForItem($imagePath, $coordinate)
-    {
-        $drawing = new Drawing();
-        $drawing->setPath(public_path($imagePath));
-        $drawing->setCoordinates($coordinate);
-
-        return $drawing;
-    }
+    
    
 
     public function columnWidths(): array

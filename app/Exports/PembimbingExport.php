@@ -8,14 +8,9 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
-class PembimbingExport implements FromView,  WithDrawings, WithColumnWidths
+class PembimbingExport implements FromView, WithColumnWidths
 {
-    protected $pembimbing;
-
-    public function __construct($pembimbing)
-    {
-        $this->pembimbing = $pembimbing;
-    }
+    
 
     public function view(): View
     {
@@ -24,25 +19,7 @@ class PembimbingExport implements FromView,  WithDrawings, WithColumnWidths
             
         ]);
     }
-    public function drawings()
-    {
-        $drawings = [];
-
-        // Logika untuk menambahkan gambar ke dalam ekspor
-        foreach ($this->pembimbing as $index => $item) {
-            $drawings[] = $this->drawingsForItem($item->foto, 'E' . ($index + 2));
-        }
-
-        return $drawings;
-    }
-    protected function drawingsForItem($imagePath, $coordinate)
-    {
-        $drawing = new Drawing();
-        $drawing->setPath(public_path($imagePath));
-        $drawing->setCoordinates($coordinate);
-
-        return $drawing;
-    }
+    
    
 
     public function columnWidths(): array

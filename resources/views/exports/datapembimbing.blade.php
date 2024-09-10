@@ -54,7 +54,6 @@
         <thead>
             <tr>
                 <th>Pembimbing_id</th>
-                <th>Foto</th>
                 <th>Nama Guru</th>
                 <th>No HP</th>
 
@@ -63,12 +62,7 @@
         <tbody>
             @foreach ($dataPembimbing as $item)
                 <tr>
-                   
                     <td>{{ $item->id }}</td>
-                    <td style=" width: 70px;">
-                        <img src="{{ public_path($item->foto) }}" alt="Foto Sarana" width="100" height="100">
-
-                    </td>
                     <td style=" width: 200px;">{{ $item->nama }}</td>
                     <td style=" width: 200px;">{{ $item->no_hp}}</td>
                 </tr>
