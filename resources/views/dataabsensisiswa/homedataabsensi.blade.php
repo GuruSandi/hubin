@@ -118,6 +118,8 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $absensisiswa->links() }}
+
                     </div>
                 </div>
             </div>

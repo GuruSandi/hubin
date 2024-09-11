@@ -114,7 +114,7 @@
                                             @elseif ($item->keterangan == 'tidak_hadir_pkl')
                                                 Tidak Masuk PKL
                                             @elseif ($item->keterangan == 'absen')
-                                                Alpha
+                                                Alpa
                                             @endif
                                         </p>
 

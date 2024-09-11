@@ -78,6 +78,8 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $datajurnal->links() }}
+
                     </div>
                 </div>
             </div>

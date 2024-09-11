@@ -79,7 +79,9 @@ class DataAbsensiController extends Controller
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->join('guru_mapel_pkls', 'membimbings.guru_mapel_pkl_id', '=', 'guru_mapel_pkls.id')
             ->orderBy('absensisiswas.created_at', 'desc')
-            ->get();
+            ->paginate(10);
+
+            // ->get();
             foreach ($absensisiswa as $item) {
                 $item->tanggal = Carbon::parse($item->tanggal)->format('Y-m-d');;
     
