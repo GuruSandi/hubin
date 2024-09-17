@@ -141,6 +141,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dataabsensisiswa', 'DataAbsensiController@dataabsensisiswa')->name('dataabsensisiswa');
         Route::post('/posteditdataabsensisiswa/{absensisiswa}', 'DataAbsensiController@posteditdataabsensisiswa')->name('posteditdataabsensisiswa');
         Route::get('/hapusdataabsensisiswa/{absensisiswa}', 'DataAbsensiController@hapusdataabsensisiswa')->name('hapusdataabsensisiswa');
+        Route::get('/searchdataabsensisiswa', 'DataAbsensiController@searchdataabsensisiswa')->name('searchdataabsensisiswa');
         Route::delete('/dataabsensidelete', 'DataAbsensiController@dataabsensidelete')->name('dataabsensi.delete');
 
         //datajurnal
@@ -149,8 +150,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/hapusdatajurnalsiswa/{jurnal}', 'DataJurnalController@hapusdatajurnalsiswa')->name('hapusdatajurnalsiswa');
         Route::delete('/datajurnaldelete', 'DataJurnalController@datajurnaldelete')->name('datajurnal.delete');
         Route::get('/datajurnalbelumdivalidasi', 'DataJurnalController@datajurnalbelumdivalidasi')->name('datajurnalbelumdivalidasi');
+        Route::get('/searchjurnalbelumdivalidasi', 'DataJurnalController@searchjurnalbelumdivalidasi')->name('searchjurnalbelumdivalidasi');
+        Route::get('/searchdatajurnalhome', 'DataJurnalController@searchdatajurnal')->name('searchdatajurnalhome');
         Route::post('/validasijurnal', 'DataJurnalController@jurnalvalidasisiswa')->name('datajurnal.validasi');
-
+        
         //datanilaisiswa
         Route::get('/datanilaisiswa', 'DataNilaiController@datanilaisiswa')->name('datanilaisiswa');
         Route::post('/posteditdatanilaisiswa/{nilai_pkl}', 'DataNilaiController@posteditdatanilaisiswa')->name('posteditdatanilaisiswa');
