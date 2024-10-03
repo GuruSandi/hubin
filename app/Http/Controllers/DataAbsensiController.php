@@ -21,7 +21,7 @@ class DataAbsensiController extends Controller
             ->join('absensisiswas', 'membimbings.siswa_id', '=', 'absensisiswas.siswa_id')
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->join('guru_mapel_pkls', 'membimbings.guru_mapel_pkl_id', '=', 'guru_mapel_pkls.id')
-            ->whereDate('absensisiswas.created_at', Carbon::now()->toDateString())
+            ->whereDate('absensisiswas.tanggal', Carbon::now()->toDateString())
             ->orderBy('absensisiswas.created_at', 'desc')
             ->get();
             foreach ($absensisiswa as $item) {

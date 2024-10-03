@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-sm table-bordered" id="example" style="font-size: 12px">
+                            <table class="table table-sm table-bordered" id="" style="font-size: 12px">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -60,7 +60,8 @@
                                 <tbody>
                                     @foreach ($siswa as $item)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $loop->iteration + ($siswa->currentPage() - 1) * $siswa->perPage() }}
+                                            </td>
                                             <td onclick="openModal({{ $item->id }})">{{ $item->nama_siswa }}</td>
                                             <td>{{ $item->kelas_siswa }}</td>
                                             <td>{{ $item->tanggal }}</td>
@@ -76,7 +77,7 @@
                                             </td>
                                             <td>{{ $item->instansi }}</td>
                                             <td>{{ $item->nama_pembimbing }}</td>
-                                            <td style="width: 130px" class="text-center">
+                                            <td style="width: 150px" class="text-center">
                                                 <button type="button" class="btn btn-sm mx-1 btn-success"
                                                     onclick="openModal({{ $item->id }})">
                                                     <i class="fas fa-eye"></i>
@@ -95,14 +96,12 @@
 
                                                     </button>
                                                 @else
-                                                    <a href="{{ route('validasisetuju', $item->id) }}"
-                                                        class="btn btn-sm btn-primary mx-1 validate-btn"
-                                                        data-id="{{ $item->id }}">
+                                                    <a href="{{ route('validasisetuju', ['id' => $item->id, 'page' => $siswa->currentPage()]) }}"
+                                                        class="btn btn-sm btn-primary mx-1 validate-btn">
                                                         <i class="fas fa-check"></i>
                                                     </a>
-                                                    <a href="{{ route('validasiditolak', $item->id) }}"
-                                                        class="btn btn-sm btn-danger tolakvalidate-btn"
-                                                        data-id="{{ $item->id }}">
+                                                    <a href="{{ route('validasiditolak', ['id' => $item->id, 'page' => $siswa->currentPage()]) }}"
+                                                        class="btn btn-sm btn-danger mx-1 tolakvalidate-btn">
                                                         <i class="fas fa-times"></i>
                                                     </a>
                                                 @endif
@@ -113,6 +112,18 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    @php
+                                        $from = ($siswa->currentPage() - 1) * $siswa->perPage() + 1; // Hitung dari
+                                        $to = min($from + $siswa->count() - 1, $siswa->total()); // Hitung sampai
+                                    @endphp
+                                    <p>Showing {{ $from }} to {{ $to }} of {{ $siswa->total() }} entries</p>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ $siswa->links() }} <!-- Pagination links -->
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -167,11 +178,11 @@
                     <div class="custom-modal-footer">
 
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('validasisetuju', $item->id) }}" class="btn btn-primary mx-1"
+                            <a href="{{ route('validasisetuju', ['id' => $item->id, 'page' => $siswa->currentPage()]) }}" class="btn btn-primary mx-1"
                                 data-id="{{ $item->id }}">
                                 Setuju
                             </a>
-                            <a href="{{ route('validasiditolak', $item->id) }}" class="btn btn-danger mx-1"
+                            <a href="{{ route('validasiditolak', ['id' => $item->id, 'page' => $siswa->currentPage()]) }}" class="btn btn-danger mx-1"
                                 data-id="{{ $item->id }}">
                                 Tolak
                             </a>
@@ -246,12 +257,12 @@
                             <br>Pilih "Tolak" jika ada ketidaksesuaian dengan kriteria yang ditentukan.
                         </p>
                         <div class="text-center">
-                            <a href="{{ route('validasisetuju', $item->id) }}"
-                                class="btn1 btn btn-success mx-1 validate-btn1" data-id="{{ $item->id }}">
+                            <a href="{{ route('validasisetuju', ['id' => $item->id, 'page' => $siswa->currentPage()]) }}" class="btn btn-primary mx-1"
+                                data-id="{{ $item->id }}">
                                 Setuju
                             </a>
-                            <a href="{{ route('validasiditolak', $item->id) }}"
-                                class="btn btn1 btn-danger tolakvalidate-btn1" data-id="{{ $item->id }}">
+                            <a href="{{ route('validasiditolak', ['id' => $item->id, 'page' => $siswa->currentPage()]) }}" class="btn btn-danger mx-1"
+                                data-id="{{ $item->id }}">
                                 Tolak
                             </a>
                         </div>
@@ -286,6 +297,7 @@
                 }
             });
         </script>
+
     </div>
 
 @endsection

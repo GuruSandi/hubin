@@ -111,23 +111,23 @@ class FiturGuruController extends Controller
 
         return view('fiturguru.dashboardguru', compact('sudahabsen', 'belumabsen', 'guru_mapel_pkl', 'jurnalterbaru', 'absensiterbaru', 'jumlahsiswa', 'jurnalsiswa'));
     }
-    public function validasisetuju($id)
+    public function validasisetuju($id, Request $request)
     {
         $jurnal = jurnal::findOrFail($id);
 
         $jurnal->update([
             'validasi' => 'tervalidasi'
         ]);
-        return redirect()->back();
+        return redirect()->route('datajurnal', ['page' => $request->input('page', 1)]);
     }
 
-    public function validasiditolak($id)
+    public function validasiditolak($id, Request $request)
     {
         $jurnal = jurnal::findOrFail($id);
         $jurnal->update([
             'validasi' => 'ditolak'
         ]);
-        return redirect()->back();
+        return redirect()->route('datajurnal', ['page' => $request->input('page', 1)]);
     }
     public function detailabsen(Request $request, $siswa_id)
     {
@@ -486,19 +486,16 @@ class FiturGuruController extends Controller
         $user = User::find(Auth::id());
         $guru_mapel_pkl = guru_mapel_pkl::where('user_id', $user->id)->first();
         $siswa = DB::table('membimbings')
-            ->select('membimbings.*', 'instansis.instansi', 'siswas.nama as nama_siswa', 'siswas.kelas as kelas_siswa', 'absensisiswas.tanggal', 'absensisiswas.created_at', 'absensisiswas.keterangan', 'absensisiswas.jam_masuk', 'absensisiswas.jam_pulang', 'jurnals.deskripsi_jurnal',  'jurnals.id', 'jurnals.validasi', 'absensisiswas.jarak', 'pembimbings.nama as nama_pembimbing')
+            ->select('membimbings.*', 'instansis.instansi', 'siswas.nama as nama_siswa', 'siswas.kelas as kelas_siswa', 'absensisiswas.tanggal', 'absensisiswas.created_at', 'absensisiswas.keterangan', 'absensisiswas.jam_masuk', 'absensisiswas.jam_pulang', 'absensisiswas.jarak', 'pembimbings.nama as nama_pembimbing')
             ->join('siswas', 'membimbings.siswa_id', '=', 'siswas.id')
             ->join('menempatis', 'membimbings.siswa_id', '=', 'menempatis.siswa_id')
             ->join('instansis', 'menempatis.instansi_id', '=', 'instansis.id')
             ->join('absensisiswas', 'membimbings.siswa_id', '=', 'absensisiswas.siswa_id')
-            ->leftJoin('jurnals', function ($join) {
-                $join->on('absensisiswas.user_id', '=', 'jurnals.user_id')
-                    ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
-            })
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
-            ->orderBy('absensisiswas.created_at', 'desc')
-            ->get();
+            ->orderBy('absensisiswas.created_at', 'desc');
+        $siswa = $siswa->paginate(100);
+
         foreach ($siswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
 
@@ -582,8 +579,10 @@ class FiturGuruController extends Controller
             ->join('jurnals', 'membimbings.siswa_id', '=', 'jurnals.siswa_id')
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
-            ->orderBy('jurnals.created_at', 'desc')
-            ->get();
+            ->orderBy('jurnals.created_at', 'desc');
+        
+        $siswa = $siswa->paginate(10);
+
         foreach ($siswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
         }

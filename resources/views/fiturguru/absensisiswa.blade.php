@@ -23,14 +23,14 @@
                                     <div class="row">
                                         <div class="col-md-6 col-lg-5">
                                             <label for="start_date">Tanggal Mulai:</label>
-                                            <input type="date" required class="form-control form-control-sm mb-3" id="start_date"
-                                                name="start_date">
+                                            <input type="date" required class="form-control form-control-sm mb-3"
+                                                id="start_date" name="start_date">
 
                                         </div>
                                         <div class="col-md-6 col-lg-5">
                                             <label for="end_date">Tanggal Selesai:</label>
-                                            <input type="date" required class="form-control form-control-sm mb-3 " id="end_date"
-                                                name="end_date">
+                                            <input type="date" required class="form-control form-control-sm mb-3 "
+                                                id="end_date" name="end_date">
 
                                         </div>
                                         <div class="col-md-6 col-lg-2">
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-sm table-striped table-bordered" id="example"
+                            <table class="table table-sm table-striped table-bordered" id=""
                                 style="font-size: 12px">
                                 <thead>
                                     <tr>
@@ -63,7 +63,8 @@
                                 <tbody>
                                     @foreach ($siswa as $item)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $loop->iteration + ($siswa->currentPage() - 1) * $siswa->perPage() }}
+                                            </td>
                                             <td onclick="openModal({{ $item->id }})">{{ $item->nama_siswa }}</td>
                                             <td>{{ $item->kelas_siswa }}</td>
                                             <td>{{ $item->tanggal }}</td>
@@ -96,6 +97,19 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    @php
+                                        $from = ($siswa->currentPage() - 1) * $siswa->perPage() + 1; // Hitung dari
+                                        $to = min($from + $siswa->count() - 1, $siswa->total()); // Hitung sampai
+                                    @endphp
+                                    <p>Showing {{ $from }} to {{ $to }} of {{ $siswa->total() }}
+                                        entries</p>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ $siswa->links() }} <!-- Pagination links -->
+                                </div>
+                            </div>
                         </div>
 
                     </div>
