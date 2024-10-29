@@ -5,7 +5,7 @@
 
     <div class="container mt-4">
 
-        <div class="row">
+        <div class="row" >
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -42,7 +42,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive " style="margin-bottom: 100px">
                             <table class="table table-sm table-bordered" id="" style="font-size: 12px">
                                 <thead>
                                     <tr>

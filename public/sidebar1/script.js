@@ -5,7 +5,9 @@ const menuItems = document.querySelectorAll(".submenu-item");
 const subMenuTitles = document.querySelectorAll(".submenu .menu-title");
 
 sidebarClose.addEventListener("click", () => sidebar.classList.toggle("close"));
-
+if (window.innerWidth < 768) {
+  sidebar.classList.add("close"); // Selalu tutup sidebar di mobile
+}
 menuItems.forEach((item, index) => {
   item.addEventListener("click", () => {
     menu.classList.add("submenu-active");
@@ -25,3 +27,4 @@ subMenuTitles.forEach((title) => {
 });
 
 console.log(menuItems, subMenuTitles);
+

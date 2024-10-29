@@ -6124,7 +6124,7 @@ textarea,
   margin-top: 6px;
 }
 
-.pagination {
+.paginationn {
   margin: 0;
   padding: 0;
   text-align: center;
@@ -6134,7 +6134,7 @@ textarea,
   justify-content: center;
 }
 
-.pagination .page-item .page-link {
+.paginationn .page-item .page-link {
   background: #1e74fd;
   border: 0;
   color: #fff;
@@ -6145,21 +6145,21 @@ textarea,
   font-size: 13px;
 }
 
-.pagination .page-item .page-link:focus {
+.paginationn .page-item .page-link:focus {
   box-shadow: none !important;
 }
 
-.pagination.pagination-secondary .page-item .page-link {
+.paginationn.paginationn-secondary .page-item .page-link {
   background: #fff;
   color: #4f5050;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
 
-.pagination.pagination-rounded .page-item .page-link {
+.paginationn.paginationn-rounded .page-item .page-link {
   border-radius: 400px !important;
 }
 
-.pagination.pagination-square .page-item .page-link {
+.paginationn.paginationn-square .page-item .page-link {
   border-radius: 0 !important;
 }
 
@@ -7633,7 +7633,7 @@ body.dark-mode-active .panelbox .modal-dialog .modal-content .modal-header .moda
   color: #ffffff;
 }
 
-body.dark-mode-active .pagination.pagination-secondary .page-item .page-link {
+body.dark-mode-active .paginationn.paginationn-secondary .page-item .page-link {
   background: #0c1624;
   color: #8195a6;
 }

@@ -494,7 +494,7 @@ class FiturGuruController extends Controller
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
             ->orderBy('absensisiswas.created_at', 'desc');
-        $siswa = $siswa->paginate(100);
+        $siswa = $siswa->paginate(10);
 
         foreach ($siswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');

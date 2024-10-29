@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap-icon/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/ionicons@latest/dist/css/ionicons.min.css">
+
     
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
@@ -35,7 +37,7 @@
 </head>
 
 <body>
-    <nav class="sidebar" style="box-shadow: ">
+    <nav class="sidebar">
         <div class="text-center" style="background-color: #080761; height: 60px; padding-top: 15px">
             <a href="#" class="logo text-white ">SIPAPII</a>
         </div>
@@ -92,9 +94,12 @@
             </ul>
         </div>
     </nav>
+   
 
     <nav class="navbar sticky-top">
         <i class="fa-solid fa-bars" id="sidebar-close"></i>
+        <a href="#" class="logoo text-white" style="text-decoration: none;">SIPAPII</a>
+
         <div class="d-flex justify-content-end">
             <!-- Tombol Dropdown -->
             <a href="#" id="dropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -129,7 +134,57 @@
     <main class="main">
         @yield('content')
     </main>
-
+    <div class="appBottomMenu">
+        <div class="item {{ \Route::is('dashboardguru*') ? 'active1' : '' }}">
+            <a href="{{ route('dashboardguru') }}" style="text-decoration: none">
+                <div class="icon-text">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </div>
+            </a>
+        </div>
+        <div class="item {{ \Route::is('dataabsensi') ? 'active1' : '' }}">
+            <a href="{{ route('dataabsensi') }}" style="text-decoration: none">
+                <div class="icon-text">
+                    <i class="fas fa-list"></i>
+                    <span>Absensi</span>
+                </div>
+            </a>
+        </div>
+        <div class="item {{ \Route::is('dataabsensi.rekapabsen') ? 'active1' : '' }}">
+            <a href="{{ route('dataabsensi.rekapabsen') }}" style="text-decoration: none">
+                <div class="icon-text">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Rekap</span>
+                </div>
+            </a>
+        </div>
+        <div class="item {{ \Route::is('datajurnal*') ? 'active1' : '' }}">
+            <a href="{{ route('datajurnal') }}" style="text-decoration: none">
+                <div class="icon-text">
+                    <i class="fas fa-book"></i>
+                    <span>Jurnal</span>
+                </div>
+            </a>
+        </div>
+        <div class="item {{ \Route::is('nilaisiswa*') ? 'active1' : '' }}">
+            <a href="{{ route('nilaisiswa') }}" style="text-decoration: none">
+                <div class="icon-text">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Nilai</span>
+                </div>
+            </a>
+        </div>
+        <div class="item {{ \Route::is('datasiswa*') ? 'active1' : '' }}">
+            <a href="{{ route('datasiswa') }}" style="text-decoration: none">
+                <div class="icon-text">
+                    <i class="fas fa-user"></i>
+                    <span>Siswa</span>
+                </div>
+            </a>
+        </div>
+        
+    </div>
     <script src="{{ asset('sidebar1/script.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>

@@ -64,8 +64,60 @@
                 </form>
             </div>
         </div>
-        <div class="row g-3">
-            @foreach ($absensisiswa as $item)
+        
+        <div class="row mt-3">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" id=""
+                    style="font-size: 12px">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Pulang</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($absensisiswa as $item)
+                            <tr>
+                                <td>{{ $loop->iteration + ($absensisiswa->currentPage() - 1) * $absensisiswa->perPage() }}
+                                </td>
+                                <td>{{ $item->tanggal }}</td>
+                                <td>{{ $item->jam_masuk }}</td>
+                                <td>{{ $item->jam_pulang }}</td>
+                                
+                                <td>
+                                    @if ($item->keterangan == 'hadir')
+                                        Hadir
+                                    @elseif ($item->keterangan == 'libur')
+                                        Libur
+                                    @elseif ($item->keterangan == 'tidak_hadir_pkl')
+                                        Tidak Masuk PKL
+                                    @elseif ($item->keterangan == 'absen')
+                                        Alpa
+                                    @endif
+                                </td>
+    
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        @php
+                            $from = ($absensisiswa->currentPage() - 1) * $absensisiswa->perPage() + 1; // Hitung dari
+                            $to = min($from + $absensisiswa->count() - 1, $absensisiswa->total()); // Hitung sampai
+                        @endphp
+                        <p>Showing {{ $from }} to {{ $to }} of {{ $absensisiswa->total() }}
+                            entries</p>
+                    </div>
+                    <div class="col-md-6">
+                        {{ $absensisiswa->links() }} <!-- Pagination links -->
+                    </div>
+                </div>
+            </div>
+            {{-- @foreach ($absensisiswa as $item)
                 <div class="col-md-6 col-lg-4">
                     <div class="card mt-3" style="border-radius: 10px">
                         <div class="card-body ">
@@ -74,7 +126,6 @@
 
                                 <div class="row">
                                     <div class="col-12">
-                                        {{-- <p class="fw-bold">{{ substr($item->deskripsi_jurnal, 0, strpos($item->deskripsi_jurnal, ' ', strpos($item->deskripsi_jurnal, ' ') + 1)) }}</p> --}}
                                         <h5 class="fw-bold">{{ $item->tanggal }}</h5>
                                     </div>
                                 </div>
@@ -127,7 +178,7 @@
                     </div>
 
                 </div>
-            @endforeach
+            @endforeach --}}
 
 
         </div>

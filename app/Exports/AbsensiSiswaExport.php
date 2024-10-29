@@ -42,14 +42,14 @@ class AbsensiSiswaExport implements FromView
 
             // Format jam_masuk jika ada
             if ($item->jam_masuk) {
-                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H.i');
+                $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H:i');
             } else {
                 $item->jam_masuk = 'Belum Absen Datang';
             }
 
             // Format jam_pulang jika ada
             if ($item->jam_pulang) {
-                $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H.i');
+                $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H:i');
             } else {
                 $item->jam_pulang = 'Belum Absen Pulang';
             }

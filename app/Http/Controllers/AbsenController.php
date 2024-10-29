@@ -325,7 +325,8 @@ class AbsenController extends Controller
                     ->whereDate('jurnals.created_at', '=', DB::raw('DATE(absensisiswas.tanggal)'));
             })
             ->orderBy('absensisiswas.tanggal', 'desc')  // Mengurutkan berdasarkan tanggal descending
-            ->get();
+            ->paginate(10);
+
         foreach ($absensisiswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
 
