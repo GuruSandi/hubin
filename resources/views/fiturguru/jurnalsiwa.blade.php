@@ -11,10 +11,16 @@
                     <div class="card-body">
                         <p class="fw-bold mb-4">Jurnal Siswa</p>
                         <div class="row">
-                            <div class="col-md-6 col-lg-3">
+                            <div class="col-3">
                                 <div id="toggleFilter" class="btn btn-warning text-white" style="font-size: 12px">
                                     <i class="bi bi-funnel"></i> Filter Tanggal
                                 </div>
+                            </div>
+                            <div class="col-3">
+
+                                <h3 id="jumlahvalidasi" class="btn shadow card " style="font-size: 12px; width: 200px">
+                                    <span>Jurnal Belum Validasi : {{ $jumlahJurnalBelumTervalidasi }}</span>
+                                </h3>
                             </div>
                         </div>
                         <div class="row col-md-6 col-lg-8 mt-3">

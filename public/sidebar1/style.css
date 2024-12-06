@@ -660,8 +660,12 @@ a {
     display: none; /* Sembunyikan ikon di mobile */
   }
   
+  
 }
 @media (min-width: 769px) {
+  #jumlahvalidasi {
+    margin-left: -150px; 
+  }
   .logoo {
     display: none; /* Sembunyikan teks di desktop */
   }

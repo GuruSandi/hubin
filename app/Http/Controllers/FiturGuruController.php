@@ -571,6 +571,11 @@ class FiturGuruController extends Controller
         Carbon::setLocale('id_ID');
         $user = User::find(Auth::id());
         $guru_mapel_pkl = guru_mapel_pkl::where('user_id', $user->id)->first();
+        $jumlahJurnalBelumTervalidasi = DB::table('membimbings')
+            ->join('jurnals', 'membimbings.siswa_id', '=', 'jurnals.siswa_id')
+            ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
+            ->where('jurnals.validasi', 'belum_tervalidasi')
+            ->count();
         $siswa = DB::table('membimbings')
             ->select('membimbings.*', 'instansis.instansi', 'siswas.nama as nama_siswa', 'siswas.kelas as kelas_siswa', 'jurnals.deskripsi_jurnal', 'jurnals.tanggal',  'jurnals.id', 'jurnals.validasi', 'pembimbings.nama as nama_pembimbing')
             ->join('siswas', 'membimbings.siswa_id', '=', 'siswas.id')
@@ -580,13 +585,14 @@ class FiturGuruController extends Controller
             ->join('pembimbings', 'membimbings.pembimbing_id', '=', 'pembimbings.id')
             ->where('membimbings.guru_mapel_pkl_id', $guru_mapel_pkl->id)
             ->orderBy('jurnals.created_at', 'desc');
-        
+
+
         $siswa = $siswa->paginate(10);
 
         foreach ($siswa as $item) {
             $item->tanggal = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
         }
-        return view('fiturguru.jurnalsiwa', compact('siswa', 'guru_mapel_pkl'));
+        return view('fiturguru.jurnalsiwa', compact('siswa', 'guru_mapel_pkl', 'jumlahJurnalBelumTervalidasi'));
     }
     public function searchjurnalsiwa(Request $request)
     {
