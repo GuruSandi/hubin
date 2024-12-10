@@ -115,6 +115,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/exportDataInstansi', 'InstansiController@exportDataInstansi')->name('exportDataInstansi');
         Route::get('/exportDataPembimbing', 'PembimbingController@exportDataPembimbing')->name('exportDataPembimbing');
         Route::get('/exportDataGuruMapelPkl', 'GuruMapelController@exportDataGuruMapelPkl')->name('exportDataGuruMapelPkl');
+        Route::get('/exportDataNilaiSiswa', 'DataNilaiController@exportDataNilaiSiswa')->name('exportDataNilaiSiswa');
 
         //akunsiswa
         Route::get('/homeakunsiswa', 'AuthController@homeakunsiswa')->name('homeakunsiswa');

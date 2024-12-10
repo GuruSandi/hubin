@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\absensisiswa;
 use App\Models\jurnal;
+use App\Models\nilai_pkl;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Crypt;
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
         //     'role'=>'admin',
         // ]);
         // jurnal::factory()->count(3000)->create(); 
-        absensisiswa::factory()->count(3000)->create(); 
+        // absensisiswa::factory()->count(3000)->create(); 
+        nilai_pkl::factory()->count(50)->create();
     }
 }

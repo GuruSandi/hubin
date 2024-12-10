@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DataNilaiSiswaExport;
 use App\Models\nilai_pkl;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class DataNilaiController extends Controller
 {
     public function datanilaisiswa()
     {
-        $nilaisiswa = nilai_pkl::with('siswa')->get();
+        $nilaisiswa = nilai_pkl::with(['siswa', 'guru_mapel_pkl'])->get();
 
         return view('datanilaisiswa.homedatanilai', compact('nilaisiswa'));
 
@@ -48,5 +50,10 @@ class DataNilaiController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
+    }
+
+    public function exportDataNilaiSiswa()
+    {
+        return Excel::download(new DataNilaiSiswaExport, 'data_nilai_siswa.xlsx');
     }
 }
