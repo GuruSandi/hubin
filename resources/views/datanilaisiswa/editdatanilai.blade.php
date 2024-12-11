@@ -9,8 +9,8 @@
             </div>
             <div class="modal-body">
                 <!-- Form Edit -->
-                <p><strong>Nama :</strong> {{ $item->siswa->nama }}</p>
-                <p><strong>Kelas :</strong> {{ $item->siswa->kelas }}</p>
+                <p><strong>Nama :</strong> {{ $item->nama }}</p>
+                <p><strong>Kelas :</strong> {{ $item->kelas }}</p>
 
                 <form action="{{ route('posteditdatanilaisiswa', $item->id) }}" class="form-group"
                     enctype="multipart/form-data" method="POST">

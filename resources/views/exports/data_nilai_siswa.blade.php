@@ -81,13 +81,13 @@
             @foreach ($nilaisiswa as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->siswa->nama }}</td>
-                    <td>{{ $item->siswa->kelas }}</td>
-                    <td>{{ $item->nilai1 }}</td>
-                    <td>{{ $item->nilai2 }}</td>
-                    <td>{{ $item->nilai3 }}</td>
-                    <td>{{ $item->nilai4 }}</td>
-                    <td>{{ $item->guru_mapel_pkl->nama }}</td>
+                    <td>{{ $item->nama }}</td>
+                    <td>{{ $item->kelas }}</td>
+                    <td>{{ $item->nilai1 ?? 'Belum Dinilai' }}</td>
+                    <td>{{ $item->nilai2 ?? 'Belum Dinilai' }}</td>
+                    <td>{{ $item->nilai3 ?? 'Belum Dinilai' }}</td>
+                    <td>{{ $item->nilai4 ?? 'Belum Dinilai' }}</td>
+                    <td>{{ $item->guru_mapel_pkl ?? 'belum ditugaskan' }}</td>
 
                 </tr>
             @endforeach

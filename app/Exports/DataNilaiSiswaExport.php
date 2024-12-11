@@ -2,19 +2,32 @@
 
 namespace App\Exports;
 
-use App\Models\guru_mapel_pkl;
-use App\Models\membimbing;
-use App\Models\nilai_pkl;
-use App\Models\User;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class DataNilaiSiswaExport implements  FromView
 {
     public function view(): View
     {
-        $nilaisiswa = nilai_pkl::with(['siswa', 'guru_mapel_pkl'])->get();
+        $nilaisiswa = DB::table('siswas')
+        ->leftJoin('nilai_pkls', 'siswas.id', '=', 'nilai_pkls.siswa_id')
+        ->leftJoin('membimbings', 'siswas.id', '=', 'membimbings.siswa_id')  // Join with membimbing to get the teacher
+        ->leftJoin('guru_mapel_pkls', 'membimbings.guru_mapel_pkl_id', '=', 'guru_mapel_pkls.id')
+        
+        ->select(
+            'siswas.id as siswa_id',
+            'siswas.nama',
+            'siswas.kelas',
+            'nilai_pkls.id',
+            'nilai_pkls.nilai1',
+            'nilai_pkls.nilai2',
+            'nilai_pkls.nilai3',
+            'nilai_pkls.nilai4',
+            'guru_mapel_pkls.nama as guru_mapel_pkl',
+        )
+        ->get();
 
         return view('exports.data_nilai_siswa', [
             'nilaisiswa'  => $nilaisiswa

@@ -14,7 +14,7 @@
                             class="bi bi-cloud-download-fill"></i> Unduh Excel</a>
 
                 </div>
-                
+
             </div>
             <div class="row">
                 <div class="col-12 col-md-12 col-sm-8">
@@ -44,34 +44,45 @@
                                                 value="{{ $item->id }}">
                                         </td>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->siswa->nama }}</td>
-                                        <td>{{ $item->siswa->kelas }}</td>
-                                        <td>{{ $item->nilai1 }}</td>
-                                        <td>{{ $item->nilai2 }}</td>
-                                        <td>{{ $item->nilai3 }}</td>
-                                        <td>{{ $item->nilai4 }}</td>
-                                        <td>{{ $item->guru_mapel_pkl->nama }}</td>
+                                        <td>{{ $item->nama }}</td>
+                                        <td>{{ $item->kelas }}</td>
+                                        <td>{{ $item->nilai1 ?? 'Belum Dinilai' }}</td>
+                                        <td>{{ $item->nilai2 ?? 'Belum Dinilai' }}</td>
+                                        <td>{{ $item->nilai3 ?? 'Belum Dinilai' }}</td>
+                                        <td>{{ $item->nilai4 ?? 'Belum Dinilai' }}</td>
+                                        <td>{{ $item->guru_mapel_pkl ?? 'belum ditugaskan' }}</td>
                                         <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-info mx-1" data-bs-toggle="modal"
-                                                    data-bs-target="#detailModal{{ $item->id }}">
-                                                    <i class="bi bi-book " style="color: white"></i>
-                                                </button>
-                                                <button type="button" style="background-color: #080761" class="btn mx-1"
-                                                    data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">
-                                                    <i class="bi bi-pencil " style="color: white"></i>
-                                                </button>
-                                                <a href="{{ route('hapusdatanilaisiswa', $item->id) }}"
-                                                    class="btn btn-danger mx-1 delete-btn" data-id="{{ $item->id }}">
-                                                    <i class="bi bi-trash"></i>
-                                                </a>
+                                            @if ($item->nilai1 == null && $item->nilai2 == null && $item->nilai3 == null && $item->nilai4 == null)
+                                                Tidak Ada aksi
+                                            @else
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-info mx-1" data-bs-toggle="modal"
+                                                        data-bs-target="#detailModal{{ $item->id }}">
+                                                        <i class="bi bi-book " style="color: white"></i>
+                                                    </button>
+                                                    <button type="button" style="background-color: #080761"
+                                                        class="btn mx-1" data-bs-toggle="modal"
+                                                        data-bs-target="#editModal{{ $item->id }}">
+                                                        <i class="bi bi-pencil " style="color: white"></i>
+                                                    </button>
+                                                    <a href="{{ route('hapusdatanilaisiswa', $item->id) }}"
+                                                        class="btn btn-danger mx-1 delete-btn"
+                                                        data-id="{{ $item->id }}">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
 
-                                            </div>
+                                                </div>
+                                            @endif
+
                                         </td>
 
                                     </tr>
-                                    @include('datanilaisiswa.detaildatanilai')
-                                    @include('datanilaisiswa.editdatanilai')
+                                    @if ($item->nilai1 == null && $item->nilai2 == null && $item->nilai3 == null && $item->nilai4 == null)
+                                    
+                                    @else
+                                        @include('datanilaisiswa.detaildatanilai')
+                                        @include('datanilaisiswa.editdatanilai')
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
