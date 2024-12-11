@@ -14,20 +14,21 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class menempatiController extends Controller
 {
-   
+
     public function homemenempati()
     {
-        $menempati = menempati::all();
-        $menempatis_sorted = $menempati->sortBy('instansi');
+        $menempatis_sorted = Menempati::with('instansi') 
+            ->orderBy('instansi_id')  
+            ->paginate(10);
         return view('menempati.homemenempati', compact('menempatis_sorted'));
     }
     public function tambahmenempati()
     {
-        $instansi=instansi::all();
-        $siswa=siswa::all();
+        $instansi = instansi::all();
+        $siswa = siswa::all();
         $siswa_terpilih = menempati::pluck('siswa_id')->toArray();
         $siswa_tersedia = $siswa->whereNotIn('id', $siswa_terpilih);
-        return view('menempati.tambahmenempati', compact('siswa_tersedia','instansi'));
+        return view('menempati.tambahmenempati', compact('siswa_tersedia', 'instansi'));
     }
     public function posttambahmenempati(Request $request)
     {
@@ -51,13 +52,13 @@ class menempatiController extends Controller
         $instansi = instansi::all();
         $selectinstansi = $menempati->instansi_id;
         $selectsiswa = $menempati->siswa_id;
-        return view('menempati.editmenempatisatu', compact('menempati','siswa','instansi','selectinstansi','selectsiswa'));
+        return view('menempati.editmenempatisatu', compact('menempati', 'siswa', 'instansi', 'selectinstansi', 'selectsiswa'));
     }
-   
-   
+
+
     public function posteditmenempati(Request $request, menempati $menempati)
     {
-        $data=$request->validate([
+        $data = $request->validate([
             'siswa_id' => 'required',
             'instansi_id' => 'required',
         ]);
@@ -68,10 +69,10 @@ class menempatiController extends Controller
     }
     public function hapusmenempati(menempati $menempati)
     {
-       
+
         $menempati->delete();
         toastr()->success('Data berhasil dihapus');
-        
+
         return redirect()->route('homemenempati');
     }
     public function menempatidelete(Request $request)
@@ -91,11 +92,35 @@ class menempatiController extends Controller
     }
     public function exportDataMenempati()
     {
-            return Excel::download(new MenempatiExport, 'data_menempati.xlsx');
+        return Excel::download(new MenempatiExport, 'data_menempati.xlsx');
     }
     public function unduhformatmenempati()
     {
         return Excel::download(new MenempatiTemplateExport, 'template_import_penempatan.xlsx');
-        
+    }
+    public function searchdatamenempati(Request $request)
+    {
+        $search = $request->input('search'); 
+
+        if ($search) {
+            $menempatis_sorted = Menempati::with('instansi') 
+                ->whereHas('siswa', function($query) use ($search) {
+                    $query->where('nama', 'like', "%$search%"); 
+                })
+                ->orWhereHas('instansi', function($query) use ($search) {
+                    $query->where('instansi', 'like', "%$search%"); 
+                })
+                ->orderBy('instansi_id') 
+                ->paginate(10)
+                ->appends($request->except('page'));
+
+        } else {
+            
+            $menempatis_sorted = Menempati::with('instansi')
+                ->orderBy('instansi_id') 
+                ->paginate(10);
+        }
+
+        return view('menempati.homemenempati', compact('menempatis_sorted'));
     }
 }

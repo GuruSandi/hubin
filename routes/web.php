@@ -75,8 +75,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/gurumapeldelete', 'GuruMapelController@gurumapeldelete')->name('gurumapel.delete');
 
         //menempati
-        Route::get('/search-instansi', 'MenempatiController@search')->name('search');
-        Route::get('/search-siswa', 'MenempatiController@searchsiswa')->name('searchsiswa');
+       
         Route::get('/homemenempati', 'MenempatiController@homemenempati')->name('homemenempati');
         Route::get('/tambahmenempati', 'MenempatiController@tambahmenempati')->name('tambahmenempati');
         Route::post('/posttambahmenempati', 'MenempatiController@posttambahmenempati')->name('posttambahmenempati');
@@ -85,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/hapusmenempati/{menempati}', 'MenempatiController@hapusmenempati')->name('hapusmenempati');
         Route::delete('/menempatidelete', 'MenempatiController@menempatidelete')->name('menempati.delete');
         Route::get('/unduhformatmenempati', 'MenempatiController@unduhformatmenempati')->name('unduhformatmenempati');
+        Route::get('/searchdatamenempati', 'MenempatiController@searchdatamenempati')->name('searchdatamenempati');
 
         //membimbing
         Route::get('/homemembimbing', 'MembimbingController@homemembimbing')->name('homemembimbing');

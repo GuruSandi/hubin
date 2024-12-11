@@ -50,19 +50,39 @@
             </div>
            
             <div class="row mt-3 mb-3">
-                <div class="col-12">
+                <div class="col-6">
                     <a href="#" class="btn btn-danger" id="deleteAllSelectedRecord">Hapus Semua Select</a>
+                </div>
+                <div class="col-6">
+                    <form action="{{ route('searchdatamenempati') }}" method="GET" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" name="search" class="form-control " placeholder="nama siswa atau instansi" value="{{ request('search') }}">
+
+                            </div>
+                            
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary text-white">
+                                    <i class="bi bi-search"></i> Filter
+                                </button>
+                               
+
+                            </div>
+    
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-12 col-sm-8">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="example" style="font-size: 12px">
+                        <table class="table table-bordered" id="" style="font-size: 12px">
                             <thead>
                                 <tr>
                                     <th>
                                         <input type="checkbox" id="select_all_ids">
                                     </th>
+                                    <th>No</th>
                                     <th>ID</th>
                                     <th>NIS Siswa</th>
                                     <th>Nama Siswa</th>
@@ -76,6 +96,8 @@
                                         <td>
                                             <input type="checkbox" name="ids" class="checkbox_ids" value="{{ $item->id }}">
                                         </td>
+                                        <td>{{ $loop->iteration + ($menempatis_sorted->currentPage() - 1) * $menempatis_sorted->perPage() }}</td>
+
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->siswa->nis }}</td>
                                         <td>{{ $item->siswa->nama }}</td>
@@ -102,6 +124,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $menempatis_sorted->links() }}
                     </div>
                 </div>
             </div>

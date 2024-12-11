@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\absensisiswa;
 use App\Models\jurnal;
+use App\Models\menempati;
 use App\Models\nilai_pkl;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         // jurnal::factory()->count(3000)->create(); 
         // absensisiswa::factory()->count(3000)->create(); 
-        nilai_pkl::factory()->count(50)->create();
+        // nilai_pkl::factory()->count(50)->create();
+        menempati::factory()->count(500)->create();
     }
 }
